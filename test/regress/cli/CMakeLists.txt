@@ -31,6 +31,12 @@ set(regress_0_tests
   regress0/arith/bug547.2.smt2
   regress0/arith/bug549.cvc.smt2
   regress0/arith/bug569.smt2
+  regress0/arith/cube-test-bool.smt2
+  regress0/arith/cube-test-diseq.smt2
+  regress0/arith/cube-test-equality.smt2
+  regress0/arith/cube-test-paper-example.smt2
+  regress0/arith/cube-test-unbounded.smt2
+  regress0/arith/cube-test-unsat.smt2
   regress0/arith/dd_59_static_learn.smt2
   regress0/arith/dd_cs_dekker.smt2
   regress0/arith/dd-10890-round-robin.smt2

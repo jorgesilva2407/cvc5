@@ -14,6 +14,7 @@
 #include <map>
 #include <optional>
 #include <queue>
+#include <tuple>
 #include <vector>
 
 #include "base/output.h"
@@ -374,7 +375,15 @@ TheoryArithPrivate::Statistics::Statistics(StatisticsRegistry& reg,
       d_mipProofsSuccessful(
           reg.registerInt(name + "z::mip::proofs::successful")),
       d_numBranchesFailed(
-          reg.registerInt(name + "z::mip::branch::proof::failed"))
+          reg.registerInt(name + "z::mip::branch::proof::failed")),
+      d_cubeCalls(reg.registerInt(name + "cube::calls")),
+      d_cubeSuccess(reg.registerInt(name + "cube::success")),
+      d_cubeSkippedEquality(reg.registerInt(name + "cube::skippedEquality")),
+      d_cubeShiftedInfeasible(
+          reg.registerInt(name + "cube::shiftedInfeasible")),
+      d_cubeShiftedUnknown(reg.registerInt(name + "cube::shiftedUnknown")),
+      d_cubeRoundFailed(reg.registerInt(name + "cube::roundFailed")),
+      d_cubeTimer(reg.registerTimer(name + "cube::time"))
 {
 }
 
@@ -2686,6 +2695,332 @@ void TheoryArithPrivate::replayAssert(ConstraintP c)
   }
 }
 
+const std::vector<std::pair<ArithVar, Rational>>& TheoryArithPrivate::cubeRow(
+    ArithVar v)
+{
+  Assert(isAuxiliaryVariable(v));
+  auto it = d_cubeRows.find(v);
+  if (it != d_cubeRows.end())
+  {
+    return it->second;
+  }
+  Polynomial p = Polynomial::parsePolynomial(d_partialModel.asNode(v));
+  std::vector<Rational> coeffs;
+  std::vector<ArithVar> vars;
+  asVectors(p, coeffs, vars);
+  std::vector<std::pair<ArithVar, Rational>>& row = d_cubeRows[v];
+  for (size_t i = 0, n = vars.size(); i < n; ++i)
+  {
+    Assert(!isAuxiliaryVariable(vars[i]));
+    row.emplace_back(vars[i], coeffs[i]);
+  }
+  return row;
+}
+
+const Rational& TheoryArithPrivate::cubeShift(ArithVar v)
+{
+  if (!d_cubeShifts.isKey(v))
+  {
+    // ||a||_1 of the row defining v, which is e_v for input variables
+    Rational norm(1);
+    if (isAuxiliaryVariable(v))
+    {
+      norm = Rational(0);
+      for (const std::pair<ArithVar, Rational>& entry : cubeRow(v))
+      {
+        norm += entry.second.abs();
+      }
+    }
+    d_cubeShifts.set(v, norm / Rational(2));
+  }
+  return d_cubeShifts[v];
+}
+
+bool TheoryArithPrivate::cubeTestApplicable()
+{
+  // Internal assumptions are not supported when producing proofs.
+  if (isProofEnabled() || foundNonlinear())
+  {
+    return false;
+  }
+  // The shifts are only correct if every column is rounded, i.e., for pure
+  // integer problems.
+  for (var_iterator vi = var_begin(), vend = var_end(); vi != vend; ++vi)
+  {
+    if (!isInteger(*vi))
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool TheoryArithPrivate::cubeAssertBound(ConstraintP c)
+{
+  Assert(c->isLowerBound() || c->isUpperBound());
+  if (c->negationHasProof())
+  {
+    return true;
+  }
+  ArithVar x = c->getVariable();
+  const DeltaRational& value = c->getValue();
+  if (c->isUpperBound())
+  {
+    if (d_partialModel.cmpToLowerBound(x, value) < 0)
+    {
+      return true;
+    }
+    if (d_partialModel.greaterThanUpperBound(x, value))
+    {
+      return false;  // not tighter than the current bound
+    }
+  }
+  else
+  {
+    if (d_partialModel.cmpToUpperBound(x, value) > 0)
+    {
+      return true;
+    }
+    if (d_partialModel.lessThanLowerBound(x, value))
+    {
+      return false;  // not tighter than the current bound
+    }
+  }
+  if (!c->hasProof())
+  {
+    c->setInternalAssumption(false);
+  }
+  if (c->isUpperBound())
+  {
+    d_partialModel.setUpperBoundConstraint(c);
+  }
+  else
+  {
+    d_partialModel.setLowerBoundConstraint(c);
+  }
+  // as in AssertLower/AssertUpper
+  if (!d_tableau.isBasic(x))
+  {
+    const DeltaRational& a = d_partialModel.getAssignment(x);
+    if (c->isUpperBound() ? a > value : a < value)
+    {
+      d_linEq.update(x, value);
+    }
+  }
+  else
+  {
+    d_errorSet.signalVariable(x);
+  }
+  return false;
+}
+
+bool TheoryArithPrivate::unitCubeTest()
+{
+  TimerStat::CodeTimer codeTimer(d_statistics.d_cubeTimer);
+  ++d_statistics.d_cubeCalls;
+  Assert(d_qflraStatus == Result::SAT);
+  Assert(!anyConflict());
+
+  // Collect the shifted bounds before asserting any of them, since asserting
+  // them changes the bounds.
+  std::vector<std::tuple<ArithVar, ConstraintType, DeltaRational>> shifted;
+  for (var_iterator vi = var_begin(), vend = var_end(); vi != vend; ++vi)
+  {
+    ArithVar v = *vi;
+    bool hasLb = d_partialModel.hasLowerBound(v);
+    bool hasUb = d_partialModel.hasUpperBound(v);
+    if (!hasLb && !hasUb)
+    {
+      continue;
+    }
+    DeltaRational shift(cubeShift(v));
+    if (hasLb && hasUb
+        && d_partialModel.getUpperBound(v) - d_partialModel.getLowerBound(v)
+               < shift + shift)
+    {
+      // No unit cube fits between the bounds of v, e.g., because of an
+      // equality.
+      Trace("arith::cube") << "cube: no room for " << d_partialModel.asNode(v)
+                           << std::endl;
+      ++d_statistics.d_cubeSkippedEquality;
+      return false;
+    }
+    if (hasLb)
+    {
+      shifted.emplace_back(
+          v, LowerBound, d_partialModel.getLowerBound(v) + shift);
+    }
+    if (hasUb)
+    {
+      shifted.emplace_back(
+          v, UpperBound, d_partialModel.getUpperBound(v) - shift);
+    }
+  }
+
+  size_t enteringPropN = d_currentPropagationList.size();
+  Result::Status shiftedStatus = Result::UNKNOWN;
+  // the rounded point, for all variables
+  DenseMap<DeltaRational> rounded;
+  {
+    // Everything asserted in this block is speculative: the shifted bounds
+    // and any conflict found with them are removed by the pop.
+    context::Context::ScopedPush speculativePush(context());
+    d_cmEnabled = false;
+
+    bool infeasible = false;
+    for (const auto& [v, t, value] : shifted)
+    {
+      ConstraintP c = d_constraintDatabase.getConstraint(v, t, value);
+      Trace("arith::cube") << "cube: shifted bound " << c << std::endl;
+      if (cubeAssertBound(c))
+      {
+        infeasible = true;
+        break;
+      }
+    }
+
+    if (infeasible)
+    {
+      shiftedStatus = Result::UNSAT;
+    }
+    else
+    {
+      d_partialModel.stopQueueingBoundCounts();
+      UpdateTrackingCallback utcb(&d_linEq);
+      d_partialModel.processBoundsQueue(utcb);
+      d_linEq.startTrackingBoundCounts();
+
+      shiftedStatus = selectSimplex(true).findModel(true);
+
+      d_linEq.stopTrackingBoundCounts();
+      d_partialModel.startQueueingBoundCounts();
+    }
+    Trace("arith::cube") << "cube: shifted system is " << shiftedStatus
+                         << std::endl;
+
+    if (shiftedStatus == Result::SAT)
+    {
+      // Round the center z to the closest integer point floor(z + 1/2).
+      const Rational& delta = d_partialModel.getDelta();
+      Rational half(1, 2);
+      for (var_iterator vi = var_begin(), vend = var_end(); vi != vend; ++vi)
+      {
+        ArithVar v = *vi;
+        if (!isAuxiliaryVariable(v))
+        {
+          Rational z = d_partialModel.getAssignment(v).substituteDelta(delta);
+          rounded.set(v, DeltaRational(Rational((z + half).floor())));
+          Trace("arith::cube") << "cube: " << d_partialModel.asNode(v) << " "
+                               << z << " -> " << rounded[v] << std::endl;
+        }
+      }
+    }
+  }
+  // Restore what the pop does not.
+  if (d_currentPropagationList.size() > enteringPropN)
+  {
+    d_currentPropagationList.resize(enteringPropN);
+  }
+  clearUpdates();
+  d_errorSet.clear();
+  d_qflraStatus = Result::SAT;
+
+  if (shiftedStatus != Result::SAT)
+  {
+    if (shiftedStatus == Result::UNSAT)
+    {
+      ++d_statistics.d_cubeShiftedInfeasible;
+    }
+    else
+    {
+      ++d_statistics.d_cubeShiftedUnknown;
+    }
+    d_partialModel.revertAssignmentChanges();
+    return false;
+  }
+
+  // The values of the auxiliary variables at the rounded point.
+  for (var_iterator vi = var_begin(), vend = var_end(); vi != vend; ++vi)
+  {
+    ArithVar v = *vi;
+    if (isAuxiliaryVariable(v))
+    {
+      Rational value(0);
+      for (const std::pair<ArithVar, Rational>& entry : cubeRow(v))
+      {
+        value += entry.second
+                 * rounded[entry.first].getNoninfinitesimalPart();
+      }
+      rounded.set(v, DeltaRational(value));
+    }
+  }
+
+  // Check the rounded point against the asserted bounds and disequalities.
+  // By Corollary 3 of the paper, only a disequality can be violated.
+  bool satisfied = true;
+  for (var_iterator vi = var_begin(), vend = var_end(); satisfied && vi != vend;
+       ++vi)
+  {
+    ArithVar v = *vi;
+    satisfied = d_partialModel.cmpToLowerBound(v, rounded[v]) >= 0
+                && d_partialModel.cmpToUpperBound(v, rounded[v]) <= 0;
+    Assert(satisfied) << "cube: rounded point violates a bound of "
+                      << d_partialModel.asNode(v);
+  }
+  for (context::CDQueue<ConstraintP>::const_iterator it = d_diseqQueue.begin(),
+                                                     it_end = d_diseqQueue.end();
+       satisfied && it != it_end;
+       ++it)
+  {
+    ConstraintP diseq = *it;
+    satisfied = !(rounded[diseq->getVariable()] == diseq->getValue());
+  }
+  if (!satisfied)
+  {
+    Trace("arith::cube") << "cube: rounded point violates a disequality"
+                         << std::endl;
+    ++d_statistics.d_cubeRoundFailed;
+    d_partialModel.revertAssignmentChanges();
+    return false;
+  }
+
+  // Install the rounded point, keeping the current basis.
+  ApproximateSimplex::Solution sol;
+  for (Tableau::BasicIterator bi = d_tableau.beginBasic(),
+                              bend = d_tableau.endBasic();
+       bi != bend;
+       ++bi)
+  {
+    sol.newBasis.add(*bi);
+  }
+  sol.newValues = rounded;
+
+  d_partialModel.stopQueueingBoundCounts();
+  UpdateTrackingCallback utcb(&d_linEq);
+  d_partialModel.processBoundsQueue(utcb);
+  d_linEq.startTrackingBoundCounts();
+
+  Result::Status installed = d_attemptSolSimplex.attempt(sol);
+
+  d_linEq.stopTrackingBoundCounts();
+  d_partialModel.startQueueingBoundCounts();
+
+  // The rounded point satisfies all bounds, so this cannot fail.
+  Assert(installed == Result::SAT && !anyConflict());
+  if (installed != Result::SAT || anyConflict())
+  {
+    ++d_statistics.d_cubeRoundFailed;
+    d_errorSet.clear();
+    d_partialModel.revertAssignmentChanges();
+    return false;
+  }
+  d_partialModel.commitAssignmentChanges();
+  ++d_statistics.d_cubeSuccess;
+  Trace("arith::cube") << "cube: success" << std::endl;
+  Assert(hasIntegerModel());
+  return true;
+}
+
 void TheoryArithPrivate::resolveOutPropagated(
     std::vector<ConstraintCPVec>& confs) const
 {
@@ -4050,7 +4385,16 @@ bool TheoryArithPrivate::postCheck(Theory::Effort effortLevel)
       }
     }
 
-    if (!emmittedConflictOrSplit && d_hasDoneWorkSinceCut
+    // If the unit cube test succeeds, the assignment is now integral and
+    // there is nothing left to cut or branch on.
+    bool cubeSolved = false;
+    if (!emmittedConflictOrSplit && options().arith.arithCubeTest
+        && cubeTestApplicable())
+    {
+      cubeSolved = unitCubeTest();
+    }
+
+    if (!emmittedConflictOrSplit && !cubeSolved && d_hasDoneWorkSinceCut
         && options().arith.arithDioSolver)
     {
       if (getDioCuttingResource())
@@ -4069,7 +4413,7 @@ bool TheoryArithPrivate::postCheck(Theory::Effort effortLevel)
       }
     }
 
-    if (!emmittedConflictOrSplit)
+    if (!emmittedConflictOrSplit && !cubeSolved)
     {
       bool tryNew;
       Trace("arith-round-robin") << "Round robin branch..." << std::endl;
@@ -4125,7 +4469,7 @@ bool TheoryArithPrivate::postCheck(Theory::Effort effortLevel)
       } while (!emmittedConflictOrSplit && tryNew);
     }
 
-    if (options().arith.maxCutsInContext <= d_cutCount)
+    if (!cubeSolved && options().arith.maxCutsInContext <= d_cutCount)
     {
       if (d_diosolver.hasMoreDecompositionLemmas())
       {

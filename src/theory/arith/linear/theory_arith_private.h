@@ -16,6 +16,7 @@
 #pragma once
 
 #include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "context/cdhashset.h"
@@ -789,6 +790,38 @@ class TheoryArithPrivate : protected EnvObj
 
   void replayAssert(ConstraintP c);
 
+  /**
+   * Unit cube test (Bromberger and Weidenbach, IJCAR 2016).
+   *
+   * Tightens every bound of the current problem Ax <= b to Ax <= b', where
+   * b'_i = b_i - 1/2 ||a_i||_1 (1/2 for bounds on input variables), solves
+   * the shifted real relaxation in a speculative context push, and rounds its
+   * solution z to the closest integer point. If the shifted problem is
+   * satisfiable, the rounded point satisfies all asserted bounds, and it is
+   * installed as the current assignment. Returns true in that case. Otherwise
+   * the assignment is reverted to the last committed one and false is
+   * returned. This never produces conflicts or lemmas.
+   */
+  bool unitCubeTest();
+  /** Returns true if the unit cube test can be applied to the current state. */
+  bool cubeTestApplicable();
+  /** The row (coefficients over input variables) defining the auxiliary v. */
+  const std::vector<std::pair<ArithVar, Rational>>& cubeRow(ArithVar v);
+  /** The amount 1/2 ||a||_1 by which the bounds on v are tightened. */
+  const Rational& cubeShift(ArithVar v);
+  /**
+   * Asserts c as a speculative bound in the current context. Unlike
+   * AssertLower/AssertUpper, this does not require integral bounds on integer
+   * variables and does no propagation. Returns true if c is inconsistent with
+   * the current bounds, in which case nothing is asserted.
+   */
+  bool cubeAssertBound(ConstraintP c);
+  /** Cache for cubeRow. */
+  std::unordered_map<ArithVar, std::vector<std::pair<ArithVar, Rational>>>
+      d_cubeRows;
+  /** Cache for cubeShift. */
+  DenseMap<Rational> d_cubeShifts;
+
   static ConstraintCP vectorToIntHoleConflict(const ConstraintCPVec& conflict);
   static void intHoleConflictToVector(ConstraintCP conflicting,
                                       ConstraintCPVec& conflict);
@@ -885,6 +918,14 @@ class TheoryArithPrivate : protected EnvObj
     IntStat d_mipProofsSuccessful;
 
     IntStat d_numBranchesFailed;
+
+    IntStat d_cubeCalls;
+    IntStat d_cubeSuccess;
+    IntStat d_cubeSkippedEquality;
+    IntStat d_cubeShiftedInfeasible;
+    IntStat d_cubeShiftedUnknown;
+    IntStat d_cubeRoundFailed;
+    TimerStat d_cubeTimer;
 
     Statistics(StatisticsRegistry& reg, const std::string& name);
   };
