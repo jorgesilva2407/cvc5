@@ -14,6 +14,7 @@
 #include <map>
 #include <optional>
 #include <queue>
+#include <tuple>
 #include <vector>
 
 #include "base/output.h"
@@ -111,6 +112,7 @@ TheoryArithPrivate::TheoryArithPrivate(Env& env,
       d_nextIntegerCheckVar(0),
       d_constantIntegerVariables(context()),
       d_diseqQueue(context(), false),
+      d_assertedDiseqs(context()),
       d_currentPropagationList(),
       d_learnedBounds(context()),
       d_preregisteredNodes(context()),
@@ -374,7 +376,33 @@ TheoryArithPrivate::Statistics::Statistics(StatisticsRegistry& reg,
       d_mipProofsSuccessful(
           reg.registerInt(name + "z::mip::proofs::successful")),
       d_numBranchesFailed(
-          reg.registerInt(name + "z::mip::branch::proof::failed"))
+          reg.registerInt(name + "z::mip::branch::proof::failed")),
+      d_cubeCalls(reg.registerInt(name + "cube::calls")),
+      d_cubeSuccess(reg.registerInt(name + "cube::success")),
+      d_cubeSkippedEquality(reg.registerInt(name + "cube::skippedEquality")),
+      d_cubeNoRoom(reg.registerInt(name + "cube::noRoom")),
+      d_cubeShiftedInfeasible(
+          reg.registerInt(name + "cube::shiftedInfeasible")),
+      d_cubeShiftedUnknown(reg.registerInt(name + "cube::shiftedUnknown")),
+      d_cubeRoundFailed(reg.registerInt(name + "cube::roundFailed")),
+      d_cubeDiseqFailed(reg.registerInt(name + "cube::diseqFailed")),
+      d_cubeNotApplicable(reg.registerInt(name + "cube::notApplicable")),
+      d_cubeTimer(reg.registerTimer(name + "cube::time")),
+      d_cubeImpliedEqCalls(reg.registerInt(name + "cube::impliedEq::calls")),
+      d_cubeImpliedEqRounds(
+          reg.registerInt(name + "cube::impliedEq::rounds")),
+      d_cubeImpliedEqFound(reg.registerInt(name + "cube::impliedEq::found")),
+      d_cubeImpliedEqUnknown(
+          reg.registerInt(name + "cube::impliedEq::unknown")),
+      d_cubeImpliedEqTimer(reg.registerTimer(name + "cube::impliedEq::time")),
+      d_cubeEqElimCalls(reg.registerInt(name + "cube::eqElim::calls")),
+      d_cubeEqElimEqualities(
+          reg.registerInt(name + "cube::eqElim::equalities")),
+      d_cubeEqElimFresh(reg.registerInt(name + "cube::eqElim::fresh")),
+      d_cubeEqElimInfeasible(
+          reg.registerInt(name + "cube::eqElim::infeasible")),
+      d_cubeEqElimUnknown(reg.registerInt(name + "cube::eqElim::unknown")),
+      d_cubeEqElimTimer(reg.registerTimer(name + "cube::eqElim::time"))
 {
 }
 
@@ -959,6 +987,11 @@ bool TheoryArithPrivate::AssertDisequality(ConstraintP constraint)
 
   // Should be fine in integers
   Assert(!isInteger(x_i) || c_i.isIntegral());
+
+  if (options().arith.arithCubeTest)
+  {
+    d_assertedDiseqs.push_back(constraint);
+  }
 
   if (d_cmEnabled)
   {
@@ -2686,6 +2719,324 @@ void TheoryArithPrivate::replayAssert(ConstraintP c)
   }
 }
 
+const std::vector<std::pair<ArithVar, Rational>>& TheoryArithPrivate::cubeRow(
+    ArithVar v)
+{
+  Assert(isAuxiliaryVariable(v));
+  Node node = d_partialModel.asNode(v);
+  auto it = d_cubeRows.find(node);
+  if (it != d_cubeRows.end())
+  {
+    return it->second;
+  }
+  Polynomial p = Polynomial::parsePolynomial(node);
+  std::vector<Rational> coeffs;
+  std::vector<ArithVar> vars;
+  asVectors(p, coeffs, vars);
+  std::vector<std::pair<ArithVar, Rational>>& row = d_cubeRows[node];
+  for (size_t i = 0, n = vars.size(); i < n; ++i)
+  {
+    Assert(!isAuxiliaryVariable(vars[i]));
+    row.emplace_back(vars[i], coeffs[i]);
+  }
+  return row;
+}
+
+bool TheoryArithPrivate::cubeTestApplicable()
+{
+  // The test only changes the assignment and never derives a lemma or a
+  // conflict, so it needs no proofs.
+  if (foundNonlinear())
+  {
+    return false;
+  }
+  // The shifts are only correct if every column is rounded, i.e., for pure
+  // integer problems.
+  for (var_iterator vi = var_begin(), vend = var_end(); vi != vend; ++vi)
+  {
+    if (!isInteger(*vi))
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool TheoryArithPrivate::cubeHasEquality()
+{
+  for (var_iterator vi = var_begin(), vend = var_end(); vi != vend; ++vi)
+  {
+    if (d_partialModel.boundsAreEqual(*vi))
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+CubeProblem TheoryArithPrivate::cubeSnapshot(std::vector<ArithVar>& vars)
+{
+  CubeProblem p;
+  vars.clear();
+  // The index in p of each input variable.
+  DenseMap<size_t> index;
+  for (var_iterator vi = var_begin(), vend = var_end(); vi != vend; ++vi)
+  {
+    if (!isAuxiliaryVariable(*vi))
+    {
+      index.set(*vi, p.addInput());
+      vars.push_back(*vi);
+    }
+  }
+  for (var_iterator vi = var_begin(), vend = var_end(); vi != vend; ++vi)
+  {
+    if (isAuxiliaryVariable(*vi))
+    {
+      std::vector<std::pair<size_t, Rational>> coeffs;
+      for (const std::pair<ArithVar, Rational>& entry : cubeRow(*vi))
+      {
+        coeffs.emplace_back(index[entry.first], entry.second);
+      }
+      p.addRow(std::move(coeffs));
+      vars.push_back(*vi);
+    }
+  }
+  for (size_t i = 0, n = vars.size(); i < n; ++i)
+  {
+    if (d_partialModel.hasLowerBound(vars[i]))
+    {
+      p.d_lower[i] = d_partialModel.getLowerBound(vars[i]);
+    }
+    if (d_partialModel.hasUpperBound(vars[i]))
+    {
+      p.d_upper[i] = d_partialModel.getUpperBound(vars[i]);
+    }
+  }
+#ifdef CVC5_ASSERTIONS
+  // The rows of the snapshot hold under the current assignment, as the rows of
+  // the tableau do.
+  for (size_t i = 0, m = p.d_rows.size(); i < m; ++i)
+  {
+    ArithVar aux = vars[p.d_numInputs + i];
+    DeltaRational sum;
+    for (const auto& [x, a] : p.d_rows[i])
+    {
+      sum += d_partialModel.getAssignment(vars[x]) * a;
+    }
+    Assert(sum == d_partialModel.getAssignment(aux))
+        << "cube: snapshot row of " << d_partialModel.asNode(aux)
+        << " does not match the tableau";
+  }
+#endif
+  return p;
+}
+
+bool TheoryArithPrivate::cubeSatisfiesAll(
+    const std::vector<ArithVar>& vars, const std::vector<Rational>& values) const
+{
+  Assert(vars.size() == values.size());
+  DenseMap<Rational> value;
+  for (size_t i = 0, n = vars.size(); i < n; ++i)
+  {
+    value.set(vars[i], values[i]);
+    DeltaRational d(values[i]);
+    if (d_partialModel.cmpToLowerBound(vars[i], d) < 0
+        || d_partialModel.cmpToUpperBound(vars[i], d) > 0)
+    {
+      // the rounded point satisfies the bounds of the snapshot
+      Assert(false) << "cube: rounded point violates a bound of "
+                    << d_partialModel.asNode(vars[i]);
+      return false;
+    }
+  }
+  for (ConstraintP diseq : d_assertedDiseqs)
+  {
+    Assert(value.isKey(diseq->getVariable()));
+    if (DeltaRational(value[diseq->getVariable()]) == diseq->getValue())
+    {
+      Trace("arith::cube") << "cube: rounded point violates " << diseq
+                           << std::endl;
+      return false;
+    }
+  }
+  return true;
+}
+
+bool TheoryArithPrivate::cubeInstall(const std::vector<ArithVar>& vars,
+                                     const std::vector<Rational>& values)
+{
+  // Keep the current basis.
+  ApproximateSimplex::Solution sol;
+  for (Tableau::BasicIterator bi = d_tableau.beginBasic(),
+                              bend = d_tableau.endBasic();
+       bi != bend;
+       ++bi)
+  {
+    sol.newBasis.add(*bi);
+  }
+  for (size_t i = 0, n = vars.size(); i < n; ++i)
+  {
+    sol.newValues.set(vars[i], DeltaRational(values[i]));
+  }
+
+  d_partialModel.stopQueueingBoundCounts();
+  UpdateTrackingCallback utcb(&d_linEq);
+  d_partialModel.processBoundsQueue(utcb);
+  d_linEq.startTrackingBoundCounts();
+
+  Result::Status installed = d_attemptSolSimplex.attempt(sol);
+
+  d_linEq.stopTrackingBoundCounts();
+  d_partialModel.startQueueingBoundCounts();
+
+  // Every value is within the bounds of its variable, so the attempt only
+  // updates the nonbasic variables and can neither fail nor find a conflict.
+  Assert(installed == Result::SAT && !anyConflict());
+  if (installed != Result::SAT || anyConflict())
+  {
+    d_errorSet.clear();
+    d_partialModel.revertAssignmentChanges();
+    return false;
+  }
+  d_partialModel.commitAssignmentChanges();
+  Assert(hasIntegerModel());
+  return true;
+}
+
+ImpliedEqResult TheoryArithPrivate::cubeImpliedEqualities(const CubeProblem& p)
+{
+  TimerStat::CodeTimer codeTimer(d_statistics.d_cubeImpliedEqTimer);
+  ++d_statistics.d_cubeImpliedEqCalls;
+  ImpliedEqResult res =
+      detectImpliedEqualities(p, options().arith.arithCubePivotLimit);
+  d_statistics.d_cubeImpliedEqRounds += res.d_rounds;
+  d_statistics.d_cubeImpliedEqFound += res.d_equalities.size();
+  if (!res.d_complete)
+  {
+    ++d_statistics.d_cubeImpliedEqUnknown;
+  }
+  for (const ImpliedEquality& eq : res.d_equalities)
+  {
+    Trace("arith::cube") << "cube: implied equality: variable " << eq.d_var
+                         << " = " << eq.d_value << std::endl;
+  }
+  return res;
+}
+
+bool TheoryArithPrivate::cubeEliminateEqualities(CubeProblem& q,
+                                                 std::vector<AffineExpr>& map)
+{
+  TimerStat::CodeTimer codeTimer(d_statistics.d_cubeEqElimTimer);
+  ++d_statistics.d_cubeEqElimCalls;
+  EliminationResult res =
+      eliminateEqualities(q, options().arith.arithCubePivotLimit);
+  d_statistics.d_cubeEqElimEqualities += res.d_equalities;
+  d_statistics.d_cubeEqElimFresh += res.d_fresh;
+  switch (res.d_status)
+  {
+    case EliminationResult::Status::REDUCED: break;
+    case EliminationResult::Status::INFEASIBLE:
+      ++d_statistics.d_cubeEqElimInfeasible;
+      return false;
+    case EliminationResult::Status::UNKNOWN:
+      ++d_statistics.d_cubeEqElimUnknown;
+      return false;
+  }
+  map = composeMaps(map, res.d_map);
+  q = std::move(res.d_reduced);
+  return true;
+}
+
+bool TheoryArithPrivate::unitCubeTest()
+{
+  TimerStat::CodeTimer codeTimer(d_statistics.d_cubeTimer);
+  ++d_statistics.d_cubeCalls;
+  Assert(d_qflraStatus == Result::SAT);
+  Assert(!anyConflict());
+  bool eqElim = options().arith.arithCubeEqElim;
+
+  // An equality leaves no room for a cube. Unless the equalities are
+  // eliminated, this is checked before the problem is copied, since it is
+  // cheap.
+  if (!eqElim && cubeHasEquality())
+  {
+    ++d_statistics.d_cubeSkippedEquality;
+    Trace("arith::cube") << "cube: skipped, there is an equality" << std::endl;
+    return false;
+  }
+
+  std::vector<ArithVar> vars;
+  CubeProblem p = cubeSnapshot(vars);
+  // The test is applied to q, whose integer solutions y give the integer
+  // solutions map(y) of p. Initially, q is p and map is the identity.
+  CubeProblem q = p;
+  std::vector<AffineExpr> map;
+  for (size_t i = 0; i < p.d_numInputs; ++i)
+  {
+    map.push_back({Integer(0), {{i, Integer(1)}}});
+  }
+  CubeResult res;
+  while (true)
+  {
+    if (eqElim && q.hasEquality() && !cubeEliminateEqualities(q, map))
+    {
+      return false;
+    }
+    res = runUnitCubeTest(q, options().arith.arithCubePivotLimit);
+    Trace("arith::cube") << "cube: " << q.numVariables() << " variables, "
+                         << res.d_pivots << " pivots" << std::endl;
+    if (res.d_status == CubeResult::Status::SUCCESS)
+    {
+      break;
+    }
+    switch (res.d_status)
+    {
+      case CubeResult::Status::NO_ROOM: ++d_statistics.d_cubeNoRoom; break;
+      case CubeResult::Status::SHIFTED_INFEASIBLE:
+        ++d_statistics.d_cubeShiftedInfeasible;
+        break;
+      case CubeResult::Status::UNKNOWN:
+        ++d_statistics.d_cubeShiftedUnknown;
+        return false;
+      default:
+        Assert(res.d_status == CubeResult::Status::ROUND_FAILED);
+        ++d_statistics.d_cubeRoundFailed;
+        return false;
+    }
+    if (!options().arith.arithCubeImpliedEq)
+    {
+      return false;
+    }
+    ImpliedEqResult implied = cubeImpliedEqualities(q);
+    if (!eqElim || implied.d_equalities.empty())
+    {
+      return false;
+    }
+    // Make the implied equalities explicit, so that they are eliminated, and
+    // try again. Each round eliminates at least one variable of q.
+    for (const ImpliedEquality& eq : implied.d_equalities)
+    {
+      q.d_lower[eq.d_var] = DeltaRational(eq.d_value);
+      q.d_upper[eq.d_var] = DeltaRational(eq.d_value);
+    }
+  }
+
+  std::vector<Rational> values = p.evaluate(applyMap(map, res.d_point));
+  if (!cubeSatisfiesAll(vars, values))
+  {
+    ++d_statistics.d_cubeDiseqFailed;
+    return false;
+  }
+  if (!cubeInstall(vars, values))
+  {
+    ++d_statistics.d_cubeRoundFailed;
+    return false;
+  }
+  ++d_statistics.d_cubeSuccess;
+  Trace("arith::cube") << "cube: success" << std::endl;
+  return true;
+}
+
 void TheoryArithPrivate::resolveOutPropagated(
     std::vector<ConstraintCPVec>& confs) const
 {
@@ -4050,7 +4401,22 @@ bool TheoryArithPrivate::postCheck(Theory::Effort effortLevel)
       }
     }
 
-    if (!emmittedConflictOrSplit && d_hasDoneWorkSinceCut
+    // If the unit cube test succeeds, the assignment is now integral and
+    // there is nothing left to cut or branch on.
+    bool cubeSolved = false;
+    if (!emmittedConflictOrSplit && options().arith.arithCubeTest)
+    {
+      if (cubeTestApplicable())
+      {
+        cubeSolved = unitCubeTest();
+      }
+      else
+      {
+        ++d_statistics.d_cubeNotApplicable;
+      }
+    }
+
+    if (!emmittedConflictOrSplit && !cubeSolved && d_hasDoneWorkSinceCut
         && options().arith.arithDioSolver)
     {
       if (getDioCuttingResource())
@@ -4069,7 +4435,7 @@ bool TheoryArithPrivate::postCheck(Theory::Effort effortLevel)
       }
     }
 
-    if (!emmittedConflictOrSplit)
+    if (!emmittedConflictOrSplit && !cubeSolved)
     {
       bool tryNew;
       Trace("arith-round-robin") << "Round robin branch..." << std::endl;
@@ -4125,7 +4491,7 @@ bool TheoryArithPrivate::postCheck(Theory::Effort effortLevel)
       } while (!emmittedConflictOrSplit && tryNew);
     }
 
-    if (options().arith.maxCutsInContext <= d_cutCount)
+    if (!cubeSolved && options().arith.maxCutsInContext <= d_cutCount)
     {
       if (d_diosolver.hasMoreDecompositionLemmas())
       {

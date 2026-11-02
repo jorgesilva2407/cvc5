@@ -513,6 +513,38 @@ name   = "Arithmetic Theory"
   help       = "whether to use simple rounding, similar to a unit-cube test, for integers"
 
 [[option]]
+  name       = "arithCubeTest"
+  category   = "regular"
+  long       = "arith-cube-test"
+  type       = "bool"
+  default    = "false"
+  help       = "apply the unit cube test (Bromberger and Weidenbach, IJCAR 2016) to the real relaxation before branching on integers"
+
+[[option]]
+  name       = "arithCubeImpliedEq"
+  category   = "regular"
+  long       = "arith-cube-implied-eq"
+  type       = "bool"
+  default    = "false"
+  help       = "when the shifted system of the unit cube test is infeasible, detect the implied equalities of the problem by checking its strict version (requires --arith-cube-test)"
+
+[[option]]
+  name       = "arithCubeEqElim"
+  category   = "regular"
+  long       = "arith-cube-eq-elim"
+  type       = "bool"
+  default    = "false"
+  help       = "eliminate the equalities of the problem (and those found by --arith-cube-implied-eq) with a Diophantine equation solver before the unit cube test, instead of skipping the test (requires --arith-cube-test)"
+
+[[option]]
+  name       = "arithCubePivotLimit"
+  category   = "expert"
+  long       = "arith-cube-pivot-limit=N"
+  type       = "uint64_t"
+  default    = "10000"
+  help       = "the maximum number of pivots of each simplex call made by the unit cube test and the implied equality detection; the test gives up when it is reached"
+
+[[option]]
   name       = "nlCov"
   category   = "regular"
   long       = "nl-cov"

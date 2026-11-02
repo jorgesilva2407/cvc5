@@ -16,6 +16,7 @@
 #pragma once
 
 #include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "context/cdhashset.h"
@@ -33,6 +34,8 @@
 #include "theory/arith/linear/arithvar.h"
 #include "theory/arith/linear/attempt_solution_simplex.h"
 #include "theory/arith/linear/congruence_manager.h"
+#include "theory/arith/linear/cube/equality_elimination.h"
+#include "theory/arith/linear/cube/unit_cube.h"
 #include "theory/arith/linear/constraint.h"
 #include "theory/arith/linear/dio_solver.h"
 #include "theory/arith/linear/dual_simplex.h"
@@ -274,6 +277,13 @@ class TheoryArithPrivate : protected EnvObj
    * not known to be satisfied.
    */
   context::CDQueue<ConstraintP> d_diseqQueue;
+
+  /**
+   * All of the disequalities asserted in the current context, unlike
+   * d_diseqQueue, from which the satisfied and split ones are removed. Only
+   * maintained for the unit cube test, which checks its point against them.
+   */
+  context::CDList<ConstraintP> d_assertedDiseqs;
 
   /**
    * Constraints that have yet to be processed by proagation work list.
@@ -789,6 +799,63 @@ class TheoryArithPrivate : protected EnvObj
 
   void replayAssert(ConstraintP c);
 
+  /**
+   * Unit cube test (Bromberger and Weidenbach, IJCAR 2016).
+   *
+   * Copies the current problem Ax <= b into a CubeProblem and runs the test
+   * on it with a separate exact simplex (see cube/unit_cube.h), so the
+   * tableau, assignment and constraints of this solver are not touched. If
+   * the shifted system is satisfiable, its solution is rounded, checked
+   * against all asserted bounds and disequalities, and installed as the
+   * current assignment; true is returned in that case. If the shifted system
+   * is infeasible and --arith-cube-implied-eq is on, the implied equalities
+   * of the problem are detected.
+   *
+   * An equality (a variable with equal bounds) leaves no room for a cube. If
+   * there is one, the test is skipped, unless --arith-cube-eq-elim is on: then
+   * the equalities, and the implied equalities that are found, are
+   * eliminated (see cube/equality_elimination.h) and the test is applied to
+   * the result. This never produces conflicts or lemmas.
+   */
+  bool unitCubeTest();
+  /** Returns true if the unit cube test can be applied to the current state. */
+  bool cubeTestApplicable();
+  /** Whether some variable (input or row) has equal lower and upper bounds. */
+  bool cubeHasEquality();
+  /** The row (coefficients over input variables) defining the auxiliary v. */
+  const std::vector<std::pair<ArithVar, Rational>>& cubeRow(ArithVar v);
+  /**
+   * Copies the current bounds and rows into a CubeProblem. vars is set to the
+   * variable of this solver for each variable of the problem.
+   */
+  CubeProblem cubeSnapshot(std::vector<ArithVar>& vars);
+  /**
+   * Whether assigning values[i] to vars[i] for all i satisfies every asserted
+   * bound and disequality. values must assign every variable.
+   */
+  bool cubeSatisfiesAll(const std::vector<ArithVar>& vars,
+                        const std::vector<Rational>& values) const;
+  /**
+   * Installs the assignment of vars to values, keeping the current basis.
+   * Returns false, with the assignment reverted, if this fails.
+   */
+  bool cubeInstall(const std::vector<ArithVar>& vars,
+                   const std::vector<Rational>& values);
+  /** Runs the implied equality detection on p and reports the result. */
+  ImpliedEqResult cubeImpliedEqualities(const CubeProblem& p);
+  /**
+   * Eliminates the equalities of q, replacing q by the reduced problem and
+   * map by its composition with the solution of the equalities. Returns false
+   * if this fails, in which case the test gives up.
+   */
+  bool cubeEliminateEqualities(CubeProblem& q, std::vector<AffineExpr>& map);
+  /**
+   * Cache for cubeRow, keyed by the node of the auxiliary variable, since
+   * ArithVars are reused after they are released.
+   */
+  std::unordered_map<Node, std::vector<std::pair<ArithVar, Rational>>>
+      d_cubeRows;
+
   static ConstraintCP vectorToIntHoleConflict(const ConstraintCPVec& conflict);
   static void intHoleConflictToVector(ConstraintCP conflicting,
                                       ConstraintCPVec& conflict);
@@ -885,6 +952,30 @@ class TheoryArithPrivate : protected EnvObj
     IntStat d_mipProofsSuccessful;
 
     IntStat d_numBranchesFailed;
+
+    IntStat d_cubeCalls;
+    IntStat d_cubeSuccess;
+    IntStat d_cubeSkippedEquality;
+    IntStat d_cubeNoRoom;
+    IntStat d_cubeShiftedInfeasible;
+    IntStat d_cubeShiftedUnknown;
+    IntStat d_cubeRoundFailed;
+    IntStat d_cubeDiseqFailed;
+    IntStat d_cubeNotApplicable;
+    TimerStat d_cubeTimer;
+
+    IntStat d_cubeImpliedEqCalls;
+    IntStat d_cubeImpliedEqRounds;
+    IntStat d_cubeImpliedEqFound;
+    IntStat d_cubeImpliedEqUnknown;
+    TimerStat d_cubeImpliedEqTimer;
+
+    IntStat d_cubeEqElimCalls;
+    IntStat d_cubeEqElimEqualities;
+    IntStat d_cubeEqElimFresh;
+    IntStat d_cubeEqElimInfeasible;
+    IntStat d_cubeEqElimUnknown;
+    TimerStat d_cubeEqElimTimer;
 
     Statistics(StatisticsRegistry& reg, const std::string& name);
   };
