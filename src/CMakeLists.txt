@@ -424,6 +424,12 @@ libcvc5_add_sources(
   theory/arith/linear/constraint.cpp
   theory/arith/linear/constraint.h
   theory/arith/linear/constraint_forward.h
+  theory/arith/linear/cube/equality_elimination.cpp
+  theory/arith/linear/cube/equality_elimination.h
+  theory/arith/linear/cube/exact_simplex.cpp
+  theory/arith/linear/cube/exact_simplex.h
+  theory/arith/linear/cube/unit_cube.cpp
+  theory/arith/linear/cube/unit_cube.h
   theory/arith/linear/cut_log.cpp
   theory/arith/linear/cut_log.h
   theory/arith/linear/dio_solver.cpp
