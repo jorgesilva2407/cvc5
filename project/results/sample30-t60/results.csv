@@ -1,0 +1,601 @@
+family,file,config,answer,expected,returncode,timeout,wall_s,cpu_s,maxrss_kb,stats
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-10/c10_problem__003.smt2.slack.smt2,B1,none,unsat,137,True,60.00,0.00,1968,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-10/c10_problem__003.smt2.slack.smt2,B0,none,unsat,137,True,60.00,0.00,1812,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-10/c10_problem__003.smt2.slack.smt2,B1+C2,none,unsat,137,True,60.00,0.00,1976,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-10/c10_problem__003.smt2.slack.smt2,B2,none,unsat,137,True,60.00,0.00,1984,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-50/c50_problem__005.smt2.slack.smt2,B1,sat,sat,0,False,0.07,0.04,23588,"{""calls"": 1, ""success"": 1, ""time"": 8}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-50/c50_problem__005.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.05,0.04,24008,"{""calls"": 1, ""success"": 1, ""time"": 8}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-50/c50_problem__005.smt2.slack.smt2,B2,sat,sat,0,False,0.06,0.05,23524,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem_2__014.smt2.slack.smt2,B0,sat,sat,0,False,0.14,0.01,22804,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem_2__014.smt2.slack.smt2,B1,sat,sat,0,False,0.01,0.01,22856,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem_2__014.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23140,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem_2__014.smt2.slack.smt2,B2,sat,sat,0,False,0.01,0.01,23180,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem__013.smt2.slack.smt2,B0,sat,sat,0,False,0.01,0.01,23544,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem__013.smt2.slack.smt2,B1,sat,sat,0,False,0.01,0.01,23440,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem__013.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23208,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem__013.smt2.slack.smt2,B2,sat,sat,0,False,0.01,0.01,23196,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem__021.smt2.slack.smt2,B0,unsat,unsat,0,False,0.06,0.05,23060,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem__021.smt2.slack.smt2,B1,unsat,unsat,0,False,0.02,0.02,23352,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem__021.smt2.slack.smt2,B1+C2,unsat,unsat,0,False,0.02,0.01,23080,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/10-vars/v10_problem__021.smt2.slack.smt2,B2,unsat,unsat,0,False,0.02,0.02,23024,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/15-vars/v15_problem_2__003.smt2.slack.smt2,B0,sat,sat,0,False,0.07,0.01,23416,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/15-vars/v15_problem_2__003.smt2.slack.smt2,B1,sat,sat,0,False,0.01,0.00,23172,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/15-vars/v15_problem_2__003.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.01,0.01,22828,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/15-vars/v15_problem_2__003.smt2.slack.smt2,B2,sat,sat,0,False,0.01,0.01,23448,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/15-vars/v15_problem_2__020.smt2.slack.smt2,B0,unsat,unsat,0,False,0.03,0.03,23540,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/15-vars/v15_problem_2__020.smt2.slack.smt2,B1,unsat,unsat,0,False,0.03,0.03,23360,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/15-vars/v15_problem_2__020.smt2.slack.smt2,B1+C2,unsat,unsat,0,False,0.03,0.03,23320,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/15-vars/v15_problem_2__020.smt2.slack.smt2,B2,unsat,unsat,0,False,0.03,0.03,23056,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/20-vars/v20_problem__012.smt2.slack.smt2,B0,sat,sat,0,False,0.70,0.66,25072,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/20-vars/v20_problem__012.smt2.slack.smt2,B1,sat,sat,0,False,0.11,0.11,23576,"{""calls"": 1, ""success"": 1, ""time"": 47}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/20-vars/v20_problem__012.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.10,0.10,23968,"{""calls"": 1, ""success"": 1, ""time"": 44}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/20-vars/v20_problem__012.smt2.slack.smt2,B2,sat,sat,0,False,0.06,0.06,23948,"{""calls"": 1, ""success"": 1, ""time"": 23}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/20-vars/v20_problem__032.smt2.slack.smt2,B0,unsat,unsat,0,False,0.12,0.12,23928,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/20-vars/v20_problem__032.smt2.slack.smt2,B1,unsat,unsat,0,False,0.14,0.13,23892,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/20-vars/v20_problem__032.smt2.slack.smt2,B1+C2,unsat,unsat,0,False,0.13,0.11,23568,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/20-vars/v20_problem__032.smt2.slack.smt2,B2,unsat,unsat,0,False,0.13,0.13,23752,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__024.smt2.slack.smt2,B0,sat,sat,0,False,1.19,1.19,26372,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__024.smt2.slack.smt2,B1,sat,sat,0,False,0.12,0.12,23920,"{""calls"": 1, ""success"": 1, ""time"": 45}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__024.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.12,0.12,24332,"{""calls"": 1, ""success"": 1, ""time"": 45}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__024.smt2.slack.smt2,B2,sat,sat,0,False,0.12,0.12,24216,"{""calls"": 1, ""success"": 1, ""time"": 45}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-50/c50_problem__005.smt2.slack.smt2,B0,none,sat,137,True,60.00,0.00,1992,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__035.smt2.slack.smt2,B1,sat,sat,0,False,0.24,0.23,24424,"{""calls"": 1, ""success"": 1, ""time"": 113}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__035.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.24,0.24,24448,"{""calls"": 1, ""success"": 1, ""time"": 111}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__035.smt2.slack.smt2,B2,sat,sat,0,False,0.23,0.23,24404,"{""calls"": 1, ""success"": 1, ""time"": 108}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__035.smt2.slack.smt2,B0,none,sat,137,True,60.00,0.00,1892,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/30-vars/v30_problem_2__018.smt2.slack.smt2,B1,sat,sat,0,False,0.10,0.10,24532,"{""calls"": 1, ""success"": 1, ""time"": 26}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/30-vars/v30_problem_2__018.smt2.slack.smt2,B0,sat,sat,0,False,5.27,5.25,26652,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/30-vars/v30_problem_2__018.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.10,0.09,24432,"{""calls"": 1, ""success"": 1, ""time"": 26}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/30-vars/v30_problem_2__018.smt2.slack.smt2,B2,sat,sat,0,False,0.10,0.09,24528,"{""calls"": 1, ""success"": 1, ""time"": 24}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem_2__011.smt2.slack.smt2,B1,sat,sat,0,False,0.09,0.08,24348,"{""calls"": 1, ""success"": 1, ""time"": 25}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem_2__011.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.09,0.09,24312,"{""calls"": 1, ""success"": 1, ""time"": 26}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem_2__011.smt2.slack.smt2,B2,sat,sat,0,False,0.09,0.09,24772,"{""calls"": 1, ""success"": 1, ""time"": 26}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem_2__022.smt2.slack.smt2,B0,sat,sat,0,False,3.93,3.92,26500,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem_2__022.smt2.slack.smt2,B1,sat,sat,0,False,0.15,0.15,24964,"{""calls"": 1, ""success"": 1, ""time"": 46}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem_2__022.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.14,0.14,25052,"{""calls"": 1, ""success"": 1, ""time"": 46}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem_2__022.smt2.slack.smt2,B2,sat,sat,0,False,0.14,0.14,24956,"{""calls"": 1, ""success"": 1, ""time"": 48}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem__031.smt2.slack.smt2,B0,sat,sat,0,False,3.84,3.68,27784,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem__031.smt2.slack.smt2,B1,sat,sat,0,False,0.32,0.32,24872,"{""calls"": 1, ""success"": 1, ""time"": 116}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem__031.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.28,0.27,25100,"{""calls"": 1, ""success"": 1, ""time"": 106}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem__031.smt2.slack.smt2,B2,sat,sat,0,False,0.28,0.28,24936,"{""calls"": 1, ""success"": 1, ""time"": 107}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem_2__009.smt2.slack.smt2,B0,sat,sat,0,False,3.60,3.58,27212,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem_2__009.smt2.slack.smt2,B1,sat,sat,0,False,0.06,0.06,24056,"{""calls"": 1, ""success"": 1, ""time"": 23}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem_2__009.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.06,0.06,24340,"{""calls"": 1, ""success"": 1, ""time"": 23}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem_2__009.smt2.slack.smt2,B2,sat,sat,0,False,0.12,0.12,24244,"{""calls"": 1, ""success"": 1, ""time"": 47}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem_2__013.smt2.slack.smt2,B0,sat,sat,0,False,4.14,4.14,26836,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem_2__013.smt2.slack.smt2,B1,sat,sat,0,False,0.12,0.12,24752,"{""calls"": 1, ""success"": 1, ""time"": 35}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem_2__013.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.10,0.10,24776,"{""calls"": 1, ""success"": 1, ""time"": 32}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem_2__013.smt2.slack.smt2,B2,sat,sat,0,False,0.10,0.10,24828,"{""calls"": 1, ""success"": 1, ""time"": 32}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/35-vars/v35_problem_2__011.smt2.slack.smt2,B0,sat,sat,0,False,50.96,50.92,27704,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__001.smt2.slack.smt2,B1,sat,sat,0,False,0.05,0.05,24492,"{""calls"": 1, ""success"": 1, ""time"": 15}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__001.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.05,0.04,24172,"{""calls"": 1, ""success"": 1, ""time"": 15}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__001.smt2.slack.smt2,B2,sat,sat,0,False,0.05,0.04,24484,"{""calls"": 1, ""success"": 1, ""time"": 15}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__001.smt2.slack.smt2,B0,none,sat,137,True,60.00,0.00,1952,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__017.smt2.slack.smt2,B1,sat,sat,0,False,0.13,0.13,24960,"{""calls"": 1, ""success"": 1, ""time"": 40}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__017.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.13,0.13,24508,"{""calls"": 1, ""success"": 1, ""time"": 40}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__017.smt2.slack.smt2,B2,sat,sat,0,False,0.13,0.13,24960,"{""calls"": 1, ""success"": 1, ""time"": 42}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__025.smt2.slack.smt2,B0,sat,sat,0,False,4.73,4.73,27640,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__025.smt2.slack.smt2,B1,sat,sat,0,False,0.15,0.15,24560,"{""calls"": 1, ""success"": 1, ""time"": 53}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__025.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.15,0.15,25052,"{""calls"": 1, ""success"": 1, ""time"": 52}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__025.smt2.slack.smt2,B2,sat,sat,0,False,0.15,0.15,25068,"{""calls"": 1, ""success"": 1, ""time"": 55}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__017.smt2.slack.smt2,B0,none,sat,137,True,60.00,0.00,1964,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/45-vars/v45_problem__030.smt2.slack.smt2,B1,sat,sat,0,False,0.25,0.24,25556,"{""calls"": 1, ""success"": 1, ""time"": 85}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/45-vars/v45_problem__030.smt2.slack.smt2,B1+C2,sat,sat,0,False,0.25,0.25,25580,"{""calls"": 1, ""success"": 1, ""time"": 91}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/45-vars/v45_problem__030.smt2.slack.smt2,B2,sat,sat,0,False,0.25,0.24,25672,"{""calls"": 1, ""success"": 1, ""time"": 88}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/45-vars/v45_problem__030.smt2.slack.smt2,B0,none,sat,137,True,60.00,0.00,1968,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/15-vars/cut_lemma_01_011.smt2.slack.smt2,B0,none,unsat,137,True,60.00,0.00,1892,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/15-vars/cut_lemma_01_011.smt2.slack.smt2,B1,none,unsat,137,True,60.00,0.00,1856,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/15-vars/cut_lemma_01_011.smt2.slack.smt2,B1+C2,none,unsat,137,True,60.00,0.00,1988,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/15-vars/cut_lemma_01_011.smt2.slack.smt2,B2,none,unsat,137,True,60.00,0.00,1984,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/15-vars/cut_lemma_03_006.smt2.slack.smt2,B0,none,unsat,137,True,60.00,0.00,1952,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/15-vars/cut_lemma_03_006.smt2.slack.smt2,B1,none,unsat,137,True,60.00,0.00,1976,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/15-vars/cut_lemma_03_006.smt2.slack.smt2,B1+C2,none,unsat,137,True,60.00,0.00,1976,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/15-vars/cut_lemma_03_006.smt2.slack.smt2,B2,none,unsat,137,True,60.00,0.00,1968,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/20-vars/cut_lemma_03_007.smt2.slack.smt2,B0,none,unsat,137,True,60.00,0.00,2000,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/20-vars/cut_lemma_03_007.smt2.slack.smt2,B1,none,unsat,137,True,60.00,0.00,1816,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/20-vars/cut_lemma_03_007.smt2.slack.smt2,B1+C2,none,unsat,137,True,60.00,0.00,1868,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/more_slacked/cut_lemmas/20-vars/cut_lemma_03_007.smt2.slack.smt2,B2,none,unsat,137,True,60.00,0.00,2000,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd025v30c/unbd-sage14.smt2,B0,none,sat,137,True,60.00,0.00,1952,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd025v30c/unbd-sage14.smt2,B1,none,sat,137,True,60.00,0.00,1872,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd025v30c/unbd-sage14.smt2,B1+C2,none,sat,137,True,60.00,0.00,1984,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd025v30c/unbd-sage14.smt2,B2,none,sat,137,True,60.00,0.00,2000,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd050v55c/unbd-sage15.smt2,B0,none,sat,137,True,60.00,0.00,1860,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd050v55c/unbd-sage15.smt2,B1,none,sat,137,True,60.00,0.00,1872,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd050v55c/unbd-sage15.smt2,B1+C2,none,sat,137,True,60.00,0.00,1956,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd050v55c/unbd-sage15.smt2,B2,none,sat,137,True,60.00,0.00,1872,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd075v83c/unbd-sage8.smt2,B0,none,sat,137,True,60.00,0.00,1988,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd075v83c/unbd-sage8.smt2,B1,none,sat,137,True,60.00,0.00,1812,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd075v83c/unbd-sage8.smt2,B1+C2,none,sat,137,True,60.00,0.00,1976,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd075v83c/unbd-sage8.smt2,B2,none,sat,137,True,60.00,0.00,1980,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd075v83c/unbd-sage9.smt2,B0,none,sat,137,True,60.00,0.00,2004,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd075v83c/unbd-sage9.smt2,B1,none,sat,137,True,60.00,0.00,1872,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd075v83c/unbd-sage9.smt2,B1+C2,none,sat,137,True,60.00,0.00,1952,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd075v83c/unbd-sage9.smt2,B2,none,sat,137,True,60.00,0.00,1892,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd100v110c/unbd-sage1.smt2,B0,none,sat,137,True,60.00,0.00,1812,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd100v110c/unbd-sage1.smt2,B1,none,sat,137,True,60.00,0.00,1892,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd100v110c/unbd-sage1.smt2,B1+C2,none,sat,137,True,60.00,0.00,2000,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd100v110c/unbd-sage1.smt2,B2,none,sat,137,True,60.00,0.00,1976,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd100v110c/unbd-sage12.smt2,B0,none,sat,137,True,60.00,0.00,2000,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd100v110c/unbd-sage12.smt2,B1,none,sat,137,True,60.00,0.00,1928,{}
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd100v110c/unbd-sage12.smt2,B1+C2,none,sat,137,True,60.00,0.00,1812,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-10/problem__003.smt2,B0,unsat,unsat,0,False,0.22,0.18,24368,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-10/problem__003.smt2,B1,unsat,unsat,0,False,0.19,0.19,24336,"{""calls"": 20, ""shiftedInfeasible"": 2, ""skippedEquality"": 18, ""time"": 9}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-10/problem__003.smt2,B1+C2,unsat,unsat,0,False,0.20,0.19,24196,"{""calls"": 20, ""impliedEq::calls"": 2, ""impliedEq::rounds"": 2, ""impliedEq::time"": 5, ""shiftedInfeasible"": 2, ""skippedEquality"": 18, ""time"": 15}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-10/problem__003.smt2,B2,unsat,unsat,0,False,0.28,0.28,24524,"{""calls"": 20, ""eqElim::calls"": 18, ""eqElim::equalities"": 42, ""eqElim::time"": 4, ""impliedEq::calls"": 20, ""impliedEq::rounds"": 20, ""impliedEq::time"": 45, ""shiftedInfeasible"": 20, ""time"": 100}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-100/problem__005.smt2,B0,sat,sat,0,False,0.15,0.15,25404,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-100/problem__005.smt2,B1,sat,sat,0,False,0.03,0.03,23772,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-100/problem__005.smt2,B1+C2,sat,sat,0,False,0.03,0.02,23644,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-100/problem__005.smt2,B2,sat,sat,0,False,0.03,0.02,23664,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-40/problem__003.smt2,B0,sat,sat,0,False,0.23,0.23,24880,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-40/problem__003.smt2,B1,sat,sat,0,False,0.02,0.02,23316,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-40/problem__003.smt2,B1+C2,sat,sat,0,False,0.02,0.02,23316,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-40/problem__003.smt2,B2,sat,sat,0,False,0.02,0.02,23508,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-50/problem__002.smt2,B0,unsat,unsat,0,False,0.04,0.02,23224,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-50/problem__002.smt2,B1,unsat,unsat,0,False,0.02,0.02,23720,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-50/problem__002.smt2,B1+C2,unsat,unsat,0,False,0.02,0.01,23264,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-50/problem__002.smt2,B2,unsat,unsat,0,False,0.02,0.01,23312,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-50/problem__005.smt2,B0,sat,sat,0,False,5.59,5.58,28584,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-50/problem__005.smt2,B1,sat,sat,0,False,0.03,0.03,23556,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-50/problem__005.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23616,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-50/problem__005.smt2,B2,sat,sat,0,False,0.03,0.03,23400,"{""calls"": 1, ""success"": 1, ""time"": 6}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-60/problem__002.smt2,B0,sat,sat,0,False,0.05,0.04,24676,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-60/problem__002.smt2,B1,sat,sat,0,False,0.02,0.01,23532,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-60/problem__002.smt2,B1+C2,sat,sat,0,False,0.02,0.02,23020,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/coef-size/smt/size-60/problem__002.smt2,B2,sat,sat,0,False,0.02,0.02,23332,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem_2__014.smt2,B0,sat,sat,0,False,0.04,0.00,23132,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem_2__014.smt2,B1,sat,sat,0,False,0.01,0.01,23328,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem_2__014.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23124,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem_2__014.smt2,B2,sat,sat,0,False,0.01,0.01,23256,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__011.smt2,B0,unsat,unsat,0,False,0.02,0.00,22464,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__011.smt2,B1,unsat,unsat,0,False,0.01,0.01,22544,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__011.smt2,B1+C2,unsat,unsat,0,False,0.01,0.01,22452,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__011.smt2,B2,unsat,unsat,0,False,0.01,0.01,22536,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__019.smt2,B0,sat,sat,0,False,0.01,0.01,22596,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__019.smt2,B1,sat,sat,0,False,0.01,0.01,23300,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__019.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23168,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__019.smt2,B2,sat,sat,0,False,0.01,0.00,22932,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__035.smt2,B0,unsat,unsat,0,False,0.01,0.00,23092,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__035.smt2,B1,unsat,unsat,0,False,0.01,0.00,22828,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__035.smt2,B1+C2,unsat,unsat,0,False,0.01,0.01,23272,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/10-vars/problem__035.smt2,B2,unsat,unsat,0,False,0.01,0.00,23076,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/15-vars/problem_2__017.smt2,B0,sat,sat,0,False,0.51,0.50,24552,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/15-vars/problem_2__017.smt2,B1,sat,sat,0,False,0.04,0.03,23444,"{""calls"": 1, ""success"": 1, ""time"": 16}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/15-vars/problem_2__017.smt2,B1+C2,sat,sat,0,False,0.04,0.04,23256,"{""calls"": 1, ""success"": 1, ""time"": 16}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/15-vars/problem_2__017.smt2,B2,sat,sat,0,False,0.04,0.04,23628,"{""calls"": 1, ""success"": 1, ""time"": 16}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__009.smt2,B0,sat,sat,0,False,0.11,0.09,23576,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__009.smt2,B1,sat,sat,0,False,0.03,0.03,23044,"{""calls"": 1, ""success"": 1, ""time"": 8}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__009.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23112,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__009.smt2,B2,sat,sat,0,False,0.03,0.02,23512,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__016.smt2,B0,unsat,unsat,0,False,0.08,0.06,23240,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__016.smt2,B1,unsat,unsat,0,False,0.05,0.05,22860,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__016.smt2,B1+C2,unsat,unsat,0,False,0.06,0.05,23384,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__016.smt2,B2,unsat,unsat,0,False,0.05,0.05,23276,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__029.smt2,B0,unsat,unsat,0,False,0.08,0.08,23648,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__029.smt2,B1,unsat,unsat,0,False,0.08,0.08,23216,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__029.smt2,B1+C2,unsat,unsat,0,False,0.08,0.08,22952,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/20-vars/problem__029.smt2,B2,unsat,unsat,0,False,0.08,0.08,23260,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/25-vars/problem_2__021.smt2,B0,sat,sat,0,False,4.20,4.20,25472,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/25-vars/problem_2__021.smt2,B1,sat,sat,0,False,0.08,0.08,23812,"{""calls"": 1, ""success"": 1, ""time"": 30}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/25-vars/problem_2__021.smt2,B1+C2,sat,sat,0,False,0.08,0.07,23688,"{""calls"": 1, ""success"": 1, ""time"": 33}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/25-vars/problem_2__021.smt2,B2,sat,sat,0,False,0.08,0.08,23828,"{""calls"": 1, ""success"": 1, ""time"": 32}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/25-vars/problem_2__032.smt2,B0,sat,sat,0,False,0.56,0.56,25164,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/25-vars/problem_2__032.smt2,B1,sat,sat,0,False,0.21,0.21,23900,"{""calls"": 1, ""success"": 1, ""time"": 64}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/25-vars/problem_2__032.smt2,B1+C2,sat,sat,0,False,0.22,0.21,23664,"{""calls"": 1, ""success"": 1, ""time"": 66}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/25-vars/problem_2__032.smt2,B2,sat,sat,0,False,0.28,0.27,23936,"{""calls"": 1, ""success"": 1, ""time"": 116}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/30-vars/problem_2__015.smt2,B0,sat,sat,0,False,0.66,0.61,25784,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/30-vars/problem_2__015.smt2,B1,sat,sat,0,False,0.04,0.04,23820,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/30-vars/problem_2__015.smt2,B1+C2,sat,sat,0,False,0.04,0.04,23636,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/30-vars/problem_2__015.smt2,B2,sat,sat,0,False,0.04,0.04,23744,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__008.smt2,B0,sat,sat,0,False,0.57,0.54,26324,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__008.smt2,B1,sat,sat,0,False,0.03,0.03,23676,"{""calls"": 1, ""success"": 1, ""time"": 10}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__008.smt2,B1+C2,sat,sat,0,False,0.04,0.03,23604,"{""calls"": 1, ""success"": 1, ""time"": 10}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__008.smt2,B2,sat,sat,0,False,0.03,0.02,23484,"{""calls"": 1, ""success"": 1, ""time"": 10}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__010.smt2,B0,sat,sat,0,False,0.39,0.39,25620,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__010.smt2,B1,sat,sat,0,False,0.04,0.04,23412,"{""calls"": 1, ""success"": 1, ""time"": 11}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__010.smt2,B1+C2,sat,sat,0,False,0.04,0.04,23640,"{""calls"": 1, ""success"": 1, ""time"": 11}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__010.smt2,B2,sat,sat,0,False,0.04,0.04,23656,"{""calls"": 1, ""success"": 1, ""time"": 11}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__019.smt2,B0,sat,sat,0,False,2.53,2.51,25808,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__019.smt2,B1,sat,sat,0,False,0.05,0.04,23792,"{""calls"": 1, ""success"": 1, ""time"": 22}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__019.smt2,B1+C2,sat,sat,0,False,0.05,0.05,23680,"{""calls"": 1, ""success"": 1, ""time"": 23}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem_2__019.smt2,B2,sat,sat,0,False,0.10,0.10,23556,"{""calls"": 1, ""success"": 1, ""time"": 40}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem__017.smt2,B0,sat,sat,0,False,0.44,0.44,25432,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem__017.smt2,B1,sat,sat,0,False,0.07,0.06,23876,"{""calls"": 1, ""success"": 1, ""time"": 25}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem__017.smt2,B1+C2,sat,sat,0,False,0.07,0.07,23728,"{""calls"": 1, ""success"": 1, ""time"": 25}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem__017.smt2,B2,sat,sat,0,False,0.06,0.06,23972,"{""calls"": 1, ""success"": 1, ""time"": 25}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem__028.smt2,B0,sat,sat,0,False,0.77,0.76,25496,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem__028.smt2,B1,sat,sat,0,False,0.11,0.11,24064,"{""calls"": 1, ""success"": 1, ""time"": 41}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem__028.smt2,B1+C2,sat,sat,0,False,0.11,0.11,23828,"{""calls"": 1, ""success"": 1, ""time"": 40}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/35-vars/problem__028.smt2,B2,sat,sat,0,False,0.11,0.11,24168,"{""calls"": 1, ""success"": 1, ""time"": 40}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__006.smt2,B0,sat,sat,0,False,0.62,0.60,25888,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__006.smt2,B1,sat,sat,0,False,0.04,0.04,23864,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__006.smt2,B1+C2,sat,sat,0,False,0.04,0.04,23732,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__006.smt2,B2,sat,sat,0,False,0.04,0.03,23860,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__010.smt2,B0,sat,sat,0,False,0.50,0.49,25848,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__010.smt2,B1,sat,sat,0,False,0.03,0.03,23276,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__010.smt2,B1+C2,sat,sat,0,False,0.04,0.04,23488,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__010.smt2,B2,sat,sat,0,False,0.04,0.03,23668,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__033.smt2,B0,sat,sat,0,False,3.97,3.96,26488,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__033.smt2,B1,sat,sat,0,False,0.17,0.16,24044,"{""calls"": 1, ""success"": 1, ""time"": 99}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__033.smt2,B1+C2,sat,sat,0,False,0.14,0.13,24428,"{""calls"": 1, ""success"": 1, ""time"": 84}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem_2__033.smt2,B2,sat,sat,0,False,0.15,0.15,24456,"{""calls"": 1, ""success"": 1, ""time"": 86}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem__014.smt2,B0,sat,sat,0,False,0.52,0.52,25436,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem__014.smt2,B1,sat,sat,0,False,0.05,0.05,23832,"{""calls"": 1, ""success"": 1, ""time"": 19}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem__014.smt2,B1+C2,sat,sat,0,False,0.05,0.05,23904,"{""calls"": 1, ""success"": 1, ""time"": 19}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem__014.smt2,B2,sat,sat,0,False,0.05,0.05,23508,"{""calls"": 1, ""success"": 1, ""time"": 19}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem__022.smt2,B0,sat,sat,0,False,2.26,2.26,26160,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem__022.smt2,B1,sat,sat,0,False,0.10,0.10,24084,"{""calls"": 1, ""success"": 1, ""time"": 39}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem__022.smt2,B1+C2,sat,sat,0,False,0.10,0.10,23864,"{""calls"": 1, ""success"": 1, ""time"": 37}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/40-vars/problem__022.smt2,B2,sat,sat,0,False,0.10,0.09,23980,"{""calls"": 1, ""success"": 1, ""time"": 37}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem_2__020.smt2,B0,sat,sat,0,False,0.89,0.87,25824,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem_2__020.smt2,B1,sat,sat,0,False,0.07,0.06,23968,"{""calls"": 1, ""success"": 1, ""time"": 25}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem_2__020.smt2,B1+C2,sat,sat,0,False,0.07,0.06,24096,"{""calls"": 1, ""success"": 1, ""time"": 26}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem_2__020.smt2,B2,sat,sat,0,False,0.07,0.07,23996,"{""calls"": 1, ""success"": 1, ""time"": 26}"
+20180326-Bromberger,QF_LIA/20180326-Bromberger/unbd-sage/unbd100v110c/unbd-sage12.smt2,B2,none,sat,137,True,60.00,0.00,1840,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem_2__034.smt2,B1,sat,sat,0,False,0.15,0.15,24468,"{""calls"": 1, ""success"": 1, ""time"": 73}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem_2__034.smt2,B1+C2,sat,sat,0,False,0.15,0.14,24356,"{""calls"": 1, ""success"": 1, ""time"": 76}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem_2__034.smt2,B2,sat,sat,0,False,0.16,0.16,24492,"{""calls"": 1, ""success"": 1, ""time"": 82}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem_2__034.smt2,B0,sat,sat,0,False,1.36,1.33,26444,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem__027.smt2,B1,sat,sat,0,False,0.13,0.13,24440,"{""calls"": 1, ""success"": 1, ""time"": 51}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem__027.smt2,B1+C2,sat,sat,0,False,0.13,0.13,24332,"{""calls"": 1, ""success"": 1, ""time"": 50}"
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem__027.smt2,B2,sat,sat,0,False,0.18,0.18,24440,"{""calls"": 1, ""success"": 1, ""time"": 89}"
+dillig,QF_LIA/dillig/10-15.smt2,B0,sat,sat,0,False,0.04,0.01,23000,{}
+CAV_2009_benchmarks,QF_LIA/CAV_2009_benchmarks/smt/45-vars/problem__027.smt2,B0,sat,sat,0,False,1.28,1.28,25736,{}
+dillig,QF_LIA/dillig/10-15.smt2,B1,sat,sat,0,False,0.01,0.01,22820,{}
+dillig,QF_LIA/dillig/10-15.smt2,B1+C2,sat,sat,0,False,0.01,0.01,22924,{}
+dillig,QF_LIA/dillig/10-15.smt2,B2,sat,sat,0,False,0.01,0.01,22928,{}
+dillig,QF_LIA/dillig/10-34.smt2,B1,sat,sat,0,False,0.04,0.02,22768,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+dillig,QF_LIA/dillig/10-34.smt2,B0,sat,sat,0,False,0.05,0.01,23116,{}
+dillig,QF_LIA/dillig/10-34.smt2,B1+C2,sat,sat,0,False,0.01,0.00,22708,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+dillig,QF_LIA/dillig/10-34.smt2,B2,sat,sat,0,False,0.01,0.01,22972,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+dillig,QF_LIA/dillig/15-1.smt2,B0,sat,sat,0,False,0.03,0.03,22908,{}
+dillig,QF_LIA/dillig/15-1.smt2,B1,sat,sat,0,False,0.03,0.01,22964,{}
+dillig,QF_LIA/dillig/15-1.smt2,B1+C2,sat,sat,0,False,0.01,0.00,23096,{}
+dillig,QF_LIA/dillig/15-1.smt2,B2,sat,sat,0,False,0.01,0.01,23224,{}
+dillig,QF_LIA/dillig/15-18.smt2,B1,sat,sat,0,False,0.04,0.02,22824,"{""calls"": 1, ""success"": 1, ""time"": 9}"
+dillig,QF_LIA/dillig/15-18.smt2,B0,sat,sat,0,False,0.06,0.03,23168,{}
+dillig,QF_LIA/dillig/15-18.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23288,"{""calls"": 1, ""success"": 1, ""time"": 9}"
+dillig,QF_LIA/dillig/15-18.smt2,B2,sat,sat,0,False,0.03,0.02,23500,"{""calls"": 1, ""success"": 1, ""time"": 9}"
+dillig,QF_LIA/dillig/15-4.smt2,B1,sat,sat,0,False,0.02,0.01,22664,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+dillig,QF_LIA/dillig/15-4.smt2,B0,sat,sat,0,False,0.05,0.03,23096,{}
+dillig,QF_LIA/dillig/15-4.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23124,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+dillig,QF_LIA/dillig/15-4.smt2,B2,sat,sat,0,False,0.01,0.01,23288,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+dillig,QF_LIA/dillig/15-8.smt2,B0,sat,sat,0,False,0.02,0.01,23040,{}
+dillig,QF_LIA/dillig/15-8.smt2,B1,sat,sat,0,False,0.01,0.01,22996,{}
+dillig,QF_LIA/dillig/15-8.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23076,{}
+dillig,QF_LIA/dillig/15-8.smt2,B2,sat,sat,0,False,0.01,0.00,23044,{}
+dillig,QF_LIA/dillig/20-3.smt2,B1,sat,sat,0,False,0.02,0.02,23396,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+dillig,QF_LIA/dillig/20-3.smt2,B1+C2,sat,sat,0,False,0.02,0.02,23328,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+dillig,QF_LIA/dillig/20-3.smt2,B0,sat,sat,0,False,0.07,0.07,23700,{}
+dillig,QF_LIA/dillig/20-3.smt2,B2,sat,sat,0,False,0.02,0.02,23260,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+dillig,QF_LIA/dillig/25-13.smt2,B1,sat,sat,0,False,0.03,0.03,23908,"{""calls"": 1, ""success"": 1, ""time"": 9}"
+dillig,QF_LIA/dillig/25-13.smt2,B1+C2,sat,sat,0,False,0.04,0.03,23732,"{""calls"": 1, ""success"": 1, ""time"": 10}"
+dillig,QF_LIA/dillig/25-13.smt2,B2,sat,sat,0,False,0.04,0.03,23836,"{""calls"": 1, ""success"": 1, ""time"": 10}"
+dillig,QF_LIA/dillig/25-13.smt2,B0,sat,sat,0,False,0.15,0.15,24628,{}
+dillig,QF_LIA/dillig/25-16.smt2,B1,sat,sat,0,False,0.06,0.06,23372,"{""calls"": 1, ""success"": 1, ""time"": 24}"
+dillig,QF_LIA/dillig/25-16.smt2,B1+C2,sat,sat,0,False,0.08,0.08,23832,"{""calls"": 1, ""success"": 1, ""time"": 35}"
+dillig,QF_LIA/dillig/25-16.smt2,B2,sat,sat,0,False,0.06,0.06,23780,"{""calls"": 1, ""success"": 1, ""time"": 24}"
+dillig,QF_LIA/dillig/25-16.smt2,B0,sat,sat,0,False,0.24,0.23,25148,{}
+dillig,QF_LIA/dillig/30-12.smt2,B1,sat,sat,0,False,0.05,0.04,23396,"{""calls"": 1, ""success"": 1, ""time"": 16}"
+dillig,QF_LIA/dillig/30-12.smt2,B1+C2,sat,sat,0,False,0.05,0.05,23748,"{""calls"": 1, ""success"": 1, ""time"": 16}"
+dillig,QF_LIA/dillig/30-12.smt2,B2,sat,sat,0,False,0.05,0.05,23336,"{""calls"": 1, ""success"": 1, ""time"": 16}"
+dillig,QF_LIA/dillig/30-12.smt2,B0,sat,sat,0,False,0.35,0.35,25800,{}
+dillig,QF_LIA/dillig/30-14.smt2,B1,sat,sat,0,False,0.04,0.04,24012,"{""calls"": 1, ""success"": 1, ""time"": 15}"
+dillig,QF_LIA/dillig/30-14.smt2,B1+C2,sat,sat,0,False,0.04,0.04,23556,"{""calls"": 1, ""success"": 1, ""time"": 15}"
+dillig,QF_LIA/dillig/30-14.smt2,B2,sat,sat,0,False,0.04,0.03,23864,"{""calls"": 1, ""success"": 1, ""time"": 15}"
+dillig,QF_LIA/dillig/30-14.smt2,B0,sat,sat,0,False,0.36,0.36,25660,{}
+dillig,QF_LIA/dillig/30-24.smt2,B1,sat,sat,0,False,0.08,0.08,24096,"{""calls"": 1, ""success"": 1, ""time"": 26}"
+dillig,QF_LIA/dillig/30-24.smt2,B1+C2,sat,sat,0,False,0.08,0.08,24064,"{""calls"": 1, ""success"": 1, ""time"": 25}"
+dillig,QF_LIA/dillig/30-24.smt2,B2,sat,sat,0,False,0.08,0.08,23664,"{""calls"": 1, ""success"": 1, ""time"": 25}"
+dillig,QF_LIA/dillig/30-24.smt2,B0,sat,sat,0,False,0.40,0.40,25516,{}
+dillig,QF_LIA/dillig/30-28.smt2,B1,sat,sat,0,False,0.15,0.15,24244,"{""calls"": 1, ""success"": 1, ""time"": 79}"
+dillig,QF_LIA/dillig/30-28.smt2,B1+C2,sat,sat,0,False,0.15,0.15,24180,"{""calls"": 1, ""success"": 1, ""time"": 79}"
+dillig,QF_LIA/dillig/30-28.smt2,B2,sat,sat,0,False,0.15,0.15,23868,"{""calls"": 1, ""success"": 1, ""time"": 79}"
+dillig,QF_LIA/dillig/30-29.smt2,B0,sat,sat,0,False,0.42,0.41,25884,{}
+dillig,QF_LIA/dillig/30-29.smt2,B1,sat,sat,0,False,0.09,0.09,23884,"{""calls"": 1, ""success"": 1, ""time"": 35}"
+dillig,QF_LIA/dillig/30-29.smt2,B1+C2,sat,sat,0,False,0.08,0.08,24060,"{""calls"": 1, ""success"": 1, ""time"": 35}"
+dillig,QF_LIA/dillig/30-29.smt2,B2,sat,sat,0,False,0.08,0.08,24196,"{""calls"": 1, ""success"": 1, ""time"": 34}"
+dillig,QF_LIA/dillig/30-34.smt2,B0,sat,sat,0,False,0.47,0.47,26052,{}
+dillig,QF_LIA/dillig/30-34.smt2,B1,sat,sat,0,False,0.19,0.19,24300,"{""calls"": 1, ""success"": 1, ""time"": 45}"
+dillig,QF_LIA/dillig/30-34.smt2,B1+C2,sat,sat,0,False,0.19,0.19,24240,"{""calls"": 1, ""success"": 1, ""time"": 45}"
+dillig,QF_LIA/dillig/30-34.smt2,B2,sat,sat,0,False,0.19,0.18,24576,"{""calls"": 1, ""success"": 1, ""time"": 43}"
+dillig,QF_LIA/dillig/30-6.smt2,B0,sat,sat,0,False,0.27,0.22,25368,{}
+dillig,QF_LIA/dillig/30-6.smt2,B1,sat,sat,0,False,0.03,0.02,23696,"{""calls"": 1, ""success"": 1, ""time"": 8}"
+dillig,QF_LIA/dillig/30-6.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23732,"{""calls"": 1, ""success"": 1, ""time"": 8}"
+dillig,QF_LIA/dillig/30-6.smt2,B2,sat,sat,0,False,0.03,0.03,23684,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+dillig,QF_LIA/dillig/30-8.smt2,B0,sat,sat,0,False,0.28,0.27,25428,{}
+dillig,QF_LIA/dillig/30-8.smt2,B1,sat,sat,0,False,0.04,0.04,23252,"{""calls"": 1, ""success"": 1, ""time"": 10}"
+dillig,QF_LIA/dillig/30-8.smt2,B1+C2,sat,sat,0,False,0.04,0.04,23524,"{""calls"": 1, ""success"": 1, ""time"": 10}"
+dillig,QF_LIA/dillig/30-8.smt2,B2,sat,sat,0,False,0.04,0.04,23496,"{""calls"": 1, ""success"": 1, ""time"": 10}"
+dillig,QF_LIA/dillig/35-25.smt2,B0,sat,sat,0,False,1.03,1.02,25848,{}
+dillig,QF_LIA/dillig/35-25.smt2,B1,sat,sat,0,False,0.08,0.08,24260,"{""calls"": 1, ""success"": 1, ""time"": 30}"
+dillig,QF_LIA/dillig/35-25.smt2,B1+C2,sat,sat,0,False,0.08,0.08,24216,"{""calls"": 1, ""success"": 1, ""time"": 29}"
+dillig,QF_LIA/dillig/35-25.smt2,B2,sat,sat,0,False,0.08,0.08,24204,"{""calls"": 1, ""success"": 1, ""time"": 29}"
+dillig,QF_LIA/dillig/35-34.smt2,B0,sat,sat,0,False,1.47,1.47,26196,{}
+dillig,QF_LIA/dillig/35-34.smt2,B1,sat,sat,0,False,0.18,0.18,24564,"{""calls"": 1, ""success"": 1, ""time"": 98}"
+dillig,QF_LIA/dillig/35-34.smt2,B1+C2,sat,sat,0,False,0.18,0.18,24636,"{""calls"": 1, ""success"": 1, ""time"": 98}"
+dillig,QF_LIA/dillig/35-34.smt2,B2,sat,sat,0,False,0.18,0.18,24116,"{""calls"": 1, ""success"": 1, ""time"": 98}"
+dillig,QF_LIA/dillig/40-12.smt2,B0,sat,sat,0,False,0.88,0.84,26044,{}
+dillig,QF_LIA/dillig/40-12.smt2,B1,sat,sat,0,False,0.06,0.06,24268,"{""calls"": 1, ""success"": 1, ""time"": 17}"
+dillig,QF_LIA/dillig/40-12.smt2,B1+C2,sat,sat,0,False,0.06,0.06,24080,"{""calls"": 1, ""success"": 1, ""time"": 17}"
+dillig,QF_LIA/dillig/40-12.smt2,B2,sat,sat,0,False,0.06,0.06,24028,"{""calls"": 1, ""success"": 1, ""time"": 17}"
+dillig,QF_LIA/dillig/40-23.smt2,B0,sat,sat,0,False,1.82,1.82,26160,{}
+dillig,QF_LIA/dillig/40-23.smt2,B1,sat,sat,0,False,0.10,0.10,24348,"{""calls"": 1, ""success"": 1, ""time"": 35}"
+dillig,QF_LIA/dillig/40-23.smt2,B1+C2,sat,sat,0,False,0.10,0.09,24456,"{""calls"": 1, ""success"": 1, ""time"": 34}"
+dillig,QF_LIA/dillig/40-23.smt2,B2,sat,sat,0,False,0.10,0.10,24580,"{""calls"": 1, ""success"": 1, ""time"": 34}"
+dillig,QF_LIA/dillig/40-29.smt2,B0,sat,sat,0,False,3.60,3.60,27820,{}
+dillig,QF_LIA/dillig/40-29.smt2,B1,sat,sat,0,False,0.12,0.12,24444,"{""calls"": 1, ""success"": 1, ""time"": 47}"
+dillig,QF_LIA/dillig/40-29.smt2,B1+C2,sat,sat,0,False,0.16,0.16,24368,"{""calls"": 1, ""success"": 1, ""time"": 87}"
+dillig,QF_LIA/dillig/40-29.smt2,B2,sat,sat,0,False,0.11,0.11,24532,"{""calls"": 1, ""success"": 1, ""time"": 46}"
+dillig,QF_LIA/dillig/40-6.smt2,B0,sat,sat,0,False,0.55,0.54,25716,{}
+dillig,QF_LIA/dillig/40-6.smt2,B1,sat,sat,0,False,0.04,0.04,23824,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+dillig,QF_LIA/dillig/40-6.smt2,B1+C2,sat,sat,0,False,0.04,0.03,23832,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+dillig,QF_LIA/dillig/40-6.smt2,B2,sat,sat,0,False,0.04,0.04,23852,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+dillig,QF_LIA/dillig/40-7.smt2,B0,sat,sat,0,False,0.52,0.52,25896,{}
+dillig,QF_LIA/dillig/40-7.smt2,B1,sat,sat,0,False,0.04,0.04,23868,"{""calls"": 1, ""success"": 1, ""time"": 13}"
+dillig,QF_LIA/dillig/40-7.smt2,B1+C2,sat,sat,0,False,0.05,0.04,23584,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+dillig,QF_LIA/dillig/40-7.smt2,B2,sat,sat,0,False,0.05,0.04,24116,"{""calls"": 1, ""success"": 1, ""time"": 13}"
+dillig,QF_LIA/dillig/40-8.smt2,B0,sat,sat,0,False,0.86,0.86,26464,{}
+dillig,QF_LIA/dillig/40-8.smt2,B1,sat,sat,0,False,0.04,0.03,23860,"{""calls"": 1, ""success"": 1, ""time"": 11}"
+dillig,QF_LIA/dillig/40-8.smt2,B1+C2,sat,sat,0,False,0.04,0.04,24132,"{""calls"": 1, ""success"": 1, ""time"": 11}"
+dillig,QF_LIA/dillig/40-8.smt2,B2,sat,sat,0,False,0.04,0.04,23776,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+dillig,QF_LIA/dillig/45-12.smt2,B0,sat,sat,0,False,0.73,0.70,25756,{}
+dillig,QF_LIA/dillig/45-12.smt2,B1,sat,sat,0,False,0.05,0.05,24012,"{""calls"": 1, ""success"": 1, ""time"": 19}"
+dillig,QF_LIA/dillig/45-12.smt2,B1+C2,sat,sat,0,False,0.05,0.05,24276,"{""calls"": 1, ""success"": 1, ""time"": 18}"
+dillig,QF_LIA/dillig/45-12.smt2,B2,sat,sat,0,False,0.05,0.05,23972,"{""calls"": 1, ""success"": 1, ""time"": 18}"
+dillig,QF_LIA/dillig/45-16.smt2,B0,sat,sat,0,False,1.14,1.14,25824,{}
+dillig,QF_LIA/dillig/45-16.smt2,B1,sat,sat,0,False,0.08,0.08,24276,"{""calls"": 1, ""success"": 1, ""time"": 29}"
+dillig,QF_LIA/dillig/45-16.smt2,B1+C2,sat,sat,0,False,0.08,0.08,24348,"{""calls"": 1, ""success"": 1, ""time"": 29}"
+dillig,QF_LIA/dillig/45-16.smt2,B2,sat,sat,0,False,0.08,0.07,24480,"{""calls"": 1, ""success"": 1, ""time"": 29}"
+dillig,QF_LIA/dillig/45-23.smt2,B0,sat,sat,0,False,1.89,1.89,26220,{}
+dillig,QF_LIA/dillig/45-23.smt2,B1,sat,sat,0,False,0.08,0.08,24464,"{""calls"": 1, ""success"": 1, ""time"": 31}"
+dillig,QF_LIA/dillig/45-23.smt2,B1+C2,sat,sat,0,False,0.08,0.08,24508,"{""calls"": 1, ""success"": 1, ""time"": 32}"
+dillig,QF_LIA/dillig/45-23.smt2,B2,sat,sat,0,False,0.08,0.08,24468,"{""calls"": 1, ""success"": 1, ""time"": 32}"
+dillig,QF_LIA/dillig/45-26.smt2,B0,sat,sat,0,False,9.08,9.08,27220,{}
+dillig,QF_LIA/dillig/45-26.smt2,B1,sat,sat,0,False,0.13,0.12,24684,"{""calls"": 1, ""success"": 1, ""time"": 48}"
+dillig,QF_LIA/dillig/45-26.smt2,B1+C2,sat,sat,0,False,0.13,0.13,24492,"{""calls"": 1, ""success"": 1, ""time"": 48}"
+dillig,QF_LIA/dillig/45-26.smt2,B2,sat,sat,0,False,0.13,0.13,24748,"{""calls"": 1, ""success"": 1, ""time"": 50}"
+dillig,QF_LIA/dillig/45-5.smt2,B0,sat,sat,0,False,0.61,0.61,26200,{}
+dillig,QF_LIA/dillig/45-5.smt2,B1,sat,sat,0,False,0.03,0.03,23796,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+dillig,QF_LIA/dillig/45-5.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23828,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+dillig,QF_LIA/dillig/45-5.smt2,B2,sat,sat,0,False,0.03,0.03,23652,"{""calls"": 1, ""success"": 1, ""time"": 7}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_10.smt2,B0,sat,sat,0,False,0.05,0.05,24000,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_10.smt2,B1,sat,sat,0,False,0.01,0.00,23440,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_10.smt2,B1+C2,sat,sat,0,False,0.01,0.00,23152,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_10.smt2,B2,sat,sat,0,False,0.01,0.01,23008,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_13.smt2,B0,sat,sat,0,False,0.04,0.03,23480,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_13.smt2,B1,sat,sat,0,False,0.02,0.01,23284,"{""calls"": 1, ""success"": 1, ""time"": 2}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_13.smt2,B1+C2,sat,sat,0,False,0.02,0.02,23320,"{""calls"": 1, ""success"": 1, ""time"": 2}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_13.smt2,B2,sat,sat,0,False,0.02,0.02,23316,"{""calls"": 1, ""success"": 1, ""time"": 2}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_14.smt2,B0,sat,sat,0,False,0.04,0.04,23716,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_14.smt2,B1,sat,sat,0,False,0.02,0.02,23528,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_14.smt2,B1+C2,sat,sat,0,False,0.02,0.01,23000,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_14.smt2,B2,sat,sat,0,False,0.02,0.01,23272,"{""calls"": 1, ""success"": 1, ""time"": 2}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_15.smt2,B0,sat,sat,0,False,0.07,0.06,24400,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_15.smt2,B1,sat,sat,0,False,0.02,0.02,23524,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_15.smt2,B1+C2,sat,sat,0,False,0.02,0.02,23488,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_15.smt2,B2,sat,sat,0,False,0.02,0.02,23604,"{""calls"": 1, ""success"": 1, ""time"": 3}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_16.smt2,B0,sat,sat,0,False,0.07,0.07,24364,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_16.smt2,B1,sat,sat,0,False,0.02,0.02,23140,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_16.smt2,B1+C2,sat,sat,0,False,0.02,0.02,23472,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_16.smt2,B2,sat,sat,0,False,0.02,0.02,23664,"{""calls"": 1, ""success"": 1, ""time"": 4}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_17.smt2,B0,sat,sat,0,False,0.11,0.11,24864,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_17.smt2,B1,sat,sat,0,False,0.03,0.03,23660,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_17.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23600,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_17.smt2,B2,sat,sat,0,False,0.03,0.03,23628,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_18.smt2,B0,sat,sat,0,False,0.10,0.10,24628,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_18.smt2,B1,sat,sat,0,False,0.03,0.02,23732,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_18.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23828,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_18.smt2,B2,sat,sat,0,False,0.03,0.03,23576,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_2.smt2,B0,sat,sat,0,False,0.01,0.01,22592,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_2.smt2,B1,sat,sat,0,False,0.01,0.01,23108,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_2.smt2,B1+C2,sat,sat,0,False,0.01,0.01,22868,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_2.smt2,B2,sat,sat,0,False,0.01,0.01,22824,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_20.smt2,B0,sat,sat,0,False,0.23,0.23,25376,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_20.smt2,B1,sat,sat,0,False,0.03,0.03,23952,"{""calls"": 1, ""success"": 1, ""time"": 6}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_20.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23344,"{""calls"": 1, ""success"": 1, ""time"": 6}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_20.smt2,B2,sat,sat,0,False,0.03,0.03,23828,"{""calls"": 1, ""success"": 1, ""time"": 6}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_3.smt2,B0,sat,sat,0,False,0.01,0.00,23308,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_3.smt2,B1,sat,sat,0,False,0.01,0.01,23052,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_3.smt2,B1+C2,sat,sat,0,False,0.01,0.00,23040,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_3.smt2,B2,sat,sat,0,False,0.01,0.01,23000,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_4.smt2,B0,sat,sat,0,False,0.01,0.01,23216,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_4.smt2,B1,sat,sat,0,False,0.01,0.01,22488,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_4.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23052,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_4.smt2,B2,sat,sat,0,False,0.01,0.01,22972,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_5.smt2,B0,sat,sat,0,False,0.03,0.03,23556,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_5.smt2,B1,sat,sat,0,False,0.01,0.01,23096,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_5.smt2,B1+C2,sat,sat,0,False,0.01,0.00,22808,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_5.smt2,B2,sat,sat,0,False,0.01,0.01,23132,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_6.smt2,B0,sat,sat,0,False,0.02,0.02,23436,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_6.smt2,B1,sat,sat,0,False,0.02,0.01,23208,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_6.smt2,B1+C2,sat,sat,0,False,0.01,0.01,22916,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_6.smt2,B2,sat,sat,0,False,0.01,0.01,22964,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_7.smt2,B0,sat,sat,0,False,0.02,0.01,23292,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_7.smt2,B1,sat,sat,0,False,0.01,0.00,22680,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_7.smt2,B1+C2,sat,sat,0,False,0.01,0.01,22908,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_7.smt2,B2,sat,sat,0,False,0.01,0.00,23008,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_8.smt2,B0,sat,sat,0,False,0.03,0.03,23648,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_8.smt2,B1,sat,sat,0,False,0.01,0.01,23196,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_8.smt2,B1+C2,sat,sat,0,False,0.01,0.00,23132,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_8.smt2,B2,sat,sat,0,False,0.01,0.01,23088,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_9.smt2,B0,sat,sat,0,False,0.02,0.01,23464,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_9.smt2,B1,sat,sat,0,False,0.01,0.00,23172,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_9.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23168,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_sat_9.smt2,B2,sat,sat,0,False,0.01,0.01,22780,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_10.smt2,B0,unsat,unsat,0,False,0.06,0.06,24164,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_10.smt2,B1,unsat,unsat,0,False,0.08,0.07,24188,"{""calls"": 23, ""shiftedInfeasible"": 15, ""skippedEquality"": 8, ""time"": 18}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_10.smt2,B1+C2,unsat,unsat,0,False,0.09,0.08,24372,"{""calls"": 23, ""impliedEq::calls"": 15, ""impliedEq::rounds"": 15, ""impliedEq::time"": 15, ""shiftedInfeasible"": 15, ""skippedEquality"": 8, ""time"": 33}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_10.smt2,B2,unsat,unsat,0,False,0.11,0.11,24144,"{""calls"": 23, ""eqElim::calls"": 8, ""eqElim::equalities"": 8, ""eqElim::time"": 1, ""impliedEq::calls"": 23, ""impliedEq::rounds"": 23, ""impliedEq::time"": 21, ""shiftedInfeasible"": 23, ""time"": 49}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_11.smt2,B0,unsat,unsat,0,False,0.07,0.06,24140,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_11.smt2,B1,unsat,unsat,0,False,0.09,0.09,24544,"{""calls"": 22, ""shiftedInfeasible"": 14, ""skippedEquality"": 8, ""time"": 21}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_11.smt2,B1+C2,unsat,unsat,0,False,0.11,0.10,23868,"{""calls"": 22, ""impliedEq::calls"": 14, ""impliedEq::rounds"": 14, ""impliedEq::time"": 17, ""shiftedInfeasible"": 14, ""skippedEquality"": 8, ""time"": 39}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_11.smt2,B2,unsat,unsat,0,False,0.14,0.13,24544,"{""calls"": 22, ""eqElim::calls"": 9, ""eqElim::equalities"": 21, ""eqElim::infeasible"": 1, ""eqElim::time"": 2, ""impliedEq::calls"": 22, ""impliedEq::found"": 11, ""impliedEq::rounds"": 23, ""impliedEq::time"": 28, ""shiftedInfeasible"": 22, ""time"": 65}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_13.smt2,B0,unsat,unsat,0,False,0.09,0.08,24272,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_13.smt2,B1,unsat,unsat,0,False,0.12,0.12,24344,"{""calls"": 27, ""shiftedInfeasible"": 17, ""skippedEquality"": 10, ""time"": 36}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_13.smt2,B1+C2,unsat,unsat,0,False,0.15,0.15,24256,"{""calls"": 27, ""impliedEq::calls"": 17, ""impliedEq::rounds"": 17, ""impliedEq::time"": 32, ""shiftedInfeasible"": 17, ""skippedEquality"": 10, ""time"": 68}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_13.smt2,B2,unsat,unsat,0,False,0.20,0.19,24240,"{""calls"": 27, ""eqElim::calls"": 10, ""eqElim::equalities"": 15, ""eqElim::time"": 3, ""impliedEq::calls"": 27, ""impliedEq::rounds"": 27, ""impliedEq::time"": 49, ""shiftedInfeasible"": 27, ""time"": 109}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_14.smt2,B0,unsat,unsat,0,False,0.10,0.10,24388,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_14.smt2,B1,unsat,unsat,0,False,0.14,0.14,24876,"{""calls"": 25, ""shiftedInfeasible"": 17, ""skippedEquality"": 8, ""time"": 45}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_14.smt2,B1+C2,unsat,unsat,0,False,0.19,0.18,24588,"{""calls"": 25, ""impliedEq::calls"": 17, ""impliedEq::rounds"": 17, ""impliedEq::time"": 40, ""shiftedInfeasible"": 17, ""skippedEquality"": 8, ""time"": 86}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_14.smt2,B2,unsat,unsat,0,False,0.22,0.22,24620,"{""calls"": 25, ""eqElim::calls"": 8, ""eqElim::equalities"": 12, ""eqElim::time"": 3, ""impliedEq::calls"": 25, ""impliedEq::rounds"": 25, ""impliedEq::time"": 56, ""shiftedInfeasible"": 25, ""time"": 123}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_16.smt2,B0,unsat,unsat,0,False,0.11,0.11,24340,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_16.smt2,B1,unsat,unsat,0,False,0.14,0.14,24628,"{""calls"": 22, ""shiftedInfeasible"": 9, ""skippedEquality"": 13, ""time"": 33}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_16.smt2,B1+C2,unsat,unsat,0,False,0.22,0.22,24812,"{""calls"": 22, ""impliedEq::calls"": 9, ""impliedEq::rounds"": 9, ""impliedEq::time"": 42, ""shiftedInfeasible"": 9, ""skippedEquality"": 13, ""time"": 87}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_16.smt2,B2,unsat,unsat,0,False,0.26,0.26,24772,"{""calls"": 22, ""eqElim::calls"": 14, ""eqElim::equalities"": 29, ""eqElim::infeasible"": 1, ""eqElim::time"": 6, ""impliedEq::calls"": 22, ""impliedEq::found"": 15, ""impliedEq::rounds"": 23, ""impliedEq::time"": 65, ""shiftedInfeasible"": 22, ""time"": 149}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_17.smt2,B0,unsat,unsat,0,False,0.18,0.17,25212,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_17.smt2,B1,unsat,unsat,0,False,0.29,0.29,25340,"{""calls"": 37, ""shiftedInfeasible"": 22, ""skippedEquality"": 15, ""time"": 107}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_17.smt2,B1+C2,unsat,unsat,0,False,0.38,0.37,25056,"{""calls"": 37, ""impliedEq::calls"": 22, ""impliedEq::rounds"": 22, ""impliedEq::time"": 93, ""shiftedInfeasible"": 22, ""skippedEquality"": 15, ""time"": 201}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_17.smt2,B2,unsat,unsat,0,False,0.67,0.66,25172,"{""calls"": 37, ""eqElim::calls"": 17, ""eqElim::equalities"": 68, ""eqElim::infeasible"": 2, ""eqElim::time"": 17, ""impliedEq::calls"": 37, ""impliedEq::found"": 33, ""impliedEq::rounds"": 39, ""impliedEq::time"": 179, ""shiftedInfeasible"": 37, ""time"": 429}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_18.smt2,B0,unsat,unsat,0,False,0.14,0.13,24668,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_18.smt2,B1,unsat,unsat,0,False,0.27,0.27,24800,"{""calls"": 28, ""shiftedInfeasible"": 23, ""skippedEquality"": 5, ""time"": 120}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_18.smt2,B1+C2,unsat,unsat,0,False,0.38,0.38,25364,"{""calls"": 28, ""impliedEq::calls"": 23, ""impliedEq::rounds"": 23, ""impliedEq::time"": 100, ""shiftedInfeasible"": 23, ""skippedEquality"": 5, ""time"": 222}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_18.smt2,B2,unsat,unsat,0,False,0.43,0.42,25188,"{""calls"": 28, ""eqElim::calls"": 6, ""eqElim::equalities"": 24, ""eqElim::infeasible"": 1, ""eqElim::time"": 3, ""impliedEq::calls"": 28, ""impliedEq::found"": 17, ""impliedEq::rounds"": 29, ""impliedEq::time"": 118, ""shiftedInfeasible"": 28, ""time"": 267}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_19.smt2,B0,unsat,unsat,0,False,0.15,0.15,25020,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_19.smt2,B1,unsat,unsat,0,False,0.21,0.20,25028,"{""calls"": 27, ""shiftedInfeasible"": 12, ""skippedEquality"": 15, ""time"": 66}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_19.smt2,B1+C2,unsat,unsat,0,False,0.27,0.27,24916,"{""calls"": 27, ""impliedEq::calls"": 12, ""impliedEq::rounds"": 12, ""impliedEq::time"": 58, ""shiftedInfeasible"": 12, ""skippedEquality"": 15, ""time"": 124}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_19.smt2,B2,unsat,unsat,0,False,0.41,0.41,25132,"{""calls"": 27, ""eqElim::calls"": 17, ""eqElim::equalities"": 69, ""eqElim::infeasible"": 2, ""eqElim::time"": 10, ""impliedEq::calls"": 27, ""impliedEq::found"": 36, ""impliedEq::rounds"": 29, ""impliedEq::time"": 114, ""shiftedInfeasible"": 27, ""time"": 257}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_20.smt2,B0,unsat,unsat,0,False,0.20,0.19,25668,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_20.smt2,B1,unsat,unsat,0,False,0.33,0.33,25532,"{""calls"": 29, ""shiftedInfeasible"": 20, ""skippedEquality"": 9, ""time"": 134}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_20.smt2,B1+C2,unsat,unsat,0,False,0.44,0.44,25868,"{""calls"": 29, ""impliedEq::calls"": 20, ""impliedEq::rounds"": 20, ""impliedEq::time"": 108, ""shiftedInfeasible"": 20, ""skippedEquality"": 9, ""time"": 243}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_20.smt2,B2,unsat,unsat,0,False,0.54,0.54,25924,"{""calls"": 29, ""eqElim::calls"": 9, ""eqElim::equalities"": 15, ""eqElim::time"": 6, ""impliedEq::calls"": 29, ""impliedEq::rounds"": 29, ""impliedEq::time"": 148, ""shiftedInfeasible"": 29, ""time"": 342}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_3.smt2,B0,unsat,unsat,0,False,0.01,0.00,23480,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_3.smt2,B1,unsat,unsat,0,False,0.01,0.01,23148,"{""calls"": 9, ""shiftedInfeasible"": 8, ""skippedEquality"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_3.smt2,B1+C2,unsat,unsat,0,False,0.01,0.00,23196,"{""calls"": 9, ""impliedEq::calls"": 8, ""impliedEq::rounds"": 8, ""impliedEq::time"": 0, ""shiftedInfeasible"": 8, ""skippedEquality"": 1, ""time"": 1}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_3.smt2,B2,unsat,unsat,0,False,0.01,0.01,23228,"{""calls"": 9, ""eqElim::calls"": 2, ""eqElim::equalities"": 4, ""eqElim::infeasible"": 1, ""eqElim::time"": 0, ""impliedEq::calls"": 9, ""impliedEq::found"": 3, ""impliedEq::rounds"": 10, ""impliedEq::time"": 0, ""shiftedInfeasible"": 9, ""time"": 2}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_4.smt2,B0,unsat,unsat,0,False,0.02,0.01,23172,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_4.smt2,B1,unsat,unsat,0,False,0.02,0.02,23308,"{""calls"": 12, ""shiftedInfeasible"": 12, ""time"": 2}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_4.smt2,B1+C2,unsat,unsat,0,False,0.02,0.02,23456,"{""calls"": 12, ""impliedEq::calls"": 12, ""impliedEq::rounds"": 12, ""impliedEq::time"": 1, ""shiftedInfeasible"": 12, ""time"": 4}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_4.smt2,B2,unsat,unsat,0,False,0.02,0.02,23420,"{""calls"": 12, ""impliedEq::calls"": 12, ""impliedEq::rounds"": 12, ""impliedEq::time"": 1, ""shiftedInfeasible"": 12, ""time"": 4}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_5.smt2,B0,unsat,unsat,0,False,0.02,0.02,23608,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_5.smt2,B1,unsat,unsat,0,False,0.03,0.03,23492,"{""calls"": 16, ""shiftedInfeasible"": 9, ""skippedEquality"": 7, ""time"": 3}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_5.smt2,B1+C2,unsat,unsat,0,False,0.03,0.03,23536,"{""calls"": 16, ""impliedEq::calls"": 9, ""impliedEq::rounds"": 9, ""impliedEq::time"": 2, ""shiftedInfeasible"": 9, ""skippedEquality"": 7, ""time"": 5}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_5.smt2,B2,unsat,unsat,0,False,0.03,0.03,23760,"{""calls"": 16, ""eqElim::calls"": 9, ""eqElim::equalities"": 18, ""eqElim::infeasible"": 2, ""eqElim::time"": 0, ""impliedEq::calls"": 16, ""impliedEq::found"": 10, ""impliedEq::rounds"": 18, ""impliedEq::time"": 4, ""shiftedInfeasible"": 16, ""time"": 9}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_6.smt2,B0,unsat,unsat,0,False,0.03,0.03,23296,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_6.smt2,B1,unsat,unsat,0,False,0.03,0.02,23684,"{""calls"": 16, ""shiftedInfeasible"": 14, ""skippedEquality"": 2, ""time"": 6}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_6.smt2,B1+C2,unsat,unsat,0,False,0.04,0.04,23904,"{""calls"": 16, ""impliedEq::calls"": 14, ""impliedEq::rounds"": 14, ""impliedEq::time"": 4, ""shiftedInfeasible"": 14, ""skippedEquality"": 2, ""time"": 11}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_6.smt2,B2,unsat,unsat,0,False,0.04,0.04,23548,"{""calls"": 16, ""eqElim::calls"": 2, ""eqElim::equalities"": 3, ""eqElim::time"": 0, ""impliedEq::calls"": 16, ""impliedEq::rounds"": 16, ""impliedEq::time"": 5, ""shiftedInfeasible"": 16, ""time"": 14}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_9.smt2,B0,unsat,unsat,0,False,0.04,0.03,23820,{}
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_9.smt2,B1,unsat,unsat,0,False,0.06,0.06,23820,"{""calls"": 20, ""shiftedInfeasible"": 13, ""skippedEquality"": 7, ""time"": 13}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_9.smt2,B1+C2,unsat,unsat,0,False,0.07,0.07,24092,"{""calls"": 20, ""impliedEq::calls"": 13, ""impliedEq::rounds"": 13, ""impliedEq::time"": 10, ""shiftedInfeasible"": 13, ""skippedEquality"": 7, ""time"": 24}"
+prime-cone,QF_LIA/prime-cone/prime_cone_unsat_9.smt2,B2,unsat,unsat,0,False,0.08,0.08,23768,"{""calls"": 20, ""eqElim::calls"": 8, ""eqElim::equalities"": 17, ""eqElim::infeasible"": 1, ""eqElim::time"": 1, ""impliedEq::calls"": 20, ""impliedEq::found"": 8, ""impliedEq::rounds"": 21, ""impliedEq::time"": 15, ""shiftedInfeasible"": 20, ""time"": 35}"
+slacks,QF_LIA/slacks/10-12.slack.smt2,B0,sat,sat,0,False,0.03,0.01,23028,{}
+slacks,QF_LIA/slacks/10-12.slack.smt2,B1,sat,sat,0,False,0.01,0.01,23060,{}
+slacks,QF_LIA/slacks/10-12.slack.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23076,{}
+slacks,QF_LIA/slacks/10-12.slack.smt2,B2,sat,sat,0,False,0.01,0.01,23012,{}
+slacks,QF_LIA/slacks/10-31.slack.smt2,B0,sat,sat,0,False,0.03,0.03,23328,{}
+slacks,QF_LIA/slacks/10-31.slack.smt2,B1,sat,sat,0,False,0.01,0.01,22852,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+slacks,QF_LIA/slacks/10-31.slack.smt2,B1+C2,sat,sat,0,False,0.01,0.00,22856,"{""calls"": 1, ""success"": 1, ""time"": 1}"
+slacks,QF_LIA/slacks/10-31.slack.smt2,B2,sat,sat,0,False,0.01,0.01,23116,"{""calls"": 1, ""success"": 1, ""time"": 0}"
+slacks,QF_LIA/slacks/15-1.slack.smt2,B0,sat,sat,0,False,0.03,0.01,23276,{}
+slacks,QF_LIA/slacks/15-1.slack.smt2,B1,sat,sat,0,False,0.01,0.01,23384,{}
+slacks,QF_LIA/slacks/15-1.slack.smt2,B1+C2,sat,sat,0,False,0.01,0.01,23316,{}
+slacks,QF_LIA/slacks/15-1.slack.smt2,B2,sat,sat,0,False,0.01,0.01,23380,{}
+slacks,QF_LIA/slacks/15-18.slack.smt2,B0,sat,sat,0,False,0.03,0.02,23456,{}
+slacks,QF_LIA/slacks/15-18.slack.smt2,B1,sat,sat,0,False,0.02,0.01,23624,{}
+slacks,QF_LIA/slacks/15-18.slack.smt2,B1+C2,sat,sat,0,False,0.02,0.01,23344,{}
+slacks,QF_LIA/slacks/15-18.slack.smt2,B2,sat,sat,0,False,0.02,0.01,23348,{}
+slacks,QF_LIA/slacks/15-4.slack.smt2,B0,sat,sat,0,False,0.81,0.79,26160,{}
+slacks,QF_LIA/slacks/15-4.slack.smt2,B1,sat,sat,0,False,0.02,0.02,23504,"{""calls"": 1, ""success"": 1, ""time"": 2}"
+slacks,QF_LIA/slacks/15-4.slack.smt2,B1+C2,sat,sat,0,False,0.02,0.02,23420,"{""calls"": 1, ""success"": 1, ""time"": 2}"
+slacks,QF_LIA/slacks/15-4.slack.smt2,B2,sat,sat,0,False,0.02,0.01,23356,"{""calls"": 1, ""success"": 1, ""time"": 2}"
+slacks,QF_LIA/slacks/15-8.slack.smt2,B0,sat,sat,0,False,0.01,0.00,23232,{}
+slacks,QF_LIA/slacks/15-8.slack.smt2,B1,sat,sat,0,False,0.01,0.01,23296,{}
+slacks,QF_LIA/slacks/15-8.slack.smt2,B1+C2,sat,sat,0,False,0.01,0.00,22912,{}
+slacks,QF_LIA/slacks/15-8.slack.smt2,B2,sat,sat,0,False,0.01,0.01,23112,{}
+slacks,QF_LIA/slacks/20-3.slack.smt2,B0,sat,sat,0,False,0.25,0.24,24764,{}
+slacks,QF_LIA/slacks/20-3.slack.smt2,B1,sat,sat,0,False,0.03,0.01,23724,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+slacks,QF_LIA/slacks/20-3.slack.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23332,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+slacks,QF_LIA/slacks/20-3.slack.smt2,B2,sat,sat,0,False,0.03,0.02,23496,"{""calls"": 1, ""success"": 1, ""time"": 5}"
+slacks,QF_LIA/slacks/25-13.slack.smt2,B0,sat,sat,0,False,1.49,1.48,26256,{}
+slacks,QF_LIA/slacks/25-13.slack.smt2,B1,sat,sat,0,False,0.05,0.04,24128,"{""calls"": 1, ""success"": 1, ""time"": 24}"
+slacks,QF_LIA/slacks/25-13.slack.smt2,B1+C2,sat,sat,0,False,0.05,0.05,23776,"{""calls"": 1, ""success"": 1, ""time"": 24}"
+slacks,QF_LIA/slacks/25-13.slack.smt2,B2,sat,sat,0,False,0.05,0.05,24152,"{""calls"": 1, ""success"": 1, ""time"": 24}"
+slacks,QF_LIA/slacks/25-16.slack.smt2,B0,sat,sat,0,False,1.03,1.00,25920,{}
+slacks,QF_LIA/slacks/25-16.slack.smt2,B1,sat,sat,0,False,0.08,0.07,24200,"{""calls"": 1, ""success"": 1, ""time"": 30}"
+slacks,QF_LIA/slacks/25-16.slack.smt2,B1+C2,sat,sat,0,False,0.08,0.08,24160,"{""calls"": 1, ""success"": 1, ""time"": 30}"
+slacks,QF_LIA/slacks/25-16.slack.smt2,B2,sat,sat,0,False,0.08,0.07,24352,"{""calls"": 1, ""success"": 1, ""time"": 30}"
+dillig,QF_LIA/dillig/30-28.smt2,B0,sat,sat,0,False,47.96,47.95,27088,{}
+slacks,QF_LIA/slacks/30-12.slack.smt2,B1,sat,sat,0,False,0.06,0.05,23988,"{""calls"": 1, ""success"": 1, ""time"": 22}"
+slacks,QF_LIA/slacks/30-12.slack.smt2,B1+C2,sat,sat,0,False,0.06,0.06,24128,"{""calls"": 1, ""success"": 1, ""time"": 22}"
+slacks,QF_LIA/slacks/30-12.slack.smt2,B2,sat,sat,0,False,0.06,0.06,24508,"{""calls"": 1, ""success"": 1, ""time"": 22}"
+slacks,QF_LIA/slacks/30-12.slack.smt2,B0,sat,sat,0,False,1.45,1.45,26084,{}
+slacks,QF_LIA/slacks/30-14.slack.smt2,B1,sat,sat,0,False,0.07,0.07,24272,"{""calls"": 1, ""success"": 1, ""time"": 21}"
+slacks,QF_LIA/slacks/30-14.slack.smt2,B1+C2,sat,sat,0,False,0.07,0.07,24352,"{""calls"": 1, ""success"": 1, ""time"": 21}"
+slacks,QF_LIA/slacks/30-14.slack.smt2,B2,sat,sat,0,False,0.07,0.07,24244,"{""calls"": 1, ""success"": 1, ""time"": 21}"
+slacks,QF_LIA/slacks/30-24.slack.smt2,B0,sat,sat,0,False,1.75,1.75,26300,{}
+slacks,QF_LIA/slacks/30-24.slack.smt2,B1,sat,sat,0,False,0.11,0.11,24440,"{""calls"": 1, ""success"": 1, ""time"": 37}"
+slacks,QF_LIA/slacks/30-24.slack.smt2,B1+C2,sat,sat,0,False,0.11,0.11,24516,"{""calls"": 1, ""success"": 1, ""time"": 37}"
+slacks,QF_LIA/slacks/30-24.slack.smt2,B2,sat,sat,0,False,0.11,0.11,24592,"{""calls"": 1, ""success"": 1, ""time"": 37}"
+slacks,QF_LIA/slacks/30-14.slack.smt2,B0,sat,sat,0,False,39.93,39.93,31040,{}
+slacks,QF_LIA/slacks/30-28.slack.smt2,B1,sat,sat,0,False,0.19,0.19,24364,"{""calls"": 1, ""success"": 1, ""time"": 73}"
+slacks,QF_LIA/slacks/30-28.slack.smt2,B1+C2,sat,sat,0,False,0.20,0.19,24812,"{""calls"": 1, ""success"": 1, ""time"": 77}"
+slacks,QF_LIA/slacks/30-28.slack.smt2,B2,sat,sat,0,False,0.20,0.20,24900,"{""calls"": 1, ""success"": 1, ""time"": 73}"
+slacks,QF_LIA/slacks/30-29.slack.smt2,B0,sat,sat,0,False,2.08,2.05,26840,{}
+slacks,QF_LIA/slacks/30-29.slack.smt2,B1,sat,sat,0,False,0.11,0.11,24536,"{""calls"": 1, ""success"": 1, ""time"": 36}"
+slacks,QF_LIA/slacks/30-29.slack.smt2,B1+C2,sat,sat,0,False,0.11,0.11,24476,"{""calls"": 1, ""success"": 1, ""time"": 36}"
+slacks,QF_LIA/slacks/30-29.slack.smt2,B2,sat,sat,0,False,0.11,0.11,24280,"{""calls"": 1, ""success"": 1, ""time"": 35}"
+slacks,QF_LIA/slacks/30-28.slack.smt2,B0,none,sat,137,True,60.00,0.00,1868,{}
+slacks,QF_LIA/slacks/30-34.slack.smt2,B1,sat,sat,0,False,0.18,0.17,24740,"{""calls"": 1, ""success"": 1, ""time"": 78}"
+slacks,QF_LIA/slacks/30-34.slack.smt2,B1+C2,sat,sat,0,False,0.18,0.18,24716,"{""calls"": 1, ""success"": 1, ""time"": 78}"
+slacks,QF_LIA/slacks/30-34.slack.smt2,B2,sat,sat,0,False,0.18,0.18,24924,"{""calls"": 1, ""success"": 1, ""time"": 82}"
+slacks,QF_LIA/slacks/30-6.slack.smt2,B0,sat,sat,0,False,1.69,1.69,26240,{}
+slacks,QF_LIA/slacks/30-6.slack.smt2,B1,sat,sat,0,False,0.05,0.05,24260,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+slacks,QF_LIA/slacks/30-6.slack.smt2,B1+C2,sat,sat,0,False,0.05,0.05,24412,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+slacks,QF_LIA/slacks/30-6.slack.smt2,B2,sat,sat,0,False,0.05,0.05,24256,"{""calls"": 1, ""success"": 1, ""time"": 14}"
+slacks,QF_LIA/slacks/30-8.slack.smt2,B0,sat,sat,0,False,0.03,0.03,23816,{}
+slacks,QF_LIA/slacks/30-8.slack.smt2,B1,sat,sat,0,False,0.03,0.03,23884,{}
+slacks,QF_LIA/slacks/30-8.slack.smt2,B1+C2,sat,sat,0,False,0.03,0.03,23872,{}
+slacks,QF_LIA/slacks/30-8.slack.smt2,B2,sat,sat,0,False,0.03,0.03,23456,{}
+slacks,QF_LIA/slacks/35-25.slack.smt2,B0,sat,sat,0,False,4.31,4.31,27060,{}
+slacks,QF_LIA/slacks/35-25.slack.smt2,B1,sat,sat,0,False,0.22,0.22,24796,"{""calls"": 1, ""success"": 1, ""time"": 75}"
+slacks,QF_LIA/slacks/35-25.slack.smt2,B1+C2,sat,sat,0,False,0.12,0.12,24884,"{""calls"": 1, ""success"": 1, ""time"": 39}"
+slacks,QF_LIA/slacks/35-25.slack.smt2,B2,sat,sat,0,False,0.13,0.13,25112,"{""calls"": 1, ""success"": 1, ""time"": 41}"
+slacks,QF_LIA/slacks/30-34.slack.smt2,B0,none,sat,137,True,60.00,0.00,1980,{}
+slacks,QF_LIA/slacks/35-34.slack.smt2,B1,sat,unknown,0,False,0.21,0.21,24816,"{""calls"": 1, ""success"": 1, ""time"": 103}"
+slacks,QF_LIA/slacks/35-34.slack.smt2,B1+C2,sat,unknown,0,False,0.29,0.29,25148,"{""calls"": 1, ""success"": 1, ""time"": 171}"
+slacks,QF_LIA/slacks/35-34.slack.smt2,B2,sat,unknown,0,False,0.22,0.22,25092,"{""calls"": 1, ""success"": 1, ""time"": 108}"
+slacks,QF_LIA/slacks/40-12.slack.smt2,B0,sat,sat,0,False,5.13,5.08,27776,{}
+slacks,QF_LIA/slacks/40-12.slack.smt2,B1,sat,sat,0,False,0.10,0.10,24776,"{""calls"": 1, ""success"": 1, ""time"": 31}"
+slacks,QF_LIA/slacks/40-12.slack.smt2,B1+C2,sat,sat,0,False,0.10,0.10,24860,"{""calls"": 1, ""success"": 1, ""time"": 30}"
+slacks,QF_LIA/slacks/40-12.slack.smt2,B2,sat,sat,0,False,0.10,0.10,24740,"{""calls"": 1, ""success"": 1, ""time"": 31}"
+slacks,QF_LIA/slacks/35-34.slack.smt2,B0,none,unknown,137,True,60.00,0.00,1868,{}
+slacks,QF_LIA/slacks/40-23.slack.smt2,B1,sat,sat,0,False,0.14,0.14,24752,"{""calls"": 1, ""success"": 1, ""time"": 49}"
+slacks,QF_LIA/slacks/40-23.slack.smt2,B1+C2,sat,sat,0,False,0.15,0.15,25140,"{""calls"": 1, ""success"": 1, ""time"": 52}"
+slacks,QF_LIA/slacks/40-23.slack.smt2,B2,sat,sat,0,False,0.15,0.15,25148,"{""calls"": 1, ""success"": 1, ""time"": 52}"
+slacks,QF_LIA/slacks/40-23.slack.smt2,B0,sat,sat,0,False,22.62,22.61,27584,{}
+slacks,QF_LIA/slacks/40-29.slack.smt2,B1,sat,sat,0,False,0.20,0.20,25112,"{""calls"": 1, ""success"": 1, ""time"": 69}"
+slacks,QF_LIA/slacks/40-29.slack.smt2,B1+C2,sat,sat,0,False,0.20,0.20,25232,"{""calls"": 1, ""success"": 1, ""time"": 71}"
+slacks,QF_LIA/slacks/40-29.slack.smt2,B2,sat,sat,0,False,0.20,0.20,25120,"{""calls"": 1, ""success"": 1, ""time"": 70}"
+slacks,QF_LIA/slacks/40-6.slack.smt2,B0,sat,sat,0,False,0.08,0.04,24144,{}
+slacks,QF_LIA/slacks/40-6.slack.smt2,B1,sat,sat,0,False,0.04,0.04,23980,{}
+slacks,QF_LIA/slacks/40-6.slack.smt2,B1+C2,sat,sat,0,False,0.04,0.03,24036,{}
+slacks,QF_LIA/slacks/40-6.slack.smt2,B2,sat,sat,0,False,0.04,0.03,23888,{}
+slacks,QF_LIA/slacks/40-7.slack.smt2,B0,sat,sat,0,False,0.56,0.56,25164,{}
+slacks,QF_LIA/slacks/40-7.slack.smt2,B1,sat,sat,0,False,0.06,0.06,24608,"{""calls"": 1, ""success"": 1, ""time"": 17}"
+slacks,QF_LIA/slacks/40-7.slack.smt2,B1+C2,sat,sat,0,False,0.06,0.06,24560,"{""calls"": 1, ""success"": 1, ""time"": 17}"
+slacks,QF_LIA/slacks/40-7.slack.smt2,B2,sat,sat,0,False,0.06,0.05,24472,"{""calls"": 1, ""success"": 1, ""time"": 17}"
+slacks,QF_LIA/slacks/40-8.slack.smt2,B0,sat,sat,0,False,4.43,4.42,28592,{}
+slacks,QF_LIA/slacks/40-8.slack.smt2,B1,sat,sat,0,False,0.07,0.07,24344,"{""calls"": 1, ""success"": 1, ""time"": 21}"
+slacks,QF_LIA/slacks/40-8.slack.smt2,B1+C2,sat,sat,0,False,0.07,0.07,24212,"{""calls"": 1, ""success"": 1, ""time"": 21}"
+slacks,QF_LIA/slacks/40-8.slack.smt2,B2,sat,sat,0,False,0.07,0.07,24556,"{""calls"": 1, ""success"": 1, ""time"": 21}"
+slacks,QF_LIA/slacks/45-12.slack.smt2,B0,sat,sat,0,False,0.06,0.04,24096,{}
+slacks,QF_LIA/slacks/45-12.slack.smt2,B1,sat,sat,0,False,0.04,0.03,24196,{}
+slacks,QF_LIA/slacks/45-12.slack.smt2,B1+C2,sat,sat,0,False,0.04,0.03,24060,{}
+slacks,QF_LIA/slacks/45-12.slack.smt2,B2,sat,sat,0,False,0.04,0.04,24020,{}
+slacks,QF_LIA/slacks/40-29.slack.smt2,B0,sat,sat,0,False,12.56,12.56,28264,{}
+slacks,QF_LIA/slacks/45-16.slack.smt2,B1,sat,sat,0,False,0.14,0.14,25144,"{""calls"": 1, ""success"": 1, ""time"": 50}"
+slacks,QF_LIA/slacks/45-16.slack.smt2,B1+C2,sat,sat,0,False,0.13,0.13,25128,"{""calls"": 1, ""success"": 1, ""time"": 49}"
+slacks,QF_LIA/slacks/45-16.slack.smt2,B2,sat,sat,0,False,0.14,0.14,24688,"{""calls"": 1, ""success"": 1, ""time"": 50}"
+slacks,QF_LIA/slacks/45-16.slack.smt2,B0,sat,sat,0,False,10.80,10.77,28300,{}
+slacks,QF_LIA/slacks/45-23.slack.smt2,B1,sat,sat,0,False,0.17,0.17,25284,"{""calls"": 1, ""success"": 1, ""time"": 54}"
+slacks,QF_LIA/slacks/45-23.slack.smt2,B1+C2,sat,sat,0,False,0.17,0.17,25280,"{""calls"": 1, ""success"": 1, ""time"": 54}"
+slacks,QF_LIA/slacks/45-23.slack.smt2,B2,sat,sat,0,False,0.17,0.16,25164,"{""calls"": 1, ""success"": 1, ""time"": 54}"
+slacks,QF_LIA/slacks/45-26.slack.smt2,B0,sat,sat,0,False,8.98,8.97,28656,{}
+slacks,QF_LIA/slacks/45-26.slack.smt2,B1,sat,sat,0,False,0.20,0.19,25532,"{""calls"": 1, ""success"": 1, ""time"": 74}"
+slacks,QF_LIA/slacks/45-26.slack.smt2,B1+C2,sat,sat,0,False,0.20,0.20,25528,"{""calls"": 1, ""success"": 1, ""time"": 74}"
+slacks,QF_LIA/slacks/45-26.slack.smt2,B2,sat,sat,0,False,0.24,0.24,25584,"{""calls"": 1, ""success"": 1, ""time"": 75}"
+slacks,QF_LIA/slacks/45-5.slack.smt2,B0,sat,sat,0,False,2.27,2.24,26228,{}
+slacks,QF_LIA/slacks/45-5.slack.smt2,B1,sat,sat,0,False,0.04,0.04,24176,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+slacks,QF_LIA/slacks/45-5.slack.smt2,B1+C2,sat,sat,0,False,0.04,0.04,24268,"{""calls"": 1, ""success"": 1, ""time"": 12}"
+slacks,QF_LIA/slacks/45-5.slack.smt2,B2,sat,sat,0,False,0.08,0.08,24416,"{""calls"": 1, ""success"": 1, ""time"": 25}"
+slacks,QF_LIA/slacks/45-23.slack.smt2,B0,sat,sat,0,False,38.14,38.10,27844,{}

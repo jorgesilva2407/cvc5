@@ -1,0 +1,88 @@
+
+== 20180326-Bromberger: 30 instances, 15 solved by all
+config   solved  sat unsat  t/o other   PAR-2 s  common s wrong
+B0           15   12     3   15     0    1878.8      78.8     0
+B1           20   17     3   10     0    1202.2       1.4     0
+B1+C2        20   17     3   10     0    1202.1       1.4     0
+B2           20   17     3   10     0    1202.1       1.4     0
+  B1: calls 15, success 15, time 678ms
+  B1+C2: calls 15, success 15, time 666ms
+  B2: calls 15, success 15, time 675ms
+
+== CAV_2009_benchmarks: 30 instances, 30 solved by all
+config   solved  sat unsat  t/o other   PAR-2 s  common s wrong
+B0           30   24     6    0     0      28.7      28.7     0
+B1           30   24     6    0     0       1.9       1.9     0
+B1+C2        30   24     6    0     0       1.9       1.9     0
+B2           30   24     6    0     0       2.2       2.2     0
+  B1: calls 43, success 23, skippedEquality 18, shiftedInfeasible 2, time 603ms
+  B1+C2: calls 43, success 23, skippedEquality 18, shiftedInfeasible 2, time 599ms, impliedEq::time 5ms
+  B2: calls 43, success 23, shiftedInfeasible 20, eqElim::calls 18, eqElim::equalities 42, time 798ms, impliedEq::time 45ms, eqElim::time 4ms
+
+== dillig: 30 instances, 30 solved by all
+config   solved  sat unsat  t/o other   PAR-2 s  common s wrong
+B0           30   30     0    0     0      75.4      75.4     0
+B1           30   30     0    0     0       2.0       2.0     0
+B1+C2        30   30     0    0     0       2.0       2.0     0
+B2           30   30     0    0     0       1.9       1.9     0
+  B1: calls 27, success 27, time 680ms
+  B1+C2: calls 27, success 27, time 728ms
+  B2: calls 27, success 27, time 674ms
+
+== prime-cone: 30 instances, 30 solved by all
+config   solved  sat unsat  t/o other   PAR-2 s  common s wrong
+B0           30   16    14    0     0       2.1       2.1     0
+B1           30   16    14    0     0       2.1       2.1     0
+B1+C2        30   16    14    0     0       2.7       2.7     0
+B2           30   16    14    0     0       3.4       3.4     0
+  B1: calls 329, success 16, skippedEquality 108, shiftedInfeasible 205, time 637ms
+  B1+C2: calls 329, success 16, skippedEquality 108, shiftedInfeasible 205, time 1178ms, impliedEq::time 522ms
+  B2: calls 329, success 16, shiftedInfeasible 313, impliedEq::found 133, eqElim::calls 119, eqElim::equalities 303, eqElim::infeasible 11, time 1883ms, impliedEq::time 803ms, eqElim::time 52ms
+
+== slacks: 30 instances, 27 solved by all
+config   solved  sat unsat  t/o other   PAR-2 s  common s wrong
+B0           27   27     0    3     0     520.6     160.6     0
+B1           30   30     0    0     0       2.7       2.1     0
+B1+C2        30   30     0    0     0       2.7       2.0     0
+B2           30   30     0    0     0       2.7       2.1     0
+  B1: calls 23, success 23, time 897ms
+  B1+C2: calls 23, success 23, time 937ms
+  B2: calls 23, success 23, time 889ms
+
+== ALL: 150 instances, 132 solved by all
+config   solved  sat unsat  t/o other   PAR-2 s  common s wrong
+B0          132  109    23   18     0    2505.5     345.5     0
+B1          140  117    23   10     0    1210.8       9.5     0
+B1+C2       140  117    23   10     0    1211.3       9.9     0
+B2          140  117    23   10     0    1212.3      10.9     0
+  B1: calls 437, success 104, skippedEquality 126, shiftedInfeasible 207, time 3495ms
+  B1+C2: calls 437, success 104, skippedEquality 126, shiftedInfeasible 207, time 4108ms, impliedEq::time 527ms
+  B2: calls 437, success 104, shiftedInfeasible 333, impliedEq::found 133, eqElim::calls 137, eqElim::equalities 345, eqElim::infeasible 11, time 4919ms, impliedEq::time 848ms, eqElim::time 56ms
+
+== wrong answers: 0
+
+== instances solved differently from B0
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-50/c50_problem__005.smt2.slack.smt2: B0 none 60.0s, B1 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-50/c50_problem__005.smt2.slack.smt2: B0 none 60.0s, B1+C2 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/coef-size/smt/size-50/c50_problem__005.smt2.slack.smt2: B0 none 60.0s, B2 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__035.smt2.slack.smt2: B0 none 60.0s, B1 sat 0.2s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__035.smt2.slack.smt2: B0 none 60.0s, B1+C2 sat 0.2s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/25-vars/v25_problem_2__035.smt2.slack.smt2: B0 none 60.0s, B2 sat 0.2s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__001.smt2.slack.smt2: B0 none 60.0s, B1 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__001.smt2.slack.smt2: B0 none 60.0s, B1+C2 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__001.smt2.slack.smt2: B0 none 60.0s, B2 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__017.smt2.slack.smt2: B0 none 60.0s, B1 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__017.smt2.slack.smt2: B0 none 60.0s, B1+C2 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/40-vars/v40_problem__017.smt2.slack.smt2: B0 none 60.0s, B2 sat 0.1s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/45-vars/v45_problem__030.smt2.slack.smt2: B0 none 60.0s, B1 sat 0.2s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/45-vars/v45_problem__030.smt2.slack.smt2: B0 none 60.0s, B1+C2 sat 0.2s
+  QF_LIA/20180326-Bromberger/more_slacked/CAV_2009_benchmarks/smt/45-vars/v45_problem__030.smt2.slack.smt2: B0 none 60.0s, B2 sat 0.2s
+  QF_LIA/slacks/30-28.slack.smt2: B0 none 60.0s, B1 sat 0.2s
+  QF_LIA/slacks/30-28.slack.smt2: B0 none 60.0s, B1+C2 sat 0.2s
+  QF_LIA/slacks/30-28.slack.smt2: B0 none 60.0s, B2 sat 0.2s
+  QF_LIA/slacks/30-34.slack.smt2: B0 none 60.0s, B1 sat 0.2s
+  QF_LIA/slacks/30-34.slack.smt2: B0 none 60.0s, B1+C2 sat 0.2s
+  QF_LIA/slacks/30-34.slack.smt2: B0 none 60.0s, B2 sat 0.2s
+  QF_LIA/slacks/35-34.slack.smt2: B0 none 60.0s, B1 sat 0.2s
+  QF_LIA/slacks/35-34.slack.smt2: B0 none 60.0s, B1+C2 sat 0.3s
+  QF_LIA/slacks/35-34.slack.smt2: B0 none 60.0s, B2 sat 0.2s

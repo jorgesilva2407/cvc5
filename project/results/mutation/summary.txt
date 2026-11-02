@@ -1,0 +1,14 @@
+# Mutation check, before C3 existed (11 cube regressions at the time).
+# run1: M0-M4 valid; M5 there was contaminated by M4 (restore bug), so
+# M0, M5 and M6 were re-run after the fix (second block).
+
+M0-none | arith_unit_cube_white rc=0 failed=0  | arith_exact_simplex_white rc=0 failed=0  | regress: 100% tests passed, 0 tests failed out of 11
+M1-input-shift-quarter | arith_unit_cube_white rc=1 failed=2  | arith_exact_simplex_white rc=0 failed=0  | regress: 91% tests passed, 1 tests failed out of 11
+M2-row-shift-quarter | arith_unit_cube_white rc=134 failed=1 crash="Fatal failure within cvc5::internal::theory::arith::linear::CubeResult cvc5::internal::theory::arith" | arith_exact_simplex_white rc=0 failed=0  | regress: 100% tests passed, 0 tests failed out of 11
+M3-round-down | arith_unit_cube_white rc=134 failed=0 crash="Fatal failure within cvc5::internal::theory::arith::linear::CubeResult cvc5::internal::theory::arith" | arith_exact_simplex_white rc=0 failed=0  | regress: 91% tests passed, 1 tests failed out of 11
+M4-c2-no-strict-filter | arith_unit_cube_white rc=1 failed=2  | arith_exact_simplex_white rc=0 failed=0  | regress: 100% tests passed, 0 tests failed out of 11
+M5-skip-diseq-check | arith_unit_cube_white rc=1 failed=2  | arith_exact_simplex_white rc=0 failed=0  | regress: 91% tests passed, 1 tests failed out of 11
+
+M0-none | arith_unit_cube_white rc=0 failed=0  | arith_exact_simplex_white rc=0 failed=0  | regress: 100% tests passed, 0 tests failed out of 11
+M5-skip-diseq-check | arith_unit_cube_white rc=0 failed=0  | arith_exact_simplex_white rc=0 failed=0  | regress: 91% tests passed, 1 tests failed out of 11
+M6-short-explanation | arith_unit_cube_white rc=134 failed=0 crash="Fatal failure within cvc5::internal::theory::arith::linear::ImpliedEqResult cvc5::internal::theory::" | arith_exact_simplex_white rc=1 failed=8  | regress: 82% tests passed, 2 tests failed out of 11

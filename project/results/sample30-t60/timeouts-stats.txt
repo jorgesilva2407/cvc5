@@ -1,0 +1,16 @@
+# The 10 files every configuration timed out on, re-run with B2
+# (--arith-cube-test --arith-cube-implied-eq --arith-cube-eq-elim)
+# and --tlimit=20000 --stats-internal on the release build.
+# All 10 still time out ("cvc5 interrupted by timeout", which also happens with
+# B0: cvc5 aborts on --tlimit). The test runs on every file and never succeeds.
+file                                    calls eqElim::calls impliedEq::found noRoom shiftedInfeasible
+size-10/c10_problem__003                361   415           143              148    267
+15-vars/cut_lemma_01_011                146   226           164              0      228
+15-vars/cut_lemma_03_006                389   388           0                5      384
+20-vars/cut_lemma_03_007                141   140           0                0      141
+unbd025v30c/unbd-sage14                 70    69            0                0      70
+unbd050v55c/unbd-sage15                 17    16            0                0      17
+unbd075v83c/unbd-sage8                  9     8             0                0      8
+unbd075v83c/unbd-sage9                  7     6             0                0      7
+unbd100v110c/unbd-sage1                 4     3             0                0      3
+unbd100v110c/unbd-sage12                3     2             0                0      3
