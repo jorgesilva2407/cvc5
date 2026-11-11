@@ -12,9 +12,10 @@ import csv
 import json
 from collections import defaultdict
 
-STATS = ["calls", "success", "skippedEquality", "noRoom",
-         "shiftedInfeasible", "shiftedUnknown", "diseqFailed",
-         "notApplicable", "impliedEq::found", "eqElim::calls",
+STATS = ["calls", "success", "skippedEquality", "skippedImpliedEquality",
+         "noRoom", "shiftedInfeasible", "shiftedUnknown", "diseqFailed",
+         "notApplicable", "impliedEq::calls", "impliedEq::rounds",
+         "impliedEq::found", "impliedEq::unknown", "eqElim::calls",
          "eqElim::equalities", "eqElim::fresh", "eqElim::infeasible",
          "time", "impliedEq::time", "eqElim::time"]
 
@@ -55,7 +56,7 @@ def main():
                   if all(solved(by[(f, c)]) for c in configs if (f, c) in by)]
         print(f"\n== {family}: {len(fs)} instances, "
               f"{len(common)} solved by all")
-        print(f"{'config':8} {'solved':>6} {'sat':>4} {'unsat':>5} "
+        print(f"{'config':16} {'solved':>6} {'sat':>4} {'unsat':>5} "
               f"{'t/o':>4} {'other':>5} {'PAR-2 s':>9} {'common s':>9} "
               f"{'wrong':>5}")
         for c in configs:
@@ -69,7 +70,7 @@ def main():
                           if (f, c) in by)
             nwrong = sum(1 for r, _ in wrong
                          if r["config"] == c and r["file"] in fs)
-            print(f"{c:8} {nsolved:6} {nsat:4} {nsolved - nsat:5} {nto:4} "
+            print(f"{c:16} {nsolved:6} {nsat:4} {nsolved - nsat:5} {nto:4} "
                   f"{len(rs) - nsolved - nto:5} {par2:9.1f} {tcommon:9.1f} "
                   f"{nwrong:5}")
         for c in configs:

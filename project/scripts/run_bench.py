@@ -1,14 +1,16 @@
 """Run cvc5 configurations on benchmarks and record answers, times and the
 unit cube test statistics.
 
-usage: run_bench.py --binary CVC5 --bench-dir DIR --out RESULTS.csv
+usage: run_bench.py --binary CVC5 (--bench-dir DIR | --file-list LIST)
+                    --out RESULTS.csv
                     [--sample N --seed S] [--timeout SEC] [--jobs J]
                     [--mem-mb MB] [--config NAME=OPTIONS ...]
 
 DIR contains one directory per family (as written by fetch_benchmarks.sh).
 With --sample, N files of each family are drawn with seed S; the files used
 are written next to the results (RESULTS.files). Rows already in the results
-file are skipped, so an interrupted run can be resumed.
+file are skipped, so an interrupted run can be resumed. Each row has the
+answer, times and memory, and one column per unit cube test statistic.
 """
 import argparse
 import csv
@@ -27,10 +29,30 @@ DEFAULT_CONFIGS = {
     "B0": "",
     "B1": "--arith-cube-test",
     "B1+C2": "--arith-cube-test --arith-cube-implied-eq",
+    "B1+C2first": "--arith-cube-test --arith-cube-implied-eq "
+                  "--arith-cube-implied-eq-order=detect-first",
     "B2": "--arith-cube-test --arith-cube-implied-eq --arith-cube-eq-elim",
 }
-FIELDS = ["family", "file", "config", "answer", "expected", "returncode",
-          "timeout", "wall_s", "cpu_s", "maxrss_kb", "stats"]
+# The theory::arith::cube::* statistics, each written to its own column
+# (cube.<name>, with "::" replaced by "."; times in ms). A statistic that is
+# not printed (cvc5 omits zero values) is written as 0.
+CUBE_STATS = ["calls", "success", "notApplicable", "skippedEquality",
+              "skippedImpliedEquality", "noRoom", "shiftedInfeasible",
+              "shiftedUnknown", "roundFailed", "diseqFailed", "time",
+              "impliedEq::calls", "impliedEq::rounds", "impliedEq::found",
+              "impliedEq::unknown", "impliedEq::time", "eqElim::calls",
+              "eqElim::equalities", "eqElim::fresh", "eqElim::infeasible",
+              "eqElim::unknown", "eqElim::time"]
+
+
+def stat_column(name):
+    col = "cube." + name.replace("::", ".")
+    return col + "_ms" if name.endswith("time") else col
+
+
+FIELDS = (["family", "file", "config", "options", "answer", "expected",
+           "returncode", "timeout", "wall_s", "cpu_s", "maxrss_kb"]
+          + [stat_column(n) for n in CUBE_STATS] + ["stats"])
 STAT = re.compile(r"^theory::arith::cube::(\S+) = (\d+)(ms)?$")
 STATUS = re.compile(r"\(set-info :status (sat|unsat|unknown)\)")
 
@@ -77,7 +99,8 @@ def run_one(binary, options, path, timeout, mem_mb):
             stats[m.group(1)] = int(m.group(2))
     # /usr/bin/time reports the exit status of timeout, 137 if it killed cvc5
     rc = p.returncode
-    return {"answer": answer, "returncode": rc,
+    columns = {stat_column(n): stats.get(n, 0) for n in CUBE_STATS}
+    return {**columns, "answer": answer, "returncode": rc,
             "timeout": rc in (124, 137) or float(wall) >= timeout,
             "wall_s": wall, "cpu_s": f"{float(user) + float(system):.2f}",
             "maxrss_kb": rss, "stats": json.dumps(stats, sort_keys=True)}
@@ -86,7 +109,9 @@ def run_one(binary, options, path, timeout, mem_mb):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--binary", required=True)
-    ap.add_argument("--bench-dir", required=True)
+    ap.add_argument("--bench-dir")
+    ap.add_argument("--file-list",
+                    help="run the files of this list instead of --bench-dir")
     ap.add_argument("--out", required=True)
     ap.add_argument("--sample", type=int, default=0)
     ap.add_argument("--seed", type=int, default=1)
@@ -94,11 +119,17 @@ def main():
     ap.add_argument("--jobs", type=int, default=1)
     ap.add_argument("--mem-mb", type=int, default=1500)
     ap.add_argument("--config", action="append", default=[],
-                    help="NAME=OPTIONS; default: B0, B1, B1+C2, B2")
+                    help="NAME=OPTIONS; default: B0, B1, B1+C2, B1+C2first, B2")
     args = ap.parse_args()
     configs = dict(c.split("=", 1) for c in args.config) or DEFAULT_CONFIGS
 
-    files = select_files(args.bench_dir, args.sample, args.seed)
+    if args.file_list:
+        # lines "FAMILY<TAB>PATH", as written by prepare_eq_order.py
+        with open(args.file_list) as fh:
+            files = [tuple(l.rstrip("\n").split("\t", 1)) for l in fh
+                     if l.strip()]
+    else:
+        files = select_files(args.bench_dir, args.sample, args.seed)
     with open(args.out + ".files", "w") as fh:
         fh.writelines(f + "\n" for _, f in files)
     done = set()
@@ -111,6 +142,12 @@ def main():
           file=sys.stderr)
 
     new = not os.path.exists(args.out)
+    if not new:
+        with open(args.out) as fh:
+            header = next(csv.reader(fh), [])
+        if header != FIELDS:
+            sys.exit(f"{args.out} was written with other columns; "
+                     "use a new output file")
     out = open(args.out, "a", newline="")
     writer = csv.DictWriter(out, FIELDS)
     if new:
@@ -121,7 +158,7 @@ def main():
     def task(item):
         fam, f, name, opts = item
         row = run_one(args.binary, opts, f, args.timeout, args.mem_mb)
-        row.update(family=fam, file=f, config=name,
+        row.update(family=fam, file=f, config=name, options=opts,
                    expected=expected_status(f))
         with lock:
             writer.writerow(row)
