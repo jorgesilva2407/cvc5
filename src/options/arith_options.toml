@@ -526,7 +526,30 @@ name   = "Arithmetic Theory"
   long       = "arith-cube-implied-eq"
   type       = "bool"
   default    = "false"
-  help       = "when the shifted system of the unit cube test is infeasible, detect the implied equalities of the problem by checking its strict version (requires --arith-cube-test)"
+  help       = "detect the implied equalities of the problem by checking its strict version, before or after the unit cube test (see --arith-cube-implied-eq-order; requires --arith-cube-test)"
+
+[[option]]
+  name       = "arithCubeImpliedEqOrder"
+  category   = "regular"
+  long       = "arith-cube-implied-eq-order=MODE"
+  type       = "ArithCubeImpliedEqOrder"
+  default    = "TEST_FIRST"
+  help       = "when --arith-cube-implied-eq detects the implied equalities: after the unit cube test fails, or before the test (see --arith-cube-implied-eq-order=help)"
+  help_mode  = "When the implied equalities of the unit cube test are detected."
+[[option.mode.TEST_FIRST]]
+  name = "test-first"
+  help = "Run the unit cube test first; detect the implied equalities only if the shifted system is infeasible. With --arith-cube-eq-elim, they are then eliminated and the test is run again."
+[[option.mode.DETECT_FIRST]]
+  name = "detect-first"
+  help = "Detect the implied equalities first, as in Bromberger and Weidenbach (IJCAR 2016, Sec. 6), and skip the test if there are any, since then no unit cube fits (Lemma 6). Not supported with --arith-cube-eq-elim yet."
+
+[[option]]
+  name       = "arithCubeImpliedEqPivotLimit"
+  category   = "expert"
+  long       = "arith-cube-implied-eq-pivot-limit=N"
+  type       = "uint64_t"
+  default    = "0"
+  help       = "the maximum number of pivots of each simplex call made by the implied equality detection (0: use --arith-cube-pivot-limit); when it is reached, the equalities found so far are used"
 
 [[option]]
   name       = "arithCubeEqElim"

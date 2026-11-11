@@ -802,6 +802,15 @@ void SetDefaults::setDefaultsPost(const LogicInfo& logic, Options& opts) const
         bv, boolToBitvector, options::BoolToBVMode::OFF, "non-BV logic");
   }
 
+  if (opts.arith.arithCubeImpliedEq && opts.arith.arithCubeEqElim
+      && opts.arith.arithCubeImpliedEqOrder
+             == options::ArithCubeImpliedEqOrder::DETECT_FIRST)
+  {
+    throw FatalOptionException(
+        "--arith-cube-implied-eq-order=detect-first does not support "
+        "--arith-cube-eq-elim yet.");
+  }
+
   // Turn on arith rewrite equalities only for pure arithmetic
   if (!opts.arith.arithRewriteEqWasSetByUser)
   {

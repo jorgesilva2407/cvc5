@@ -380,6 +380,8 @@ TheoryArithPrivate::Statistics::Statistics(StatisticsRegistry& reg,
       d_cubeCalls(reg.registerInt(name + "cube::calls")),
       d_cubeSuccess(reg.registerInt(name + "cube::success")),
       d_cubeSkippedEquality(reg.registerInt(name + "cube::skippedEquality")),
+      d_cubeSkippedImpliedEquality(
+          reg.registerInt(name + "cube::skippedImpliedEquality")),
       d_cubeNoRoom(reg.registerInt(name + "cube::noRoom")),
       d_cubeShiftedInfeasible(
           reg.registerInt(name + "cube::shiftedInfeasible")),
@@ -2907,8 +2909,12 @@ ImpliedEqResult TheoryArithPrivate::cubeImpliedEqualities(const CubeProblem& p)
 {
   TimerStat::CodeTimer codeTimer(d_statistics.d_cubeImpliedEqTimer);
   ++d_statistics.d_cubeImpliedEqCalls;
-  ImpliedEqResult res =
-      detectImpliedEqualities(p, options().arith.arithCubePivotLimit);
+  uint64_t limit = options().arith.arithCubeImpliedEqPivotLimit;
+  if (limit == 0)
+  {
+    limit = options().arith.arithCubePivotLimit;
+  }
+  ImpliedEqResult res = detectImpliedEqualities(p, limit);
   d_statistics.d_cubeImpliedEqRounds += res.d_rounds;
   d_statistics.d_cubeImpliedEqFound += res.d_equalities.size();
   if (!res.d_complete)
@@ -2954,6 +2960,12 @@ bool TheoryArithPrivate::unitCubeTest()
   Assert(d_qflraStatus == Result::SAT);
   Assert(!anyConflict());
   bool eqElim = options().arith.arithCubeEqElim;
+  bool impliedEq = options().arith.arithCubeImpliedEq;
+  bool detectFirst = impliedEq
+                     && options().arith.arithCubeImpliedEqOrder
+                            == options::ArithCubeImpliedEqOrder::DETECT_FIRST;
+  // rejected when the options are set
+  Assert(!(detectFirst && eqElim));
 
   // An equality leaves no room for a cube. Unless the equalities are
   // eliminated, this is checked before the problem is copied, since it is
@@ -2967,6 +2979,21 @@ bool TheoryArithPrivate::unitCubeTest()
 
   std::vector<ArithVar> vars;
   CubeProblem p = cubeSnapshot(vars);
+  if (detectFirst)
+  {
+    // As in the paper (Sec. 6), the equalities are looked for before the
+    // test. Any equality leaves no room for a cube (Lemma 6), so the test is
+    // skipped if one is found. If the detection gives up before finding one,
+    // the test is run anyway.
+    ImpliedEqResult implied = cubeImpliedEqualities(p);
+    if (!implied.d_equalities.empty())
+    {
+      ++d_statistics.d_cubeSkippedImpliedEquality;
+      Trace("arith::cube") << "cube: skipped, there is an implied equality"
+                           << std::endl;
+      return false;
+    }
+  }
   // The test is applied to q, whose integer solutions y give the integer
   // solutions map(y) of p. Initially, q is p and map is the identity.
   CubeProblem q = p;
@@ -3003,7 +3030,8 @@ bool TheoryArithPrivate::unitCubeTest()
         ++d_statistics.d_cubeRoundFailed;
         return false;
     }
-    if (!options().arith.arithCubeImpliedEq)
+    // With detect-first, the implied equalities were already looked for.
+    if (!impliedEq || detectFirst)
     {
       return false;
     }

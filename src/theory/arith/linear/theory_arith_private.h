@@ -807,15 +807,20 @@ class TheoryArithPrivate : protected EnvObj
    * tableau, assignment and constraints of this solver are not touched. If
    * the shifted system is satisfiable, its solution is rounded, checked
    * against all asserted bounds and disequalities, and installed as the
-   * current assignment; true is returned in that case. If the shifted system
-   * is infeasible and --arith-cube-implied-eq is on, the implied equalities
-   * of the problem are detected.
+   * current assignment; true is returned in that case.
    *
    * An equality (a variable with equal bounds) leaves no room for a cube. If
    * there is one, the test is skipped, unless --arith-cube-eq-elim is on: then
    * the equalities, and the implied equalities that are found, are
    * eliminated (see cube/equality_elimination.h) and the test is applied to
-   * the result. This never produces conflicts or lemmas.
+   * the result.
+   *
+   * With --arith-cube-implied-eq, the implied equalities are detected
+   * according to --arith-cube-implied-eq-order: with test-first, when the
+   * shifted system is infeasible (then, with --arith-cube-eq-elim, they are
+   * eliminated and the test is run again); with detect-first, before the
+   * test, which is skipped if there are any (paper, Sec. 6 and Lemma 6).
+   * This never produces conflicts or lemmas.
    */
   bool unitCubeTest();
   /** Returns true if the unit cube test can be applied to the current state. */
@@ -956,6 +961,7 @@ class TheoryArithPrivate : protected EnvObj
     IntStat d_cubeCalls;
     IntStat d_cubeSuccess;
     IntStat d_cubeSkippedEquality;
+    IntStat d_cubeSkippedImpliedEquality;
     IntStat d_cubeNoRoom;
     IntStat d_cubeShiftedInfeasible;
     IntStat d_cubeShiftedUnknown;
