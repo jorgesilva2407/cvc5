@@ -12,6 +12,9 @@
 
 #include "theory/arith/linear/cube/unit_cube.h"
 
+#include <algorithm>
+#include <map>
+
 #include "base/check.h"
 #include "base/output.h"
 #include "theory/arith/linear/cube/exact_simplex.h"
@@ -228,6 +231,9 @@ ImpliedEqResult detectImpliedEqualities(const CubeProblem& p,
     }
   }
 
+  // The index in res.d_equalities of the equality of each variable fixed by
+  // an earlier round.
+  std::map<size_t, size_t> fixed;
   while (true)
   {
     ++res.d_rounds;
@@ -243,6 +249,29 @@ ImpliedEqResult detectImpliedEqualities(const CubeProblem& p,
     }
     // Every strict bound in the conflict holds with equality in all solutions
     // of p. Fix them as equalities and try again.
+    //
+    // The conflict is explained by bounds of p, except for the bounds of the
+    // variables fixed in earlier rounds, which are replaced by the
+    // explanations of their equalities.
+    std::vector<CubeBound> explanation;
+    for (size_t id : s.getExplanation())
+    {
+      size_t v = id / 2;
+      auto it = fixed.find(v);
+      if (it != fixed.end())
+      {
+        const std::vector<CubeBound>& e =
+            res.d_equalities[it->second].d_explanation;
+        explanation.insert(explanation.end(), e.begin(), e.end());
+      }
+      else
+      {
+        explanation.push_back({v, id == upperId(v)});
+      }
+    }
+    std::sort(explanation.begin(), explanation.end());
+    explanation.erase(std::unique(explanation.begin(), explanation.end()),
+                      explanation.end());
     bool found = false;
     for (size_t id : s.getExplanation())
     {
@@ -251,13 +280,15 @@ ImpliedEqResult detectImpliedEqualities(const CubeProblem& p,
         continue;
       }
       size_t v = id / 2;
-      const DeltaRational& b = (id == lowerId(v)) ? *p.d_lower[v]
-                                                  : *p.d_upper[v];
+      bool upper = (id == upperId(v));
+      const DeltaRational& b = upper ? *p.d_upper[v] : *p.d_lower[v];
       s.setLowerBound(vars[v], b, lowerId(v));
       s.setUpperBound(vars[v], b, upperId(v));
       strict[lowerId(v)] = false;
       strict[upperId(v)] = false;
-      res.d_equalities.push_back({v, b.getNoninfinitesimalPart()});
+      fixed[v] = res.d_equalities.size();
+      res.d_equalities.push_back(
+          {v, b.getNoninfinitesimalPart(), upper, explanation});
       Trace("arith::cube") << "cube: implied equality: variable " << v
                            << " = " << b << std::endl;
       found = true;

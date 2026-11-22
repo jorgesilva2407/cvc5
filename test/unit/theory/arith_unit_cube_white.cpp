@@ -112,6 +112,48 @@ class TestTheoryWhiteArithUnitCube : public TestInternal
     return p;
   }
 
+  /**
+   * Whether the explanation of e is made of bounds of p, contains the bound
+   * of e.d_var that e comes from, and alone implies the missing bound, i.e.,
+   * the bounds of the explanation with the missing bound negated (strictly)
+   * are infeasible.
+   */
+  static bool explanationImplies(const CubeProblem& p, const ImpliedEquality& e)
+  {
+    CubeProblem only = p;
+    for (size_t w = 0, n = p.numVariables(); w < n; ++w)
+    {
+      only.d_lower[w].reset();
+      only.d_upper[w].reset();
+    }
+    for (const CubeBound& b : e.d_explanation)
+    {
+      const std::optional<DeltaRational>& bound =
+          b.d_upper ? p.d_upper[b.d_var] : p.d_lower[b.d_var];
+      if (!bound)
+      {
+        return false;
+      }
+      (b.d_upper ? only.d_upper : only.d_lower)[b.d_var] = bound;
+    }
+    size_t v = e.d_var;
+    const std::optional<DeltaRational>& from =
+        e.d_upper ? only.d_upper[v] : only.d_lower[v];
+    if (!from || *from != DeltaRational(e.d_value))
+    {
+      return false;
+    }
+    if (e.d_upper)
+    {
+      only.d_upper[v] = DeltaRational(e.d_value, -1);
+    }
+    else
+    {
+      only.d_lower[v] = DeltaRational(e.d_value, 1);
+    }
+    return !feasible(only);
+  }
+
   /** The equalities found, as a map from variable to value. */
   static std::map<size_t, Rational> equalities(const ImpliedEqResult& r)
   {
@@ -366,7 +408,10 @@ TEST_F(TestTheoryWhiteArithUnitCube, random_implied_equalities)
   std::uniform_int_distribution<int> slack(1, 3);
   std::uniform_int_distribution<int> kind(0, 6);
   size_t numFound = 0;
-  for (size_t round = 0; round < 300; ++round)
+  // Problems where equalities were found in more than one round, so that
+  // explanations refer to earlier equalities.
+  size_t numMultiRound = 0;
+  for (size_t round = 0; round < 1000; ++round)
   {
     CubeProblem p = randomRows(gen);
     std::vector<Rational> x0;
@@ -422,6 +467,17 @@ TEST_F(TestTheoryWhiteArithUnitCube, random_implied_equalities)
       below.d_upper[v] = DeltaRational(c, -1);
       ASSERT_FALSE(feasible(below)) << "round " << round << " var " << v;
     }
+    // The explanation of each equality is made of bounds of p, contains the
+    // bound the equality comes from, and alone implies the missing bound.
+    for (const ImpliedEquality& e : eq.d_equalities)
+    {
+      ASSERT_TRUE(explanationImplies(p, e))
+          << "round " << round << " var " << e.d_var;
+    }
+    if (eq.d_rounds > 2)
+    {
+      ++numMultiRound;
+    }
     for (size_t v = 0, n = p.numVariables(); v < n; ++v)
     {
       if (explicitEq[v] || found.count(v))
@@ -443,8 +499,11 @@ TEST_F(TestTheoryWhiteArithUnitCube, random_implied_equalities)
       }
     }
   }
-  // Implied equalities do occur.
+  // Implied equalities do occur, also over several rounds (where an
+  // explanation that cites the bounds fixed in an earlier round fails the
+  // check above).
   ASSERT_GT(numFound, 20u);
+  ASSERT_GT(numMultiRound, 5u);
 }
 
 }  // namespace test

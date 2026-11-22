@@ -86,11 +86,38 @@ struct CubeResult
  */
 CubeResult runUnitCubeTest(const CubeProblem& p, uint64_t pivotLimit);
 
+/** A bound of a CubeProblem: the lower or upper bound of variable d_var. */
+struct CubeBound
+{
+  size_t d_var;
+  bool d_upper;
+  bool operator==(const CubeBound& b) const
+  {
+    return d_var == b.d_var && d_upper == b.d_upper;
+  }
+  bool operator<(const CubeBound& b) const
+  {
+    return d_var < b.d_var || (d_var == b.d_var && d_upper < b.d_upper);
+  }
+};
+
 /** An implied equality: variable d_var always equals d_value. */
 struct ImpliedEquality
 {
   size_t d_var;
   Rational d_value;
+  /**
+   * Whether d_value is the upper bound of d_var in p, so that what is new is
+   * d_var >= d_value (otherwise it is the lower bound, and d_var <= d_value
+   * is new).
+   */
+  bool d_upper;
+  /**
+   * Bounds of p that imply the equality over the rationals, sorted and
+   * without duplicates. It contains the bound d_value of d_var, and only
+   * bounds of p, never the equalities found before this one.
+   */
+  std::vector<CubeBound> d_explanation;
 };
 
 /** The outcome of the implied equality detection. */
