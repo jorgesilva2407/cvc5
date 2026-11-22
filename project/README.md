@@ -33,6 +33,9 @@ behind its own option and off by default:
 |---|---|---|
 | C1 unit cube test | `--arith-cube-test` | shift the bounds inwards, solve the shifted system over the rationals, round its solution, and use it as the model if it satisfies every constraint |
 | C2 implied equalities | `--arith-cube-implied-eq` | when the shifted system is infeasible, find the equalities implied by the constraints (B&W Lemma 6) |
+| C2 propagation | `--arith-cube-propagate-eq` | when the test fails, send the implied equalities found by C2 to cvc5 as lemmas, so that its own solver (Dio solver, branching) can use them |
+| (propagation) | `--arith-cube-propagate-eq-on-skip` | also run C2 and propagate when the test is skipped because of an explicit equality (C3 off) |
+| (propagation) | `--arith-cube-propagate-eq-form=bound\|equality` (expert, default `bound`) | send the missing bound `t ≥ u` / `t ≤ u`, or the equality `t = u` |
 | C3 equality elimination | `--arith-cube-eq-elim` | remove the equalities (explicit, and those found by C2) with a Diophantine solver, run C1 on the reduced problem, map the point back |
 | (limit) | `--arith-cube-pivot-limit=N` (expert, default 10000) | pivots per simplex call of C1/C2, and steps of C3; the component gives up when reached |
 
@@ -72,6 +75,14 @@ These are the decisions taken so far, with the reason for each.
   with them is not a valid conflict. All three components work on a copy of
   the problem; anything they derive stays in that copy, and when they fail
   they simply give up and cvc5 continues as usual.
+
+  The one exception is the propagation of implied equalities
+  (`--arith-cube-propagate-eq`), which sends lemmas, and it respects the
+  rule: the strict bounds are only used to *find* an implied equality. The
+  lemma sent, `E ⇒ t ≥ u` (or `t ≤ u`), has as premises `E` the original,
+  non-strict bounds of the problem that the explanation points to, and
+  follows from them over the rationals (Lemma 6), so it is valid. Nothing
+  computed on a reduced problem of C3 is sent.
 - **Every rounded point is checked against all original constraints,
   including disequalities**, before it is used.
 - **Testing** with a debug build (assertions on) and `--check-models`.
@@ -217,8 +228,60 @@ explanation holds with equality in every solution.
 
 Each round fixes at least one variable, so this ends. It is called only when
 the shifted system was infeasible or had no room. Without C3, the equalities
-found are only counted (they explain why the test failed, but are not used).
-They are never turned into lemmas or conflicts.
+found are only counted (they explain why the test failed, but are not used),
+unless they are propagated (below). They are never turned into conflicts.
+
+Each equality also gets an explanation: the bounds of the original problem
+that imply it. The bounds in the conflict of round k are bounds of `p`,
+except those of variables fixed in an earlier round; those are replaced by
+the explanation of the earlier equality, so the explanation is transitive
+and never mentions a bound that `p` does not have.
+
+### C2 propagation (`cubePropagateEqualities`)
+
+With `--arith-cube-propagate-eq` (which requires `--arith-cube-implied-eq`),
+when the test fails after C2 ran, each implied equality `t = u` of the
+snapshot `p` is sent as the lemma
+
+```
+E  ⇒  t ≥ u        (or t ≤ u)
+```
+
+where `t ≤ u` (resp. `t ≥ u`) is the bound of `t` the equality comes from,
+`E` is the explanation of the bounds in the equality's explanation by
+asserted literals, and `t` is the variable of `p` (an input variable, or the
+polynomial of a row). With the existing bound, cvc5 then has the equality
+explicitly (both bounds equal), so the Dio solver, cuts and branching can use
+it, and so can the next calls of the test (`skippedEquality`, or C3).
+
+- If any lemma is new, the check ends there (as for a cut) and the SAT solver
+  propagates it; otherwise cvc5 continues as usual (lemmas are cached, so the
+  same one is never sent twice).
+- Only equalities of `p` can be sent, since the variables of a problem
+  reduced by C3 are not variables of cvc5. If C2 only ran on a reduced
+  problem (test-first with C3, when `p` had explicit equalities), it is run
+  once more on `p` before propagating.
+- With detect-first, the equalities found are sent when the test is skipped
+  because of them.
+- With proofs on, the lemma has no proof of its own and is a `THEORY_LEMMA`
+  trust step, like other lemmas of the linear solver.
+- **On skip** (`--arith-cube-propagate-eq-on-skip`, off by default). Without
+  C3, a problem with an explicit equality skips the test before C2 runs, so
+  its implied equalities are never found (the debug sweep found no
+  propagation at all without C3 because of this). With this option, C2 is
+  run on `p` when the test is skipped for that reason, and what it finds is
+  sent. C2 keeps the explicit equalities as they are and only reports new
+  ones. It has no effect with C3, where the test is not skipped.
+- **Form** (`--arith-cube-propagate-eq-form`, expert, default `bound`). With
+  `equality`, the conclusion is `t = u` instead of the missing bound. Since
+  `E` contains the other bound, the two lemmas are equivalent, and inside the
+  linear solver they end in the same state (equal bounds: the variable goes
+  to the Dio solver and the congruence manager, and an existing `(= t u)`
+  atom is set by trichotomy). With `--arith-rewrite-equalities`, the default
+  for pure linear arithmetic, `t = u` is even split into two bounds by
+  preprocessing, so the forms only differ without it (e.g. with UF): an
+  equality atom, whose negation is a disequality that may need a split, and
+  which other theories see directly.
 
 ### C3: equality elimination (`eliminateEqualities`)
 
@@ -276,7 +339,14 @@ loop:
         make them explicit in q (lower = upper = value) and loop again
     otherwise (pivot limit): give up
 x := map(point); check x against all bounds and disequalities; install x
+
+give up: if propagation is on and C2 ran, send the implied equalities of p
+         as lemmas (detecting them on p first if C2 only ran on a reduced q)
 ```
+
+With detect-first, C2 runs on `p` before the loop; if it finds equalities,
+the test is skipped (`skippedImpliedEquality`) and, with propagation on, they
+are sent.
 
 Every round of the loop removes at least one variable of `q`, so it ends.
 
@@ -297,6 +367,8 @@ Printed with `--stats-internal`, under `theory::arith::cube::`:
 | `diseqFailed` | rounded point violates a disequality |
 | `time` | total time of the test, including C2 and C3 |
 | `impliedEq::calls`, `::rounds`, `::found`, `::unknown`, `::time` | C2: calls, strict systems solved, equalities found, pivot limit reached, time |
+| `impliedEq::propagated` | implied equalities sent as lemmas (new ones only) |
+| `impliedEq::onSkip` | C2 runs made because the test was skipped for an explicit equality (`--arith-cube-propagate-eq-on-skip`) |
 | `eqElim::calls`, `::equalities`, `::fresh`, `::infeasible`, `::unknown`, `::time` | C3: calls, equalities eliminated, fresh variables, no integer solution, step limit reached, time |
 
 ## 4. Code map
