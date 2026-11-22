@@ -40,7 +40,8 @@ CUBE_STATS = ["calls", "success", "notApplicable", "skippedEquality",
               "skippedImpliedEquality", "noRoom", "shiftedInfeasible",
               "shiftedUnknown", "roundFailed", "diseqFailed", "time",
               "impliedEq::calls", "impliedEq::rounds", "impliedEq::found",
-              "impliedEq::unknown", "impliedEq::time", "eqElim::calls",
+              "impliedEq::unknown", "impliedEq::time",
+              "impliedEq::propagated", "impliedEq::onSkip", "eqElim::calls",
               "eqElim::equalities", "eqElim::fresh", "eqElim::infeasible",
               "eqElim::unknown", "eqElim::time"]
 

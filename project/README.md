@@ -688,3 +688,78 @@ python3 project/scripts/summarize.py results.csv --timeout 60
 
 `run_bench.py` can be interrupted and resumed (it skips runs already in the
 CSV), and takes other configurations with `--config NAME="OPTIONS"`.
+
+### Experiments: propagation and overhead
+
+Two experiments, each with a driver that runs its configurations at the same
+time (one process each, `JOBS` per configuration, default 1) and can be
+interrupted and resumed. Both are meant for the Linux benchmark machine
+(they use `flock`, GNU `time` and `/proc/cpuinfo`).
+
+1. **Propagation**: how much `--arith-cube-propagate-eq` helps.
+   Configurations B0, C1, C1+C2 (the control: test-first C2, no
+   propagation), C1+C2+P and C1+C2+P+skip (with
+   `--arith-cube-propagate-eq-on-skip`), on the 387 instances of the
+   equality-order experiment (5 families and their `+ie`/`+ie2` variants),
+   300 s. `SOURCE` reuses its benchmarks and instance list, so the instances
+   are exactly the same. Note that the implied equalities of the variants are
+   on new variables (`b = c = x + a`, with `a`, `b`, `c` fresh), so
+   propagating them tells cvc5 nothing about the original problem: on the
+   variants propagation can only cost time, and any help must show up in the
+   original families (the report lists where propagation fired, per family).
+2. **Overhead**: what the unit cube test costs where it was not chosen to
+   help. Configurations B0, C1 and C1+C2+P+skip on 1000 files drawn with a
+   fixed seed from the QF_LIA families other than the 5 above (proposal set
+   (iv), `prepare_random.py`), 60 s. `ARCHIVE` reuses the archive already
+   downloaded; only the chosen files are extracted.
+
+First a smoke test, in throwaway directories: the instance list is chosen
+only once per directory and finished runs are never redone, so a test in the
+real directories would become part of the results.
+
+```
+B=$HOME/cvc5/build-release/bin/cvc5
+cd $HOME/cvc5/project/scripts
+env SOURCE=$HOME/cube-eq TIMEOUT=5 ./propagation_experiment.sh $B /tmp/prop-smoke
+env ARCHIVE=$HOME/cube-eq/download/QF_LIA.tar.zst COUNT=10 TIMEOUT=5 \
+  ./overhead_experiment.sh $B /tmp/oh-smoke
+python3 -I report_experiments.py propagation /tmp/prop-smoke/results --timeout 5
+python3 -I report_experiments.py overhead /tmp/oh-smoke/results --timeout 5
+rm -rf /tmp/prop-smoke /tmp/oh-smoke
+```
+
+(`TIMEOUT=5` on 387 instances still takes up to about half an hour per
+configuration; interrupt it once the CSVs have a few rows.) Then the real
+runs:
+
+```
+nohup env SOURCE=$HOME/cube-eq ./propagation_experiment.sh $B $HOME/cube-prop \
+  > $HOME/cube-prop.log 2>&1 &
+nohup env ARCHIVE=$HOME/cube-eq/download/QF_LIA.tar.zst \
+  ./overhead_experiment.sh $B $HOME/cube-overhead > $HOME/cube-overhead.log 2>&1 &
+
+python3 -I report_experiments.py propagation $HOME/cube-prop/results --timeout 300
+python3 -I report_experiments.py overhead $HOME/cube-overhead/results --timeout 60
+```
+
+Expected wall time with one job per configuration: about 4 h for the
+propagation experiment (B0 took 3 h 53 min in the demo), and many hours for
+the overhead one (up to 1000 × 60 s ≈ 17 h per configuration if everything
+timed out). With enough cores, `JOBS=2` halves that.
+
+If a run stops at once with an unknown option, the binary was not rebuilt
+from this branch (`git pull && make -C build-release`).
+
+Together they run 8 processes with up to 4000 MB each: run them at the same
+time only if the machine has more physical cores than that (`lscpu`) and
+32 GB free, otherwise one after the other, since timing is what is measured.
+
+`report_experiments.py propagation` prints solved, PAR-2 and wrong answers
+per configuration and family, how often equalities were propagated, the
+instances gained and lost against the control, and the time ratio where
+something was propagated. `report_experiments.py overhead` prints the share
+of CPU time spent in the test (`cube::time`, from finished runs; separately
+for instances where the test succeeded, where that time was useful, and
+where it never did, where it was pure overhead) and the CPU slowdown against
+B0 on the instances both solve where the test never succeeded (instances
+under 0.5 s are left out, since start-up dominates them).

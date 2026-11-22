@@ -15,7 +15,8 @@ from collections import defaultdict
 STATS = ["calls", "success", "skippedEquality", "skippedImpliedEquality",
          "noRoom", "shiftedInfeasible", "shiftedUnknown", "diseqFailed",
          "notApplicable", "impliedEq::calls", "impliedEq::rounds",
-         "impliedEq::found", "impliedEq::unknown", "eqElim::calls",
+         "impliedEq::found", "impliedEq::unknown", "impliedEq::propagated",
+         "impliedEq::onSkip", "eqElim::calls",
          "eqElim::equalities", "eqElim::fresh", "eqElim::infeasible",
          "time", "impliedEq::time", "eqElim::time"]
 
