@@ -94,6 +94,8 @@ enum class InferenceId
   ARITH_APPROX_CUT,
   ARITH_BB_LEMMA,
   ARITH_DIO_CUT,
+  // an implied equality found by the unit cube test, sent as a lemma
+  ARITH_CUBE_IMPLIED_EQ,
   ARITH_DIO_DECOMPOSITION,
   // unate lemma during presolve
   ARITH_UNATE,

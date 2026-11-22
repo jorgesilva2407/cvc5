@@ -56,6 +56,7 @@ const char* toString(InferenceId i)
     case InferenceId::ARITH_APPROX_CUT: return "ARITH_APPROX_CUT";
     case InferenceId::ARITH_BB_LEMMA: return "ARITH_BB_LEMMA";
     case InferenceId::ARITH_DIO_CUT: return "ARITH_DIO_CUT";
+    case InferenceId::ARITH_CUBE_IMPLIED_EQ: return "ARITH_CUBE_IMPLIED_EQ";
     case InferenceId::ARITH_DIO_DECOMPOSITION: return "ARITH_DIO_DECOMPOSITION";
     case InferenceId::ARITH_UNATE: return "ARITH_UNATE";
     case InferenceId::ARITH_ROW_IMPL: return "ARITH_ROW_IMPL";

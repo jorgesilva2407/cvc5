@@ -396,6 +396,9 @@ TheoryArithPrivate::Statistics::Statistics(StatisticsRegistry& reg,
       d_cubeImpliedEqFound(reg.registerInt(name + "cube::impliedEq::found")),
       d_cubeImpliedEqUnknown(
           reg.registerInt(name + "cube::impliedEq::unknown")),
+      d_cubeImpliedEqPropagated(
+          reg.registerInt(name + "cube::impliedEq::propagated")),
+      d_cubeImpliedEqOnSkip(reg.registerInt(name + "cube::impliedEq::onSkip")),
       d_cubeImpliedEqTimer(reg.registerTimer(name + "cube::impliedEq::time")),
       d_cubeEqElimCalls(reg.registerInt(name + "cube::eqElim::calls")),
       d_cubeEqElimEqualities(
@@ -2953,17 +2956,61 @@ bool TheoryArithPrivate::cubeEliminateEqualities(CubeProblem& q,
   return true;
 }
 
-bool TheoryArithPrivate::unitCubeTest()
+bool TheoryArithPrivate::cubePropagateEqualities(
+    const std::vector<ArithVar>& vars, const ImpliedEqResult& res)
+{
+  NodeManager* nm = nodeManager();
+  bool sent = false;
+  for (const ImpliedEquality& eq : res.d_equalities)
+  {
+    // The bounds of the explanation imply the equality over the rationals
+    // (Lemma 6), so they imply the bound of the variable that is missing.
+    ConstraintCPVec exp;
+    for (const CubeBound& b : eq.d_explanation)
+    {
+      ArithVar v = vars[b.d_var];
+      ConstraintP c = b.d_upper ? d_partialModel.getUpperBoundConstraint(v)
+                                : d_partialModel.getLowerBoundConstraint(v);
+      Assert(c != NullConstraint);
+      exp.push_back(c);
+    }
+    Node term = d_partialModel.asNode(vars[eq.d_var]);
+    Assert(eq.d_value.isIntegral());
+    Node value = nm->mkConstRealOrInt(term.getType(), eq.d_value);
+    // Either the missing bound, which with the bound of the variable in the
+    // premises gives the equality, or the equality itself.
+    Node conclusion =
+        options().arith.arithCubePropagateEqForm
+                == options::ArithCubePropagateEqForm::EQUALITY
+            ? term.eqNode(value)
+            : nm->mkNode(eq.d_upper ? Kind::GEQ : Kind::LEQ, term, value);
+    Node lemma = Constraint::externalExplainByAssertions(nm, exp).impNode(
+        rewrite(conclusion));
+    Trace("arith::cube") << "cube: implied equality lemma " << lemma
+                         << std::endl;
+    // A lemma sent before is not sent again.
+    if (outputLemma(lemma, InferenceId::ARITH_CUBE_IMPLIED_EQ))
+    {
+      ++d_statistics.d_cubeImpliedEqPropagated;
+      sent = true;
+    }
+  }
+  return sent;
+}
+
+bool TheoryArithPrivate::unitCubeTest(bool& lemmaSent)
 {
   TimerStat::CodeTimer codeTimer(d_statistics.d_cubeTimer);
   ++d_statistics.d_cubeCalls;
   Assert(d_qflraStatus == Result::SAT);
   Assert(!anyConflict());
+  lemmaSent = false;
   bool eqElim = options().arith.arithCubeEqElim;
   bool impliedEq = options().arith.arithCubeImpliedEq;
   bool detectFirst = impliedEq
                      && options().arith.arithCubeImpliedEqOrder
                             == options::ArithCubeImpliedEqOrder::DETECT_FIRST;
+  bool propagate = impliedEq && options().arith.arithCubePropagateEq;
   // rejected when the options are set
   Assert(!(detectFirst && eqElim));
 
@@ -2974,40 +3021,76 @@ bool TheoryArithPrivate::unitCubeTest()
   {
     ++d_statistics.d_cubeSkippedEquality;
     Trace("arith::cube") << "cube: skipped, there is an equality" << std::endl;
+    // The explicit equalities are known to the solver, but the implied ones
+    // may not be: detect and send them anyway.
+    if (propagate && options().arith.arithCubePropagateEqOnSkip)
+    {
+      ++d_statistics.d_cubeImpliedEqOnSkip;
+      std::vector<ArithVar> vars;
+      CubeProblem p = cubeSnapshot(vars);
+      lemmaSent = cubePropagateEqualities(vars, cubeImpliedEqualities(p));
+    }
     return false;
   }
 
   std::vector<ArithVar> vars;
   CubeProblem p = cubeSnapshot(vars);
+  // The implied equalities of p, once detected. Only those of p can be
+  // propagated, since the variables of a reduced problem are not variables
+  // of this solver.
+  std::optional<ImpliedEqResult> impliedOfP;
   if (detectFirst)
   {
     // As in the paper (Sec. 6), the equalities are looked for before the
     // test. Any equality leaves no room for a cube (Lemma 6), so the test is
     // skipped if one is found. If the detection gives up before finding one,
     // the test is run anyway.
-    ImpliedEqResult implied = cubeImpliedEqualities(p);
-    if (!implied.d_equalities.empty())
+    impliedOfP = cubeImpliedEqualities(p);
+    if (!impliedOfP->d_equalities.empty())
     {
       ++d_statistics.d_cubeSkippedImpliedEquality;
       Trace("arith::cube") << "cube: skipped, there is an implied equality"
                            << std::endl;
+      lemmaSent = propagate && cubePropagateEqualities(vars, *impliedOfP);
       return false;
     }
   }
   // The test is applied to q, whose integer solutions y give the integer
   // solutions map(y) of p. Initially, q is p and map is the identity.
   CubeProblem q = p;
+  bool qIsP = true;
   std::vector<AffineExpr> map;
   for (size_t i = 0; i < p.d_numInputs; ++i)
   {
     map.push_back({Integer(0), {{i, Integer(1)}}});
   }
+  // Whether the implied equalities were detected in the loop below (on p or
+  // on a reduced problem).
+  bool detected = false;
+  // Gives up. If the implied equalities were detected, they are propagated,
+  // after detecting those of p if they were only detected on a reduced
+  // problem.
+  auto giveUp = [&]() {
+    if (propagate && detected)
+    {
+      if (!impliedOfP)
+      {
+        impliedOfP = cubeImpliedEqualities(p);
+      }
+      lemmaSent = cubePropagateEqualities(vars, *impliedOfP);
+    }
+    return false;
+  };
   CubeResult res;
   while (true)
   {
-    if (eqElim && q.hasEquality() && !cubeEliminateEqualities(q, map))
+    if (eqElim && q.hasEquality())
     {
-      return false;
+      if (!cubeEliminateEqualities(q, map))
+      {
+        return giveUp();
+      }
+      qIsP = false;
     }
     res = runUnitCubeTest(q, options().arith.arithCubePivotLimit);
     Trace("arith::cube") << "cube: " << q.numVariables() << " variables, "
@@ -3024,21 +3107,26 @@ bool TheoryArithPrivate::unitCubeTest()
         break;
       case CubeResult::Status::UNKNOWN:
         ++d_statistics.d_cubeShiftedUnknown;
-        return false;
+        return giveUp();
       default:
         Assert(res.d_status == CubeResult::Status::ROUND_FAILED);
         ++d_statistics.d_cubeRoundFailed;
-        return false;
+        return giveUp();
     }
     // With detect-first, the implied equalities were already looked for.
     if (!impliedEq || detectFirst)
     {
-      return false;
+      return giveUp();
     }
     ImpliedEqResult implied = cubeImpliedEqualities(q);
+    detected = true;
+    if (qIsP)
+    {
+      impliedOfP = implied;
+    }
     if (!eqElim || implied.d_equalities.empty())
     {
-      return false;
+      return giveUp();
     }
     // Make the implied equalities explicit, so that they are eliminated, and
     // try again. Each round eliminates at least one variable of q.
@@ -3047,18 +3135,19 @@ bool TheoryArithPrivate::unitCubeTest()
       q.d_lower[eq.d_var] = DeltaRational(eq.d_value);
       q.d_upper[eq.d_var] = DeltaRational(eq.d_value);
     }
+    qIsP = false;
   }
 
   std::vector<Rational> values = p.evaluate(applyMap(map, res.d_point));
   if (!cubeSatisfiesAll(vars, values))
   {
     ++d_statistics.d_cubeDiseqFailed;
-    return false;
+    return giveUp();
   }
   if (!cubeInstall(vars, values))
   {
     ++d_statistics.d_cubeRoundFailed;
-    return false;
+    return giveUp();
   }
   ++d_statistics.d_cubeSuccess;
   Trace("arith::cube") << "cube: success" << std::endl;
@@ -4436,7 +4525,14 @@ bool TheoryArithPrivate::postCheck(Theory::Effort effortLevel)
     {
       if (cubeTestApplicable())
       {
-        cubeSolved = unitCubeTest();
+        // With --arith-cube-propagate-eq, a failed test may send the implied
+        // equalities it found as lemmas, which are handled first.
+        bool lemmaSent = false;
+        cubeSolved = unitCubeTest(lemmaSent);
+        if (lemmaSent)
+        {
+          emmittedConflictOrSplit = true;
+        }
       }
       else
       {

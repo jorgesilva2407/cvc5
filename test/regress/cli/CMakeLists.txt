@@ -45,6 +45,14 @@ set(regress_0_tests
   regress0/arith/cube-test-implied-unsat.smt2
   regress0/arith/cube-test-narrow.smt2
   regress0/arith/cube-test-paper-example.smt2
+  regress0/arith/cube-test-propagate-cycle.smt2
+  regress0/arith/cube-test-propagate-detect-first.smt2
+  regress0/arith/cube-test-propagate-eq-form.smt2
+  regress0/arith/cube-test-propagate-eq-form-sat.smt2
+  regress0/arith/cube-test-propagate-eqelim-unsat.smt2
+  regress0/arith/cube-test-propagate-on-skip.smt2
+  regress0/arith/cube-test-propagate-on-skip-unsat.smt2
+  regress0/arith/cube-test-propagate-unsat.smt2
   regress0/arith/cube-test-unbounded.smt2
   regress0/arith/cube-test-unsat.smt2
   regress0/arith/dd_59_static_learn.smt2

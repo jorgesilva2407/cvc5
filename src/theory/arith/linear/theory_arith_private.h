@@ -820,9 +820,16 @@ class TheoryArithPrivate : protected EnvObj
    * shifted system is infeasible (then, with --arith-cube-eq-elim, they are
    * eliminated and the test is run again); with detect-first, before the
    * test, which is skipped if there are any (paper, Sec. 6 and Lemma 6).
-   * This never produces conflicts or lemmas.
+   *
+   * Nothing derived from the shifted or strict bounds is sent: the test never
+   * produces conflicts, and produces lemmas only with
+   * --arith-cube-propagate-eq. Then, if the test fails after the implied
+   * equalities were detected, those of the original problem are sent as
+   * lemmas (see cubePropagateEqualities), and lemmaSent is set if one was
+   * new. With --arith-cube-propagate-eq-on-skip, this is also done when the
+   * test is skipped because of an equality.
    */
-  bool unitCubeTest();
+  bool unitCubeTest(bool& lemmaSent);
   /** Returns true if the unit cube test can be applied to the current state. */
   bool cubeTestApplicable();
   /** Whether some variable (input or row) has equal lower and upper bounds. */
@@ -848,6 +855,18 @@ class TheoryArithPrivate : protected EnvObj
                    const std::vector<Rational>& values);
   /** Runs the implied equality detection on p and reports the result. */
   ImpliedEqResult cubeImpliedEqualities(const CubeProblem& p);
+  /**
+   * Sends each implied equality of res, detected on the snapshot whose
+   * variables are vars, as the lemma E => t >= u (or t <= u), where t = u is
+   * the equality, t <= u (or t >= u) is a bound of t and E explains the
+   * bounds that imply the equality over the rationals. With
+   * --arith-cube-propagate-eq-form=equality, the lemma is E => t = u
+   * instead, which is equivalent since E contains t <= u. The lemma is valid,
+   * since it follows from the original, non-strict bounds; the strict ones
+   * were only used to find it. Returns true if a lemma was sent.
+   */
+  bool cubePropagateEqualities(const std::vector<ArithVar>& vars,
+                               const ImpliedEqResult& res);
   /**
    * Eliminates the equalities of q, replacing q by the reduced problem and
    * map by its composition with the solution of the equalities. Returns false
@@ -974,6 +993,8 @@ class TheoryArithPrivate : protected EnvObj
     IntStat d_cubeImpliedEqRounds;
     IntStat d_cubeImpliedEqFound;
     IntStat d_cubeImpliedEqUnknown;
+    IntStat d_cubeImpliedEqPropagated;
+    IntStat d_cubeImpliedEqOnSkip;
     TimerStat d_cubeImpliedEqTimer;
 
     IntStat d_cubeEqElimCalls;

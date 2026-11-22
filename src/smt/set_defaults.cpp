@@ -810,6 +810,19 @@ void SetDefaults::setDefaultsPost(const LogicInfo& logic, Options& opts) const
         "--arith-cube-implied-eq-order=detect-first does not support "
         "--arith-cube-eq-elim yet.");
   }
+  if (opts.arith.arithCubePropagateEq && !opts.arith.arithCubeImpliedEq)
+  {
+    throw FatalOptionException(
+        "--arith-cube-propagate-eq requires --arith-cube-implied-eq.");
+  }
+  if (!opts.arith.arithCubePropagateEq
+      && (opts.arith.arithCubePropagateEqOnSkip
+          || opts.arith.arithCubePropagateEqFormWasSetByUser))
+  {
+    throw FatalOptionException(
+        "--arith-cube-propagate-eq-on-skip and --arith-cube-propagate-eq-form "
+        "require --arith-cube-propagate-eq.");
+  }
 
   // Turn on arith rewrite equalities only for pure arithmetic
   if (!opts.arith.arithRewriteEqWasSetByUser)

@@ -552,6 +552,37 @@ name   = "Arithmetic Theory"
   help       = "the maximum number of pivots of each simplex call made by the implied equality detection (0: use --arith-cube-pivot-limit); when it is reached, the equalities found so far are used"
 
 [[option]]
+  name       = "arithCubePropagateEq"
+  category   = "regular"
+  long       = "arith-cube-propagate-eq"
+  type       = "bool"
+  default    = "false"
+  help       = "when the unit cube test fails, send each implied equality found by --arith-cube-implied-eq as a lemma (the bounds that imply it imply the missing bound), so that the rest of the solver can use it (requires --arith-cube-implied-eq)"
+
+[[option]]
+  name       = "arithCubePropagateEqOnSkip"
+  category   = "regular"
+  long       = "arith-cube-propagate-eq-on-skip"
+  type       = "bool"
+  default    = "false"
+  help       = "when the unit cube test is skipped because there is an equality (without --arith-cube-eq-elim), still detect the implied equalities and send them as with --arith-cube-propagate-eq (requires --arith-cube-propagate-eq)"
+
+[[option]]
+  name       = "arithCubePropagateEqForm"
+  category   = "expert"
+  long       = "arith-cube-propagate-eq-form=MODE"
+  type       = "ArithCubePropagateEqForm"
+  default    = "BOUND"
+  help       = "the conclusion of the lemmas of --arith-cube-propagate-eq (see --arith-cube-propagate-eq-form=help)"
+  help_mode  = "The conclusion of the implied equality lemmas of the unit cube test."
+[[option.mode.BOUND]]
+  name = "bound"
+  help = "The missing bound, t >= u or t <= u: with the bound of t in the premises, t = u then holds in the solver."
+[[option.mode.EQUALITY]]
+  name = "equality"
+  help = "The equality t = u. With --arith-rewrite-equalities (the default for pure linear arithmetic) it is split into two bounds, as with bound."
+
+[[option]]
   name       = "arithCubeEqElim"
   category   = "regular"
   long       = "arith-cube-eq-elim"
