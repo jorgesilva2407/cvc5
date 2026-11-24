@@ -541,7 +541,7 @@ name   = "Arithmetic Theory"
   help = "Run the unit cube test first; detect the implied equalities only if the shifted system is infeasible. With --arith-cube-eq-elim, they are then eliminated and the test is run again."
 [[option.mode.DETECT_FIRST]]
   name = "detect-first"
-  help = "Detect the implied equalities first, as in Bromberger and Weidenbach (IJCAR 2016, Sec. 6), and skip the test if there are any, since then no unit cube fits (Lemma 6). Not supported with --arith-cube-eq-elim yet."
+  help = "Detect the implied equalities first, as in Bromberger and Weidenbach (IJCAR 2016, Sec. 6). If there are any, no unit cube fits (Lemma 6): without --arith-cube-eq-elim the test is skipped; with it, they are eliminated together with the explicit equalities and the test is run on the reduced problem."
 
 [[option]]
   name       = "arithCubeImpliedEqPivotLimit"

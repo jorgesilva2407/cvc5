@@ -819,7 +819,9 @@ class TheoryArithPrivate : protected EnvObj
    * according to --arith-cube-implied-eq-order: with test-first, when the
    * shifted system is infeasible (then, with --arith-cube-eq-elim, they are
    * eliminated and the test is run again); with detect-first, before the
-   * test, which is skipped if there are any (paper, Sec. 6 and Lemma 6).
+   * test (paper, Sec. 6 and Lemma 6). If there are any, the test is then
+   * skipped, or, with --arith-cube-eq-elim, they are eliminated together with
+   * the explicit equalities and the test is run on the reduced problem.
    *
    * Nothing derived from the shifted or strict bounds is sent: the test never
    * produces conflicts, and produces lemmas only with

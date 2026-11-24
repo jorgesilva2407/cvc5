@@ -266,6 +266,7 @@ TheoryArithPrivate::ModelException::ModelException(TNode n, const char* msg)
 }
 TheoryArithPrivate::ModelException::~ModelException() {}
 
+// registering statistics for the test and the run
 TheoryArithPrivate::Statistics::Statistics(StatisticsRegistry& reg,
                                            const std::string& name)
     : d_statAssertUpperConflicts(
@@ -3011,12 +3012,9 @@ bool TheoryArithPrivate::unitCubeTest(bool& lemmaSent)
                      && options().arith.arithCubeImpliedEqOrder
                             == options::ArithCubeImpliedEqOrder::DETECT_FIRST;
   bool propagate = impliedEq && options().arith.arithCubePropagateEq;
-  // rejected when the options are set
-  Assert(!(detectFirst && eqElim));
 
   // An equality leaves no room for a cube. Unless the equalities are
-  // eliminated, this is checked before the problem is copied, since it is
-  // cheap.
+  // eliminated, this is checked before the problem is copied, since it is cheap.
   if (!eqElim && cubeHasEquality())
   {
     ++d_statistics.d_cubeSkippedEquality;
@@ -3039,22 +3037,6 @@ bool TheoryArithPrivate::unitCubeTest(bool& lemmaSent)
   // propagated, since the variables of a reduced problem are not variables
   // of this solver.
   std::optional<ImpliedEqResult> impliedOfP;
-  if (detectFirst)
-  {
-    // As in the paper (Sec. 6), the equalities are looked for before the
-    // test. Any equality leaves no room for a cube (Lemma 6), so the test is
-    // skipped if one is found. If the detection gives up before finding one,
-    // the test is run anyway.
-    impliedOfP = cubeImpliedEqualities(p);
-    if (!impliedOfP->d_equalities.empty())
-    {
-      ++d_statistics.d_cubeSkippedImpliedEquality;
-      Trace("arith::cube") << "cube: skipped, there is an implied equality"
-                           << std::endl;
-      lemmaSent = propagate && cubePropagateEqualities(vars, *impliedOfP);
-      return false;
-    }
-  }
   // The test is applied to q, whose integer solutions y give the integer
   // solutions map(y) of p. Initially, q is p and map is the identity.
   CubeProblem q = p;
@@ -3064,9 +3046,38 @@ bool TheoryArithPrivate::unitCubeTest(bool& lemmaSent)
   {
     map.push_back({Integer(0), {{i, Integer(1)}}});
   }
-  // Whether the implied equalities were detected in the loop below (on p or
-  // on a reduced problem).
+  // Whether the implied equalities were detected (on p or on a reduced
+  // problem).
   bool detected = false;
+  if (detectFirst)
+  {
+    // As in the paper (Sec. 6), the equalities are looked for before the
+    // test. Any equality leaves no room for a cube (Lemma 6). If the
+    // detection gives up before finding one, the test is run anyway.
+    impliedOfP = cubeImpliedEqualities(p);
+    detected = true;
+    if (!impliedOfP->d_equalities.empty())
+    {
+      if (!eqElim)
+      {
+        // No cube fits, so the test is skipped.
+        ++d_statistics.d_cubeSkippedImpliedEquality;
+        Trace("arith::cube") << "cube: skipped, there is an implied equality"
+                             << std::endl;
+        lemmaSent = propagate && cubePropagateEqualities(vars, *impliedOfP);
+        return false;
+      }
+      // Make them explicit, so that the loop below eliminates them, together
+      // with the explicit equalities of p, before the test is run on the
+      // reduced problem (paper, Sec. 6).
+      for (const ImpliedEquality& eq : impliedOfP->d_equalities)
+      {
+        q.d_lower[eq.d_var] = DeltaRational(eq.d_value);
+        q.d_upper[eq.d_var] = DeltaRational(eq.d_value);
+      }
+      qIsP = false;
+    }
+  }
   // Gives up. If the implied equalities were detected, they are propagated,
   // after detecting those of p if they were only detected on a reduced
   // problem.

@@ -32,6 +32,12 @@ set(regress_0_tests
   regress0/arith/bug549.cvc.smt2
   regress0/arith/bug569.smt2
   regress0/arith/cube-test-bool.smt2
+  regress0/arith/cube-test-detect-first.smt2
+  regress0/arith/cube-test-detect-first-eqelim.smt2
+  regress0/arith/cube-test-detect-first-eqelim-explicit.smt2
+  regress0/arith/cube-test-detect-first-eqelim-unsat.smt2
+  regress0/arith/cube-test-detect-first-limit.smt2
+  regress0/arith/cube-test-detect-first-success.smt2
   regress0/arith/cube-test-diseq.smt2
   regress0/arith/cube-test-diseq-rounded.smt2
   regress0/arith/cube-test-equality.smt2
