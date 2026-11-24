@@ -32,12 +32,14 @@ behind its own option and off by default:
 | component | option | what it does |
 |---|---|---|
 | C1 unit cube test | `--arith-cube-test` | shift the bounds inwards, solve the shifted system over the rationals, round its solution, and use it as the model if it satisfies every constraint |
-| C2 implied equalities | `--arith-cube-implied-eq` | when the shifted system is infeasible, find the equalities implied by the constraints (B&W Lemma 6) |
+| C2 implied equalities | `--arith-cube-implied-eq` | find the equalities implied by the constraints (B&W Lemma 6), after the test fails or before it (see the next row) |
+| (C2 order) | `--arith-cube-implied-eq-order=test-first\|detect-first` (default `test-first`) | `test-first`: detect only when the shifted system is infeasible; `detect-first`: detect before the test; if there is an equality, skip the test, or with C3 eliminate the equalities and run the test on the reduced problem (paper Sec. 6) |
 | C2 propagation | `--arith-cube-propagate-eq` | when the test fails, send the implied equalities found by C2 to cvc5 as lemmas, so that its own solver (Dio solver, branching) can use them |
 | (propagation) | `--arith-cube-propagate-eq-on-skip` | also run C2 and propagate when the test is skipped because of an explicit equality (C3 off) |
 | (propagation) | `--arith-cube-propagate-eq-form=bound\|equality` (expert, default `bound`) | send the missing bound `t ≥ u` / `t ≤ u`, or the equality `t = u` |
 | C3 equality elimination | `--arith-cube-eq-elim` | remove the equalities (explicit, and those found by C2) with a Diophantine solver, run C1 on the reduced problem, map the point back |
 | (limit) | `--arith-cube-pivot-limit=N` (expert, default 10000) | pivots per simplex call of C1/C2, and steps of C3; the component gives up when reached |
+| (C2 limit) | `--arith-cube-implied-eq-pivot-limit=N` (expert, default 0 = same as above) | pivots per simplex call of C2 only; when reached, the equalities found so far are used |
 
 Status:
 
@@ -128,6 +130,23 @@ These are the decisions taken so far, with the reason for each.
 
   C3 is an option of its own, so its effect can be measured by running with
   and without it.
+- **When implied equalities are detected: both orders, chosen by an
+  option.** The proposal's C2 says "when the shifted system is infeasible,
+  we check Ax < b" (`test-first`). The paper (Sec. 6) presents equality
+  handling as preprocessing: find the equalities with Lemma 6, eliminate
+  them, then run the test (`detect-first`). Both give the same answers and
+  the same final instance; they differ in where one simplex call is spent.
+  `test-first` makes successes cheaper (detection after a success would find
+  nothing, since a fitting cube means there are no equalities); `detect-first`
+  makes problems with equalities cheaper (the test on them is guaranteed to
+  fail). Which one pays off is measured (RQ3). For a first comparison,
+  `detect-first` is used without C3: C1 alone against C2-then-C1, where C2
+  only decides whether to run C1. With C3, `detect-first` is the paper's
+  full order (added 2026-11-24): the implied equalities are found first,
+  eliminated together with the explicit ones, and the test runs once on the
+  reduced problem.
+  C2 also has its own pivot limit, so that it can be kept cheap when it is
+  used as a filter.
 - **C3 is a reimplementation of Griggio's method, decoupled from the
   solver.** cvc5 already has a Diophantine solver (`DioSolver`, after
   Griggio, JSAT 2012), but it only exposes substitutions without fresh
@@ -154,7 +173,6 @@ branching (branch-and-bound / brab), as in the proposal. If the test
 succeeds, the model is integral and nothing is cut or branched on; if it
 fails, cvc5 continues exactly as without it. The test runs at every such
 check, so with Boolean structure it can run many times in one problem.
-
 ### The problem the test sees
 
 `cubeSnapshot` copies cvc5's current linear problem into a `CubeProblem`:
@@ -226,10 +244,25 @@ explanation holds with equality in every solution.
 3. If infeasible, every strict bound in the explanation is an implied
    equality: fix that variable to that bound, and go back to 2.
 
-Each round fixes at least one variable, so this ends. It is called only when
-the shifted system was infeasible or had no room. Without C3, the equalities
-found are only counted (they explain why the test failed, but are not used),
-unless they are propagated (below). They are never turned into conflicts.
+Each round fixes at least one variable, so this ends. When it is called
+depends on `--arith-cube-implied-eq-order`:
+
+- `test-first` (default): only when the shifted system was infeasible or had
+  no room. Without C3, the equalities found are only counted (they explain
+  why the test failed, but are not used), unless they are
+  propagated (below).
+- `detect-first`: before the test, on the original problem. If an equality
+  is found, no unit cube can fit: without C3 the test is skipped
+  (`skippedImpliedEquality`); with C3 the equalities are made explicit,
+  eliminated together with the explicit ones, and the test is run on the
+  reduced problem (the paper's order, Sec. 6). If the pivot limit stops the
+  detection before it finds one, the test is run anyway. With
+  `detect-first`, C2 is not run again after the test fails.
+
+Every equality reported comes from a round that finished, so it is genuine
+even if a later round hits the pivot limit (`--arith-cube-implied-eq-pivot-limit`,
+by default the same as `--arith-cube-pivot-limit`). The equalities are never
+turned into conflicts, and into lemmas only when they are propagated.
 
 Each equality also gets an explanation: the bounds of the original problem
 that imply it. The bounds in the conflict of round k are bounds of `p`,
@@ -325,7 +358,13 @@ never reported as a conflict (safety rule); cvc5 finds that out by itself.
 ```
 if C3 is off and the problem has an equality:
     skip (skippedEquality), continue with cvc5
-p := snapshot; q := p; map := identity
+p := snapshot
+q := p; map := identity
+if C2 is on and the order is detect-first:
+    find the implied equalities of p
+    if any were found:
+        if C3 is off: skip (skippedImpliedEquality), continue with cvc5
+        make them explicit in q (lower = upper = value)
 loop:
     if C3 is on and q has an equality:
         eliminate them (q, map := reduced problem, composed map)
@@ -333,7 +372,7 @@ loop:
     run C1 on q
     if success: leave the loop
     if no room or shifted system infeasible:
-        if C2 is off: give up
+        if C2 is off or the order is detect-first: give up
         find the implied equalities of q
         if C3 is off or none were found: give up
         make them explicit in q (lower = upper = value) and loop again
@@ -360,6 +399,7 @@ Printed with `--stats-internal`, under `theory::arith::cube::`:
 | `success` | times it produced the model |
 | `notApplicable` | not called: the problem is not pure integer, or is nonlinear |
 | `skippedEquality` | skipped because of an equality (C3 off) |
+| `skippedImpliedEquality` | skipped because C2 found an implied equality before the test (`detect-first`) |
 | `noRoom` | the shifted bounds of some variable cross |
 | `shiftedInfeasible` | the shifted system is infeasible |
 | `shiftedUnknown` | pivot limit reached in C1 |
@@ -535,9 +575,14 @@ B2 runs and RQ3 Nov 14–22, report and artifact Nov 23–29.
    calling it less often (e.g. only once per problem, or only after a check
    where the bounds changed). Each would be a new option, off by default, so
    the current behaviour stays the default of the test.
-2. Interaction with brab: compare B1 against B1−, and possibly the
+2. When to detect implied equalities: `--arith-cube-implied-eq-order`
+   `test-first` against `detect-first` (first without C3: C1 alone, C1 with
+   C2 after it, C2 before C1; then with C3: B2 with `test-first` against B2
+   with `detect-first`, the paper's order), and the effect of a small
+   `--arith-cube-implied-eq-pivot-limit` on `detect-first`.
+3. Interaction with brab: compare B1 against B1−, and possibly the
    alternative installation through brab lemmas (decision (b)).
-3. Implement only what the measurements call for.
+4. Implement only what the measurements call for.
 
 ### 8.5 Report and artifact
 
@@ -583,6 +628,12 @@ example, the test stops succeeding) and `--check-models`.
 | `cube-test-eqelim-decompose` | `3x + 5y = 7`: elimination with fresh variables |
 | `cube-test-eqelim-implied` | C2 finds equalities, C3 removes them, the test succeeds |
 | `cube-test-eqelim-unsat` | equalities without non-negative solutions: C3 must not interfere |
+| `cube-test-detect-first` | detect-first: the implied equalities are found first and the test is skipped (`skippedImpliedEquality`) |
+| `cube-test-detect-first-success` | detect-first without equalities: detection finds none, the test succeeds |
+| `cube-test-detect-first-limit` | detect-first with a pivot limit of 1 for C2: still sound (`--check-models`) |
+| `cube-test-detect-first-eqelim` | detect-first with C3 (paper's order): the implied equalities are found, eliminated, and the test succeeds on its only call, without a `shiftedInfeasible` |
+| `cube-test-detect-first-eqelim-explicit` | detect-first with C3 and only an explicit equality: detection finds nothing, the explicit equality is eliminated, the test succeeds |
+| `cube-test-detect-first-eqelim-unsat` | detect-first with C3 on an unsat problem whose relaxation is sat: the test must not interfere |
 
 ### 9.3 Debug sweep (tens of minutes)
 
@@ -689,6 +740,46 @@ python3 project/scripts/summarize.py results.csv --timeout 60
 `run_bench.py` can be interrupted and resumed (it skips runs already in the
 CSV), and takes other configurations with `--config NAME="OPTIONS"`.
 
+Experiment on the order of C2: plain cvc5, C1, and C2 before C1. One script
+per configuration, so they can run at the same time:
+
+```
+project/scripts/eq_order_b0.sh      build-release/bin/cvc5 ~/cube-eq
+project/scripts/eq_order_c1.sh      build-release/bin/cvc5 ~/cube-eq
+project/scripts/eq_order_c2first.sh build-release/bin/cvc5 ~/cube-eq
+project/scripts/eq_order_summary.sh ~/cube-eq     # when they are done
+```
+
+Optional environment variables: `TIMEOUT` (default 300 s), `JOBS` (runs in
+parallel within one configuration, default 1) and `MEM_MB` (default 4000).
+The first script to start downloads the SMT-LIB families
+(`fetch_benchmarks.sh`; needs `curl` and `python3-venv`) and chooses the
+instances (`prepare_eq_order.py`, fixed seed); the others wait for it.
+Running a script again resumes an interrupted run.
+
+| configuration | script | options |
+|---|---|---|
+| `B0` | `eq_order_b0.sh` | none |
+| `C1` | `eq_order_c1.sh` | `--arith-cube-test` |
+| `C2first+C1` | `eq_order_c2first.sh` | `--arith-cube-test --arith-cube-implied-eq --arith-cube-implied-eq-order=detect-first` |
+
+| instances | files | what they contain |
+|---|---|---|
+| `dillig`, `slacks`, `CAV_2009_benchmarks`, `20180326-Bromberger` | 50 each, at random | mostly instances where the test works |
+| `prime-cone` | all 37 | explicit equalities, and instances too narrow for a cube |
+| `F+ie`, `F+ie2` for each family F | 15 each | 15 of the files of F, plus three constraints that imply `b = c = x + a` (resp. `2x + 3a`) with new variables `a, b, c`: the test can never work, and the answer does not change |
+
+387 instances per configuration. Results in `~/cube-eq/results/`: one CSV per
+configuration (one row per instance, one column per statistic), its
+`.setup.txt` (machine, options, start and end), and after
+`eq_order_summary.sh`, `all.csv` and `summary.txt`.
+
+What to compare: C1 against B0 (what the test gains on the families where it
+works, and what it costs where it does not), and C2first+C1 against C1 (the
+cost of detecting first on the families where the test works,
+`cube.impliedEq.time_ms`, against the time it saves on the `+ie` variants,
+where it skips the test, `cube.skippedImpliedEquality`).
+
 ### Experiments: propagation and overhead
 
 Two experiments, each with a driver that runs its configurations at the same
@@ -763,3 +854,89 @@ for instances where the test succeeded, where that time was useful, and
 where it never did, where it was pure overhead) and the CPU slowdown against
 B0 on the instances both solve where the test never succeeded (instances
 under 0.5 s are left out, since start-up dominates them).
+
+### Experiment for the report: all instances, all configurations
+
+The scripts are in `scripts/reportScripts/`; they use the shared scripts of
+`scripts/` (`run_bench.py`, `summarize.py`, `fetch_benchmarks.sh`,
+`make_implied_eq.py`).
+
+Every file of the five families of the proposal (sets (i) and (ii): 233
+dillig, 233 slacks, 591 CAV 2009, 806 Bromberger, 37 prime-cone = 1,900
+files), and, by default, one variant with implied equalities of each of
+them (set (iii)): the files of each family are shuffled with a fixed seed
+and alternately given the `+ie` or the `+ie2` variant, 950 of each kind
+(1,900 more, each family split in half). That is 3,800 instances per
+configuration, on all the configurations of
+`scripts/reportScripts/report_configs.sh`:
+
+| configuration | script | options |
+|---|---|---|
+| `B0` | `report_b0.sh` | none |
+| `B0-nobrab` | `report_b0_nobrab.sh` | `--no-arith-brab` |
+| `C1` | `report_c1.sh` | `--arith-cube-test` |
+| `C1-nobrab` | `report_c1_nobrab.sh` | `--arith-cube-test --no-arith-brab` |
+| `C1+C2first` | `report_c2first.sh` | `--arith-cube-test --arith-cube-implied-eq --arith-cube-implied-eq-order=detect-first` (detect, skip the test if found) |
+| `C1+C2first+C3` | `report_c2first_c3.sh` | `C1+C2first` with `--arith-cube-eq-elim` (detect, eliminate, then test: the paper's order) |
+
+Rebuild the release binary first: `C1+C2first+C3` needs the change that combines
+`detect-first` with C3, and every script stops at once if the binary does
+not accept its options.
+
+```
+cd ~/cvc5 && git pull && make -C build-release -j4
+```
+
+One tmux window per configuration; in each, from `~/cvc5`:
+
+```
+project/scripts/reportScripts/report_b0.sh build-release/bin/cvc5 ~/cube-eq 2>&1 | tee ~/cube-eq/report_b0.log
+project/scripts/reportScripts/report_c1.sh build-release/bin/cvc5 ~/cube-eq 2>&1 | tee ~/cube-eq/report_c1.log
+...                                   (one line per script of the table)
+```
+
+or all of them as background processes, with logs in
+`~/cube-eq/report_logs/` (optionally only some: `report_all.sh CVC5 WORKDIR
+B0 C1`):
+
+```
+project/scripts/reportScripts/report_all.sh build-release/bin/cvc5 ~/cube-eq
+```
+
+and, at any time (it summarizes what is there):
+
+```
+project/scripts/reportScripts/report_summary.sh
+```
+
+- `WORKDIR` (`~/cube-eq` above) reuses the benchmarks downloaded for the
+  equality-order experiment; a new directory downloads them again. The first
+  script to start writes the instance list `WORKDIR/report_files.tsv` and
+  the variants `WORKDIR/report_variants/`; the others wait for it. Nothing
+  is random, so every configuration runs the same instances.
+- Results go to `project/results/report_results/` of this checkout (or to
+  `RESULTS`): `NAME.csv` (one row per instance, one column per statistic)
+  and `NAME.setup.txt` (machine, options, start and end). After
+  `report_summary.sh`: `all.csv` and `summary.txt` (solved, PAR-2, wrong
+  answers and test statistics per family, against B0).
+- Optional environment variables: `TIMEOUT` (default 300 s; give
+  `report_summary.sh` the same one), `JOBS` (runs in parallel within one
+  configuration, default 1), `MEM_MB` (default 4000), `VARIANTS` (`one`,
+  the default; `all`: both variants of every file, 5,700 instances; `none`:
+  only the 1,900 original files; read only when the instance list is made),
+  `RESULTS`.
+- Each run's row is written to `NAME.csv` as soon as it finishes (the
+  terminal only shows a count every 20 runs), so partial results can be
+  read or summarized at any time, e.g. `tail -f NAME.csv`.
+- Running a script again resumes an interrupted run.
+- Cost: 3,800 instances per configuration. Scaling the demo's per-family
+  times (300 s timeout) to the full families gives about 60 h for B0 and
+  44 h for C1 with one job, mostly timeouts (about 590 and 480 instances
+  at 300 s each); the brab-off configurations are not measured yet. `JOBS=2`
+  roughly halves this when there are enough cores. At most 3,800 × 300 s ≈
+  13 days if everything timed out. The 6 configurations together need 6 cores
+  (`lscpu`: physical cores, not threads) and up to 24 GB, so that timing is
+  not disturbed; otherwise run them in groups, e.g. first `B0 C1
+  C1+C2first+C3`, then the rest, or with `VARIANTS=none` first.
+- The propagation of implied equalities (`--arith-cube-propagate-eq`) is not
+  part of this experiment; it has its own (`propagation_experiment.sh`).
