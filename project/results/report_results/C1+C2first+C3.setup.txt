@@ -1,0 +1,10 @@
+configuration: C1+C2first+C3
+options: --arith-cube-test --arith-cube-implied-eq --arith-cube-implied-eq-order=detect-first --arith-cube-eq-elim
+binary: /home/lara/cvc5/build-release/bin/cvc5
+cvc5 1.4.1 [git 1bdccedb1 on branch cube-test-v2]
+timeout: 300 s, jobs: 1, memory: 4000 MB
+instances: 3800 (/home/lara/cube-eq/report_files.tsv; variants: see report_files.tsv, VARIANTS=one when made)
+host: Linux boudin 6.8.0-149-generic #149-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 23 13:21:10 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+cpu:  Intel(R) Xeon(R) CPU E5-2620 0 @ 2.00GHz
+started: Tue Nov 24 01:58:00 PM UTC 2026
+finished: Wed Nov 25 08:08:02 PM UTC 2026
